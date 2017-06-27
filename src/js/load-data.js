@@ -1,4 +1,4 @@
-import * as d3 from 'd3'
+// import * as d3 from 'd3'
 import 'promis'
 
 function cleanTk(d) {
@@ -8,7 +8,7 @@ function cleanTk(d) {
 }
 
 function loadTk(cb) {
-	d3.csv('assets/tk.csv', cleanTk, cb)
+	d3.csv('assets/map_data.csv', cleanTk, cb)
 }
 
 function init() {
