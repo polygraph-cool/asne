@@ -59,7 +59,13 @@ var states = [
 
 function init(mapData,latLongData,newsIDLocation) {
 
-	var cut = "race"
+	var cut = "supGender"
+
+  var countMin = 19;
+  mapData = mapData.filter(function(d){
+    return d.total_num > countMin;
+  })
+  ;
 	// var cut = "supGender"
 
 	function getAverage(data){
@@ -87,7 +93,7 @@ function init(mapData,latLongData,newsIDLocation) {
 		}
 		return +data.white_num/data.total_num
 	}
-	//
+
 	var latLongMap = d3.map(latLongData,function(d){ return d.NewsID});
 	var newsIdMap = d3.map(newsIDLocation,function(d){ return d.NewsID});
 
@@ -97,23 +103,15 @@ function init(mapData,latLongData,newsIDLocation) {
 
 	var width = 500;
 	var horzScale = d3.scaleLinear().domain([0,1]).range([0,width])
-	var container = d3.select(".line-scatter");
+	var container = d3.select(".histogram");
 
 	var yearNest = d3.nest()
 		.key(function(d){
-			var state = null;
-			var region = null;
-			if(newsIdMap.has(d.NewsID)){
-				state = newsIdMap.get(d.NewsID).State;
-			}
-			if(regionMap.has(state)){
-				region = regionMap.get(state)[3];
-			}
-			return region
-		})
-		.key(function(d){
 			return +d.Year
 		})
+    .key(function(d){
+      return Math.round(getPercent(d)*50)/50;
+    })
 		.sortKeys(function(a,b){
 			return a-b;
 		})
@@ -124,70 +122,124 @@ function init(mapData,latLongData,newsIDLocation) {
 		.entries(mapData)
 		;
 
-	//
-	var region = container
+	var years = container
 		.selectAll("div")
-		.data(yearNest)
+		.data(yearNest.filter(function(d){
+      return d.key == 2014
+    })[0].values)
 		.enter()
 		.append("div")
-		.attr("class","year-container")
+		.attr("class","histogram-year-container")
+    .style("left",function(d){
+      return (d.key*width+1)+"px"
+    })
+    .selectAll("div")
+    .data(function(d){
+      return d.value.values
+    })
+    .enter()
+    .append("div")
+    .attr("class",function(d){
+      var state = null;
+      var region = null;
+      if(newsIdMap.has(d.NewsID)){
+        state = newsIdMap.get(d.NewsID).State;
+      }
+      if(regionMap.has(state)){
+        region = regionMap.get(state)[3];
+      }
 
-		region.append("p")
-			.text(function(d){
-				return d.key;
-			})
+      if(region =="West"){
+        region = "green"
+      }
+      if(region =="South"){
+        region = "blue"
+      }
+      if(region =="Midwest"){
+        region = "purple"
+      }
+      if(region =="Northeast"){
+        region = "yellow"
+      }
+      return "histogram-year-item "+region
+    })
+    .style("background-color",function(d){
+      var state = null;
+      var region = null;
+      if(newsIdMap.has(d.NewsID)){
+        state = newsIdMap.get(d.NewsID).State;
+      }
+      if(regionMap.has(state)){
+        region = regionMap.get(state)[3];
+      }
+      if(region =="West"){
+        return "green"
+      }
+      if(region =="South"){
+        return "blue"
+      }
+      if(region =="Midwest"){
+        return "purple"
+      }
+      if(region =="Northeast"){
+        return "yellow"
+      }
+    })
+    .on("mouseover",function(d){
+      console.log(d);
+    })
+    ;
+  //
+	// 	region.append("p")
+	// 		.text(function(d){
+	// 			return d.key;
+	// 		})
 
-	var years = region
-		.selectAll("div")
-		.data(function(d){
-			return d.values
-		})
-		.enter()
-		.append("div")
-		.attr("class","region-container")
-		;
+	// var years = container
+	// 	.selectAll("div")
+	// 	.data(function(d){
+	// 		return d.values
+	// 	})
+	// 	.enter()
+	// 	.append("div")
+	// 	.attr("class","region-container")
+	// 	;
 
-
-
-	years.selectAll("div")
-		.data(function(d){
-			return d.value.values;
-		})
-		.enter()
-		.append("div")
-		.attr("class","line")
-		.style("left",function(d){
-			var percent = getPercent(d);
-			return horzScale(percent) + "px"
-		})
-		.style("background-color",function(d){
-			return null;
-		})
-		;
-	years.append("div")
-		.style("left",function(d){
-			return horzScale(.5) + "px"
-		})
-		.attr("class","line line-half")
-	//
-	years.append("div")
-		.datum(function(d){
-			return d.value.average
-		})
-		.style("left",function(d){
-			return horzScale(d) + "px"
-		})
-		.attr("class","line line-average")
-		.append("p")
-		.text(function(d){
-			return Math.round(d*100)+"%";
-		})
-		;
-
-	years.append("p")
-	.text(function(d){
-		return d.key
-	})
+	// years.selectAll("div")
+	// 	.data(function(d){
+	// 		return d.value.values;
+	// 	})
+	// 	.enter()
+	// 	.append("div")
+	// 	.attr("class","histogram-line")
+	// 	.style("background-color",function(d){
+	// 		return null;
+	// 	})
+	// 	;
+	// years.append("div")
+	// 	.style("left",function(d){
+	// 		return horzScale(.5) + "px"
+	// 	})
+	// 	.attr("class","line line-half")
+	// //
+	// years.append("div")
+	// 	.datum(function(d){
+	// 		return d.value.average
+	// 	})
+	// 	.style("left",function(d){
+	// 		return horzScale(d) + "px"
+	// 	})
+	// 	.attr("class","line line-average")
+	// 	.append("p")
+	// 	.text(function(d){
+	// 		return Math.round(d*100)+"%";
+	// 	})
+	// 	;
+  //
+	// years.append("p")
+	// .text(function(d){
+	// 	return d.key
+	// })
 }
 
 export default { init }
