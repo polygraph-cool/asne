@@ -189,6 +189,8 @@ function init(mapData,latLongData,newsIDLocation) {
       console.log(d);
     })
     ;
+
+  console.log(years.size());
   //
 	// 	region.append("p")
 	// 		.text(function(d){
