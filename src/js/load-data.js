@@ -3,6 +3,7 @@ import 'promis'
 import graphic from './graphic'
 import histogram from './histogram'
 import table from './table'
+import newsroom from './newsroom'
 
 function cleanTk(d) {
 	return {
@@ -24,6 +25,7 @@ function init() {
 					graphic.init(result[0],result[1],result[2]);
 					histogram.init(result[0],result[1],result[2]);
 					table.init(result[0],result[1],result[2]);
+					newsroom.init();
 				}
 			})
 	})

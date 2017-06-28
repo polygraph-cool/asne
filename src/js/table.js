@@ -58,9 +58,9 @@ var states = [
   ;
 
 function init(mapData,latLongData,newsIDLocation) {
-	var cut = "supGender"
+	var cut = "gender"
 
-  var countMin = 19;
+  var countMin = 100;
   mapData = mapData.filter(function(d){
     return d.total_num > countMin;
   })
@@ -125,8 +125,9 @@ function init(mapData,latLongData,newsIDLocation) {
 		.attr("class","table-rows-row")
 
   rows.append("p").text(function(d){
-    return d.key;
+    return d.value[0].Company;
   })
+  .attr("class","table-rows-row-name")
 
   rows
     .selectAll("div")
@@ -186,6 +187,11 @@ function init(mapData,latLongData,newsIDLocation) {
 		})
     .on("mouseover",function(d){
       console.log(d);
+    })
+    .append("p")
+    .attr("class","table-rows-row-dot-text")
+    .html(function(d){
+      return d.Year +"<br>"+ Math.round(getPercent(d)*100)+"%";
     })
     ;
   // //

@@ -59,9 +59,9 @@ var states = [
 
 function init(mapData,latLongData,newsIDLocation) {
 
-	var cut = "supGender"
+	var cut = "gender"
 
-  var countMin = 19;
+  var countMin =  19;
   mapData = mapData.filter(function(d){
     return d.total_num > countMin;
   })
