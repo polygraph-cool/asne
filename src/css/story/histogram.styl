@@ -1,9 +1,11 @@
 .histogram
   margin 0 auto
-  display flex
   margin-left 100px
   position relative
   height 500px
+  margin-top 100px
+  p
+    margin 0px
 
 .histogram-year-item
   width 9px
@@ -13,6 +15,21 @@
   &:hover
     background-color blue
 
+.histogram-chart-toggle-type
+  display flex
+  .histogram-chart-toggle-item
+    font-size 18px
+    font-family 'Atlas Grotesk Web'
+    margin-right 10px
+
+.histogram-chart-toggle-size
+  display flex
+  .histogram-chart-toggle-item
+    font-size 18px
+    font-family 'Atlas Grotesk Web'
+    margin-right 10px
+    line-height 10px
+
 .histogram-year-container
   display flex
   flex-direction column
@@ -21,6 +38,12 @@
   top 0px
   height 400px
   justify-content flex-end
+  p
+    font-size 10px
+    font-family 'Atlas Grotesk Web'
+    position absolute
+    bottom  -46px
+    font-weight 500
 
 .green
   order 1

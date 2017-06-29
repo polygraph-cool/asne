@@ -62,10 +62,7 @@ function init(mapData,latLongData,newsIDLocation) {
 	var cut = "gender"
 
   var countMin =  19;
-  mapData = mapData.filter(function(d){
-    return d.total_num > countMin;
-  })
-  ;
+
 	// var cut = "supGender"
 
 	function getAverage(data){
@@ -105,143 +102,157 @@ function init(mapData,latLongData,newsIDLocation) {
 	var horzScale = d3.scaleLinear().domain([0,1]).range([0,width])
 	var container = d3.select(".histogram");
 
-	var yearNest = d3.nest()
-		.key(function(d){
-			return +d.Year
-		})
-    .key(function(d){
-      return Math.round(getPercent(d)*50)/50;
-    })
-		.sortKeys(function(a,b){
-			return a-b;
-		})
-		.rollup(function(leaves){
-			var average = getAverage(leaves);
-			return {average:average,values:leaves};
-		})
-		.entries(mapData)
-		;
+  var toggles = container.append("div")
+    .attr("class","histogram-chart-toggle-wrapper");
 
-	var years = container
-		.selectAll("div")
-		.data(yearNest.filter(function(d){
-      return d.key == 2014
-    })[0].values)
-		.enter()
-		.append("div")
-		.attr("class","histogram-year-container")
-    .style("left",function(d){
-      return (d.key*width+1)+"px"
-    })
-    .selectAll("div")
-    .data(function(d){
-      return d.value.values
-    })
-    .enter()
+  container.append("p")
+  .text("west=green, south = blue, midwest = purple, northeast = yellow");
+
+  toggles
     .append("div")
-    .attr("class",function(d){
-      var state = null;
-      var region = null;
-      if(newsIdMap.has(d.NewsID)){
-        state = newsIdMap.get(d.NewsID).State;
-      }
-      if(regionMap.has(state)){
-        region = regionMap.get(state)[3];
-      }
-
-      if(region =="West"){
-        region = "green"
-      }
-      if(region =="South"){
-        region = "blue"
-      }
-      if(region =="Midwest"){
-        region = "purple"
-      }
-      if(region =="Northeast"){
-        region = "yellow"
-      }
-      return "histogram-year-item "+region
+    .attr("class","histogram-chart-toggle-size")
+    .selectAll("p")
+    .data([0,20,50,100,500])
+    .enter()
+    .append("p")
+    .attr("class","histogram-chart-toggle-item")
+    .text(function(d){
+      return d;
     })
-    .style("background-color",function(d){
-      var state = null;
-      var region = null;
-      if(newsIdMap.has(d.NewsID)){
-        state = newsIdMap.get(d.NewsID).State;
-      }
-      if(regionMap.has(state)){
-        region = regionMap.get(state)[3];
-      }
-      if(region =="West"){
-        return "green"
-      }
-      if(region =="South"){
-        return "blue"
-      }
-      if(region =="Midwest"){
-        return "purple"
-      }
-      if(region =="Northeast"){
-        return "yellow"
-      }
-    })
-    .on("mouseover",function(d){
-      console.log(d);
+    .on("click",function(d){
+      countMin = d;
+      buildChart();
     })
     ;
 
-  console.log(years.size());
-  //
-	// 	region.append("p")
-	// 		.text(function(d){
-	// 			return d.key;
-	// 		})
+  toggles
+    .append("div")
+    .attr("class","histogram-chart-toggle-type")
+    .selectAll("p")
+    .data(["race","gender","supWhite","supGender"])
+    .enter()
+    .append("p")
+    .attr("class","histogram-chart-toggle-item")
+    .text(function(d){
+      return d;
+    })
+    .on("click",function(d){
+      cut = d;
+      buildChart();
+    })
+    ;
 
-	// var years = container
-	// 	.selectAll("div")
-	// 	.data(function(d){
-	// 		return d.values
-	// 	})
-	// 	.enter()
-	// 	.append("div")
-	// 	.attr("class","region-container")
-	// 	;
+  function buildChart(){
 
-	// years.selectAll("div")
-	// 	.data(function(d){
-	// 		return d.value.values;
-	// 	})
-	// 	.enter()
-	// 	.append("div")
-	// 	.attr("class","histogram-line")
-	// 	.style("background-color",function(d){
-	// 		return null;
-	// 	})
-	// 	;
-	// years.append("div")
-	// 	.style("left",function(d){
-	// 		return horzScale(.5) + "px"
-	// 	})
-	// 	.attr("class","line line-half")
-	// //
-	// years.append("div")
-	// 	.datum(function(d){
-	// 		return d.value.average
-	// 	})
-	// 	.style("left",function(d){
-	// 		return horzScale(d) + "px"
-	// 	})
-	// 	.attr("class","line line-average")
-	// 	.append("p")
-	// 	.text(function(d){
-	// 		return Math.round(d*100)+"%";
-	// 	})
-	// 	;
-  //
-	// years.append("p")
-	// .text(function(d){
-	// 	return d.key
-	// })
+    var filteredMapData = mapData.filter(function(d){
+      return d.total_num > countMin;
+    })
+    ;
+
+    d3.selectAll(".histogram-chart-wrapper").remove();
+
+    var chartDiv = container.append("div")
+      .attr("class","histogram-chart-wrapper")
+      ;
+
+    var yearNest = d3.nest()
+      .key(function(d){
+        return +d.Year
+      })
+      .key(function(d){
+        return Math.round(getPercent(d)*50)/50;
+      })
+      .sortKeys(function(a,b){
+        return a-b;
+      })
+      .rollup(function(leaves){
+        var average = getAverage(leaves);
+        return {average:average,values:leaves};
+      })
+      .entries(filteredMapData)
+      ;
+
+    var yearsColumn = chartDiv
+      .selectAll("div")
+      .data(yearNest.filter(function(d){
+        return d.key == 2014
+      })[0].values)
+      .enter()
+      .append("div")
+      .attr("class","histogram-year-container")
+      .style("left",function(d){
+        return (d.key*width+1)+"px"
+      })
+
+    yearsColumn
+      .selectAll("div")
+      .data(function(d){
+        return d.value.values
+      })
+      .enter()
+      .append("div")
+      .attr("class",function(d){
+        var state = null;
+        var region = null;
+        if(newsIdMap.has(d.NewsID)){
+          state = newsIdMap.get(d.NewsID).State;
+        }
+        if(regionMap.has(state)){
+          region = regionMap.get(state)[3];
+        }
+
+        if(region =="West"){
+          region = "green"
+        }
+        if(region =="South"){
+          region = "blue"
+        }
+        if(region =="Midwest"){
+          region = "purple"
+        }
+        if(region =="Northeast"){
+          region = "yellow"
+        }
+        return "histogram-year-item "+region
+      })
+      .style("background-color",function(d){
+        var state = null;
+        var region = null;
+        if(newsIdMap.has(d.NewsID)){
+          state = newsIdMap.get(d.NewsID).State;
+        }
+        if(regionMap.has(state)){
+          region = regionMap.get(state)[3];
+        }
+        if(region =="West"){
+          return "green"
+        }
+        if(region =="South"){
+          return "blue"
+        }
+        if(region =="Midwest"){
+          return "purple"
+        }
+        if(region =="Northeast"){
+          return "yellow"
+        }
+      })
+      .on("mouseover",function(d){
+        console.log(d);
+      })
+      ;
+    yearsColumn.append("p")
+      .text(function(d,i){
+        if(i%5 == 0 || i==0 || i==yearsColumn.size()-1){
+          return Math.round(d.key*100)+"%";
+        }
+        return null;
+
+      })
+      ;
+  }
+  buildChart();
+
 }
 
 export default { init }

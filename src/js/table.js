@@ -61,10 +61,7 @@ function init(mapData,latLongData,newsIDLocation) {
 	var cut = "gender"
 
   var countMin = 100;
-  mapData = mapData.filter(function(d){
-    return d.total_num > countMin;
-  })
-  ;
+
 	// var cut = "supGender"
 
 	function getAverage(data){
@@ -103,148 +100,139 @@ function init(mapData,latLongData,newsIDLocation) {
 	var width = 500;
 	var horzScale = d3.scaleLinear().domain([0,1]).range([0,width])
 	var container = d3.select(".table-rows");
-  //
-	var yearNest = d3.nest()
-    .key(function(d){
-      return +d.NewsID
-    })
-		.rollup(function(leaves){
-      var extent = d3.extent(leaves,function(d){return d.Year });
-			return leaves.filter(function(d){return d.Year == extent[0] || d.Year == extent[1]});
-		})
-		.entries(mapData)
-		;
 
-  console.log(yearNest);
-  //
-	var rows = container
-		.selectAll("div")
-		.data(yearNest)
-		.enter()
-		.append("div")
-		.attr("class","table-rows-row")
+  var toggles = container.append("div")
+    .attr("class","histogram-chart-toggle-wrapper");
 
-  rows.append("p").text(function(d){
-    return d.value[0].Company;
-  })
-  .attr("class","table-rows-row-name")
+  container.append("p")
+  .text("west=green, south = blue, midwest = purple, northeast = yellow");
 
-  rows
-    .selectAll("div")
-    .data(function(d){
-      return d.value
-    })
-    .enter()
+  toggles
     .append("div")
-    .attr("class",function(d){
-      // var state = null;
-      // var region = null;
-      // if(newsIdMap.has(d.NewsID)){
-      //   state = newsIdMap.get(d.NewsID).State;
-      // }
-      // if(regionMap.has(state)){
-      //   region = regionMap.get(state)[3];
-      // }
-      //
-      // if(region =="West"){
-      //   region = "green"
-      // }
-      // if(region =="South"){
-      //   region = "blue"
-      // }
-      // if(region =="Midwest"){
-      //   region = "purple"
-      // }
-      // if(region =="Northeast"){
-      //   region = "yellow"
-      // }
-      return "table-rows-row-dot"
-    })
-    .style("background-color",function(d){
-      var state = null;
-      var region = null;
-      if(newsIdMap.has(d.NewsID)){
-        state = newsIdMap.get(d.NewsID).State;
-      }
-      if(regionMap.has(state)){
-        region = regionMap.get(state)[3];
-      }
-      if(region =="West"){
-        return "green"
-      }
-      if(region =="South"){
-        return "blue"
-      }
-      if(region =="Midwest"){
-        return "purple"
-      }
-      if(region =="Northeast"){
-        return "yellow"
-      }
-    })
-    .style("left",function(d){
-			return horzScale(getPercent(d)) + "px"
-		})
-    .on("mouseover",function(d){
-      console.log(d);
-    })
+    .attr("class","histogram-chart-toggle-size")
+    .selectAll("p")
+    .data([0,20,50,100,500])
+    .enter()
     .append("p")
-    .attr("class","table-rows-row-dot-text")
-    .html(function(d){
-      return d.Year +"<br>"+ Math.round(getPercent(d)*100)+"%";
+    .attr("class","histogram-chart-toggle-item")
+    .text(function(d){
+      return d;
+    })
+    .on("click",function(d){
+      countMin = d;
+      buildChart();
     })
     ;
-  // //
-	// // 	region.append("p")
-	// // 		.text(function(d){
-	// // 			return d.key;
-	// // 		})
-  //
-	// // var years = container
-	// // 	.selectAll("div")
-	// // 	.data(function(d){
-	// // 		return d.values
-	// // 	})
-	// // 	.enter()
-	// // 	.append("div")
-	// // 	.attr("class","region-container")
-	// // 	;
-  //
-	// // years.selectAll("div")
-	// // 	.data(function(d){
-	// // 		return d.value.values;
-	// // 	})
-	// // 	.enter()
-	// // 	.append("div")
-	// // 	.attr("class","histogram-line")
-	// // 	.style("background-color",function(d){
-	// // 		return null;
-	// // 	})
-	// // 	;
-	// // years.append("div")
-	// // 	.style("left",function(d){
-	// // 		return horzScale(.5) + "px"
-	// // 	})
-	// // 	.attr("class","line line-half")
-	// // //
-	// // years.append("div")
-	// // 	.datum(function(d){
-	// // 		return d.value.average
-	// // 	})
-	// // 	.style("left",function(d){
-	// // 		return horzScale(d) + "px"
-	// // 	})
-	// // 	.attr("class","line line-average")
-	// // 	.append("p")
-	// // 	.text(function(d){
-	// // 		return Math.round(d*100)+"%";
-	// // 	})
-	// // 	;
-  // //
-	// // years.append("p")
-	// // .text(function(d){
-	// // 	return d.key
-	// // })
+
+  toggles
+    .append("div")
+    .attr("class","histogram-chart-toggle-type")
+    .selectAll("p")
+    .data(["race","gender","supWhite","supGender"])
+    .enter()
+    .append("p")
+    .attr("class","histogram-chart-toggle-item")
+    .text(function(d){
+      return d;
+    })
+    .on("click",function(d){
+      cut = d;
+      buildChart();
+    })
+    ;
+
+  function buildChart(){
+
+    d3.selectAll(".table-rows-wrapper").remove();
+
+    var chartDiv = container.append("div")
+      .attr("class","table-rows-wrapper")
+      ;
+
+    var filteredMapData = mapData.filter(function(d){
+      return d.total_num > countMin;
+    })
+    ;
+    var yearNest = d3.nest()
+      .key(function(d){
+        return +d.NewsID
+      })
+      .rollup(function(leaves){
+        var extent = d3.extent(leaves,function(d){return d.Year });
+        return leaves.filter(function(d){return d.Year == extent[0] || d.Year == extent[1]});
+      })
+      .entries(filteredMapData)
+      ;
+
+    //
+    var rows = chartDiv
+      .selectAll("div")
+      .data(yearNest)
+      .enter()
+      .append("div")
+      .attr("class","table-rows-row")
+
+    rows.append("p").text(function(d){
+      return d.value[0].Company;
+    })
+    .attr("class","table-rows-row-name")
+
+    rows
+      .selectAll("div")
+      .data(function(d){
+        return d.value
+      })
+      .enter()
+      .append("div")
+      .sort(function(a,b){
+        return a.Year - b.Year;
+      })
+      .attr("class",function(d){
+        return "table-rows-row-dot"
+      })
+      .style("background-color",function(d){
+        var state = null;
+        var region = null;
+        if(newsIdMap.has(d.NewsID)){
+          state = newsIdMap.get(d.NewsID).State;
+        }
+        if(regionMap.has(state)){
+          region = regionMap.get(state)[3];
+        }
+        if(region =="West"){
+          return "green"
+        }
+        if(region =="South"){
+          return "blue"
+        }
+        if(region =="Midwest"){
+          return "purple"
+        }
+        if(region =="Northeast"){
+          return "yellow"
+        }
+      })
+      .style("left",function(d){
+        return horzScale(getPercent(d)) + "px"
+      })
+      .on("mouseover",function(d){
+        console.log(d);
+      })
+      .append("p")
+      .attr("class","table-rows-row-dot-text")
+      .html(function(d){
+        return d.Year +"<br>"+ Math.round(getPercent(d)*100)+"%";
+      })
+      .style("font-weight",function(d,i){
+        if (i==1){
+          return 700;
+        }
+      })
+      ;
+  }
+
+  buildChart();
+
 }
 
 export default { init }

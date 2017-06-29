@@ -34,7 +34,7 @@ function init() {
 
 function generateVis() {
 	var w = 500;
-	var h = 1800;
+	var h = 600;
 
 	svg = d3.select("#newsroom")
 	.append("svg")
