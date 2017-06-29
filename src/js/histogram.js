@@ -57,7 +57,7 @@ var states = [
   ]
   ;
 
-function init(mapData,latLongData,newsIDLocation) {
+function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 
 	var cut = "gender"
 
@@ -93,6 +93,7 @@ function init(mapData,latLongData,newsIDLocation) {
 
 	var latLongMap = d3.map(latLongData,function(d){ return d.NewsID});
 	var newsIdMap = d3.map(newsIDLocation,function(d){ return d.NewsID});
+  var newsIDName = d3.map(newsIDInfo,function(d){ return d.NewsID});
 
 	var regionMap = d3.map(states,function(d){
 		return d[1];
@@ -145,6 +146,9 @@ function init(mapData,latLongData,newsIDLocation) {
   function buildChart(){
 
     var filteredMapData = mapData.filter(function(d){
+      if(cut == "supWhite" || cut == "supGender"){
+        return d.total_num > countMin && d.total_sup_num > 0;
+      }
       return d.total_num > countMin;
     })
     ;
