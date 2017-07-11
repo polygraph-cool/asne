@@ -59,7 +59,7 @@ var states = [
 
 function init(mapData,latLongData,newsIDLocation) {
 
-	var cut = "race"
+	var cut = "gender"
 	// var cut = "supGender"
 
 	function getAverage(data){

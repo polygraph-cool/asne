@@ -1,6 +1,3 @@
-// D3 is included by globally by default
-// import * as d3 from 'd3'
-// import loadData from './load-data'
 
 var states = [
   ["Maine","ME",1,"Northeast",23],
@@ -58,7 +55,7 @@ var states = [
   ;
 
 function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
-
+//
 	var cut = "gender"
 	// var cut = "supGender"
   var countMin =  50;
@@ -94,11 +91,13 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
   var newsIDName = d3.map(newsIDInfo,function(d){ return d.NewsID});
 	var regionMap = d3.map(states,function(d){
 		return d[1];
-	})
+	});
 
-	var width = 1000;
+  var margin = {top: 40, right: 40, bottom: 40, left: 40};
+	var width = 1000 - margin.left - margin.right;
+  var height = 500 - margin.top - margin.bottom;
 	var horzScale = d3.scaleLinear().domain([0,1]).range([0,width])
-	var container = d3.select(".histogram");
+	var container = d3.select(".swarm");
 
   var toggles = container.append("div")
     .attr("class","histogram-chart-toggle-wrapper");
@@ -137,9 +136,19 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
     })
     ;
 
-
+  var xScale = d3.scaleLinear().domain([.3,1]).range([0,width]);
 
   function buildChart(){
+
+    d3.selectAll(".swarm-chart-wrapper").remove();
+
+    var chartDiv = container.append("svg")
+      .attr("class","swarm-chart-wrapper")
+      .attr("width",width)
+      .attr("height",height)
+      ;
+
+
 
     var filteredMapData = mapData.filter(function(d){
       if(cut == "supWhite" || cut == "supGender"){
@@ -148,12 +157,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       return d.total_num > countMin;
     })
     ;
-
-    d3.selectAll(".histogram-chart-wrapper").remove();
-
-    var chartDiv = container.append("div")
-      .attr("class","histogram-chart-wrapper")
-      ;
 
     var yearNest = d3.nest()
       .key(function(d){
@@ -167,95 +170,141 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       .entries(filteredMapData)
       ;
 
+    var newsNest = d3.nest()
+      .key(function(d){
+        return +d.NewsID
+      })
+      .rollup(function(leaves){
+        var map = d3.map(leaves,function(d){return d.Year});
+        var maxTotalNum = d3.max(leaves,function(d){return d.total_num});
+        //
+        // var diff = getPercent(map.get(2014))-getPercent(leaves[0])
+        //
+
+        return {yearMap:map,values:leaves,maxTotal:maxTotalNum}
+      })
+      .entries(filteredMapData)
+      ;
+
+    var diffArray = [];
+
+    newsNest = newsNest.filter(function(d){
+        if(d.value.yearMap.has(2014)){
+          return d;
+        }
+        return null;
+      })
+      for (var item in newsNest){
+        var diff = getPercent(newsNest[item].value.yearMap.get(2014))-getPercent(newsNest[item].value.values[0])
+        diffArray.push(diff);
+        newsNest[item].value.diff = diff;
+      }
+      ;
+
+    var newsMap = d3.map(newsNest,function(d){return d.key});
+
+    var diffExtent = d3.extent(diffArray,function(d){return d; });
+    var colorScale = d3.scaleLinear().domain(diffExtent).range(["green","red"]);
+
     var dataToMap = yearNest.filter(function(d){
         return d.key == 2014
       })[0].value;
 
-    dataToMap.values = d3.nest()
-      .key(function(d){
-        return Math.round(getPercent(d)*50)/50;
-      })
-      .sortKeys(function(a,b){
-        return a-b;
-      })
-      // .rollup(function(leaves){
-      //   var average = getAverage(leaves);
-      //   return {average:average,values:leaves};
-      // })
-      .entries(dataToMap.values)
-      ;
+    var totalExtent = d3.extent(dataToMap.values,function(d){return +d.total_num})
+    var radiusScale = d3.scaleLinear().domain(totalExtent).range([5,30]);
+    dataToMap.values.forEach(function(d,i){
+      d.radius = radiusScale(d.total_num);
+    })
 
-    chartDiv.append("div")
-      .attr("class","histogram-avg-div")
-      .style("left",function(d){
-        return (dataToMap.average*width+1)+"px"
-      })
-      .append("p")
-      .text(Math.round(dataToMap.average*100)+"%")
-      ;
+    var forceCollide = d3.forceCollide()
+        // .radius(function(d) { return d.radius + 1.5; })
+        .radius(function(d) { return d.radius + 1; })
+        .iterations(1);
 
+    var simulation = d3.forceSimulation(dataToMap.values)
+         .force("x", d3.forceX(function(d) { return xScale(getPercent(d)); }).strength(1))
+         .force("y", d3.forceY(height / 2))
+         .force("collide", forceCollide)
+        //  .force("collide", d3.forceCollide(4))
+         .stop()
+         ;
 
+    function buildAxis(){
+     var chartAxis = chartDiv.append("g")
+       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+       .attr("class","swarm-axis")
+       ;
 
-    var yearsColumn = chartDiv
-      .selectAll(".histogram-year-container")
+     chartAxis.append("g")
+       .append("line")
+       .attr("x1",0)
+       .attr("x2","100%")
+       .attr("y1",height/2)
+       .attr("y2",height/2)
+       .attr("class","swarm-axis-line")
+
+    }
+    buildAxis();
+
+    var chartG = chartDiv
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    function buildAverage(){
+      var chartAverage = chartDiv.append("g")
+         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+         .attr("class","swarm-average")
+         ;
+
+     chartAverage.append("text")
+       .attr("class","swarm-average-text swarm-average-text-label")
+       .attr("x",xScale(dataToMap.average))
+       .attr("y",height*.33-19)
+       .text("Overall")
+
+      chartAverage.append("text")
+        .attr("class","swarm-average-text")
+        .attr("x",xScale(dataToMap.average))
+        .attr("y",height*.33-5)
+        .text(Math.round(dataToMap.average*100)+"% Male")
+
+      chartAverage.append("line")
+        .attr("class","swarm-average-line")
+        .attr("x1",xScale(dataToMap.average))
+        .attr("x2",xScale(dataToMap.average))
+        .attr("y1",height*.33)
+        .attr("y2",height*.66)
+        ;
+    }
+    buildAverage();
+
+    for (var i = 0; i < 250; ++i) simulation.tick();
+
+    var cell = chartG
+      .selectAll("g")
       .data(dataToMap.values)
       .enter()
-      .append("div")
-      .attr("class","histogram-year-container")
-      .style("left",function(d){
-        return (d.key*width+1)+"px"
-      })
-      ;
-    //
-    yearsColumn
-      .selectAll("div")
-      .data(function(d){
-        return d.values
-      })
-      .enter()
-      .append("div")
-      .attr("class",function(d){
-        var state = null;
-        var region = null;
-        if(newsIdMap.has(d.NewsID)){
-          state = newsIdMap.get(d.NewsID).State;
-        }
-        if(regionMap.has(state)){
-          region = regionMap.get(state)[3];
-        }
+      .append("g");
 
-        if(region =="West"){
-          region = "green"
-        }
-        if(region =="South"){
-          region = "blue"
-        }
-        if(region =="Midwest"){
-          region = "purple"
-        }
-        if(region =="Northeast"){
-          region = "yellow"
-        }
-        return "histogram-year-item "+region
+    cell
+      .append("circle")
+      .attr("class","swarm-circle")
+      .attr("r", function(d){
+        return d.radius
       })
-      .style("background-color",function(d){
-        // return backgroundFunction(d)
-        return null
-      })
+      .attr("cx", function(d) { return d.x; })
+      .attr("cy", function(d) { return d.y; })
       .on("mouseover",function(d){
+        console.log(d.male_num/d.total_num);
         console.log(newsIDName.get(d.NewsID).Company);
       })
-      ;
+      .style("fill",function(d){
 
-    yearsColumn.append("p")
-      .text(function(d,i){
-        if(i%5 == 0 || i==0 || i==yearsColumn.size()-1){
-          return Math.round(d.key*100)+"%";
-        }
-        return null;
 
+        return colorScale(newsMap.get(d.NewsID).value.diff);
       })
       ;
+
   }
   function backgroundFunction(d){
     var state = null;

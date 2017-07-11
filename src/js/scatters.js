@@ -99,7 +99,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 	var width = 1000 - margin.left - margin.right;
   var height = 500 - margin.top - margin.bottom;
 	var horzScale = d3.scaleLinear().domain([0,1]).range([0,width])
-	var container = d3.select(".slope-chart");
+	var container = d3.select(".scatter");
 
   var toggles = container.append("div")
     .attr("class","histogram-chart-toggle-wrapper");
@@ -142,10 +142,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 
   function buildChart(){
 
-    d3.selectAll(".slope-chart-wrapper").remove();
+    d3.selectAll(".scatter-chart-wrapper").remove();
 
     var chartDiv = container.append("svg")
-      .attr("class","slope-chart-wrapper")
+      .attr("class","scatter-chart-wrapper")
       .attr("width",width)
       .attr("height",height)
       ;

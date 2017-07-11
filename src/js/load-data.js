@@ -5,6 +5,9 @@ import histogram from './histogram'
 import table from './table'
 import newsroom from './newsroom'
 import slope from './slope'
+import swarm from './swarm'
+import scatter from './scatters'
+
 
 function cleanTk(d) {
 	return {
@@ -24,6 +27,8 @@ function init() {
 					reject(err)
 				}
 				else {
+					scatter.init(result[0],result[1],result[2],result[3]);
+					swarm.init(result[0],result[1],result[2],result[3]);
 					graphic.init(result[0],result[1],result[2],result[3]);
 					histogram.init(result[0],result[1],result[2],result[3]);
 					table.init(result[0],result[1],result[2],result[3]);

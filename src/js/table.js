@@ -103,9 +103,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
   var toggles = container.append("div")
     .attr("class","histogram-chart-toggle-wrapper");
 
-  container.append("p")
-  .text("west=green, south = blue, midwest = purple, northeast = yellow");
-
   toggles
     .append("div")
     .attr("class","histogram-chart-toggle-size")
