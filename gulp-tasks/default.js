@@ -12,7 +12,7 @@ gulp.task('default', ['dev'], () => {
 
 gulp.task('dev', () => {
 	runSequence(
-		'clean-dev',
+		// 'clean-dev',
 		'css-dev',
 		'js-dev-critical',
 		'js-dev',
