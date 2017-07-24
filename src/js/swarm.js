@@ -55,35 +55,36 @@ var states = [
   ;
 
 function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
-//
+
 	var cut = "gender"
-	// var cut = "supGender"
+  var group = "all"
   var countMin =  50;
 
 	function getAverage(data){
-		if(cut == "gender"){
-			return d3.mean(data,function(d){return +d.male_num/d.total_num});
+
+		if(cut == "gender" && group == "all"){
+			return d3.mean(data,function(d){return (d.total_num - d.male_num)/(d.total_num)});
 		}
-		if(cut == "supWhite"){
-			return d3.mean(data,function(d){return +d.white_sup_num/d.total_sup_num});
+		if(cut == "race" && group != "all"){
+			return d3.mean(data,function(d){return (+d.total_sup_num - +d.white_sup_num)/d.total_sup_num});
 		}
-		if(cut == "supGender"){
-			return d3.mean(data,function(d){return +d.male_sup_num/d.total_sup_num});
+		if(cut == "gender" && group != "all"){
+			return d3.mean(data,function(d){return (+d.total_sup_num - +d.male_sup_num)/d.total_sup_num});
 		}
-		return d3.mean(data,function(d){return +d.white_num/d.total_num});
+		return d3.mean(data,function(d){return (+d.total_num - +d.white_num)/d.total_num});
 	}
 
 	function getPercent(data){
-		if(cut == "gender"){
-			return +data.male_num/data.total_num
+    if(cut == "gender" && group == "all"){
+      return +(data.total_num-data.male_num)/data.total_num
 		}
-		if(cut == "supWhite"){
-			return +data.white_sup_num/data.total_sup_num;
+    if(cut == "race" && group != "all"){
+      return (+data.total_sup_num - +data.white_sup_num)/data.total_sup_num;
 		}
-		if(cut == "supGender"){
-			return +data.male_sup_num/data.total_sup_num;
+    if(cut == "gender" && group != "all"){
+      return (+data.total_sup_num - +data.male_sup_num)/data.total_sup_num;
 		}
-		return +data.white_num/data.total_num
+    return (+data.total_num - +data.white_num)/data.total_num
 	}
 
 	var latLongMap = d3.map(latLongData,function(d){ return d.NewsID});
@@ -93,62 +94,158 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 		return d[1];
 	});
 
-  var margin = {top: 40, right: 40, bottom: 40, left: 40};
+  var margin = {top: 40, right: 40, bottom: 20, left: 40};
 	var width = 1000 - margin.left - margin.right;
-  var height = 500 - margin.top - margin.bottom;
+  var height = 250 - margin.top - margin.bottom;
 	var horzScale = d3.scaleLinear().domain([0,1]).range([0,width])
 	var container = d3.select(".swarm");
 
+  container.append("p")
+    .attr("class","chart-title")
+    .text("Newsrooms Broken-down by Gender")
+    ;
+
   var toggles = container.append("div")
     .attr("class","histogram-chart-toggle-wrapper");
+
+  var sizeCats = [0,20,50,100,500];
 
   toggles
     .append("div")
     .attr("class","histogram-chart-toggle-size")
     .selectAll("p")
-    .data([0,20,50,100,500])
+    .data(sizeCats)
     .enter()
     .append("p")
-    .attr("class","histogram-chart-toggle-item")
+    .attr("class",function(d,i){
+      if(i==0){
+        return "toggle-selected front-curve histogram-chart-toggle-item";
+      }
+      if(i==sizeCats.length-1){
+        return "back-curve histogram-chart-toggle-item";
+      }
+      return "histogram-chart-toggle-item";
+    })
     .text(function(d){
       return d;
     })
     .on("click",function(d){
+      var dataSelected = d;
+      d3.select(this.parentNode).selectAll("p").classed("toggle-selected",function(d){
+        if(d==dataSelected){
+          return true;
+        }
+        return false;
+      })
       countMin = d;
       buildChart();
     })
     ;
 
+  var raceGenderToggleData = ["gender","race"];//,"supWhite","supGender"]
+
   toggles
     .append("div")
     .attr("class","histogram-chart-toggle-type")
     .selectAll("p")
-    .data(["race","gender","supWhite","supGender"])
+    .data(raceGenderToggleData)
     .enter()
     .append("p")
-    .attr("class","histogram-chart-toggle-item")
+    .attr("class",function(d,i){
+      if(i==0){
+        return "toggle-selected front-curve histogram-chart-toggle-item";
+      }
+      if(i==raceGenderToggleData.length-1){
+        return "back-curve histogram-chart-toggle-item";
+      }
+      return "histogram-chart-toggle-item";
+    })
     .text(function(d){
-      return d;
+      if(d=="race"){
+        return "Race"
+      }
+      return "Gender";
     })
     .on("click",function(d){
+      var dataSelected = d;
+      d3.select(this.parentNode).selectAll("p").classed("toggle-selected",function(d){
+        if(d==dataSelected){
+          return true;
+        }
+        return false;
+      })
       cut = d;
       buildChart();
     })
     ;
 
-  var xScale = d3.scaleLinear().domain([.3,1]).range([0,width]);
+  var leaderToggleData = ["all","leader"];
+
+  toggles
+    .append("div")
+    .attr("class","histogram-chart-toggle-type")
+    .selectAll("p")
+    .data(leaderToggleData)
+    .enter()
+    .append("p")
+    .attr("class",function(d,i){
+      if(i==0){
+        return "toggle-selected front-curve histogram-chart-toggle-item";
+      }
+      if(i==leaderToggleData.length-1){
+        return "back-curve histogram-chart-toggle-item";
+      }
+      return "histogram-chart-toggle-item";
+    })
+    .text(function(d){
+      if(d=="all"){
+        return "All Staff"
+      }
+      return "Leadership";
+    })
+    .on("click",function(d){
+      var dataSelected = d;
+      d3.select(this.parentNode).selectAll("p").classed("toggle-selected",function(d){
+        if(d==dataSelected){
+          return true;
+        }
+        return false;
+      })
+      group = d;
+      buildChart();
+    })
+    ;
+
+  var xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]);
 
   function buildChart(){
 
-    d3.selectAll(".swarm-chart-wrapper").remove();
+    if(cut == "race"){
+      xScale.domain([0,1]);
+    }
 
-    var chartDiv = container.append("svg")
-      .attr("class","swarm-chart-wrapper")
-      .attr("width",width)
-      .attr("height",height)
+    d3.selectAll(".swarm-chart-container").remove();
+
+    var chartDivContainer = container
+      .append("div")
+      .attr("class","swarm-chart-container")
+      .style("width",width+margin.left+margin.right+"px")
+
+    var chartToolTip = chartDivContainer
+      .append("div")
+      .attr("class","swarm-chart-tool-tip")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .text(function(d){
+        return d;
+      })
       ;
 
-
+    var chartDiv = chartDivContainer
+      .append("svg")
+      .attr("class","swarm-chart-wrapper")
+      .attr("width",width+margin.left+margin.right)
+      .attr("height",height+margin.top+margin.bottom)
+      ;
 
     var filteredMapData = mapData.filter(function(d){
       if(cut == "supWhite" || cut == "supGender"){
@@ -177,10 +274,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       .rollup(function(leaves){
         var map = d3.map(leaves,function(d){return d.Year});
         var maxTotalNum = d3.max(leaves,function(d){return d.total_num});
-        //
-        // var diff = getPercent(map.get(2014))-getPercent(leaves[0])
-        //
-
         return {yearMap:map,values:leaves,maxTotal:maxTotalNum}
       })
       .entries(filteredMapData)
@@ -205,6 +298,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 
     var diffExtent = d3.extent(diffArray,function(d){return d; });
     var colorScale = d3.scaleLinear().domain(diffExtent).range(["green","red"]);
+    var genderColorScale = d3.scaleLinear().domain([.2,.5,.8]).range(["#2161fa","#dddddd","#ff3333"]);
+    if(cut == "race"){
+      genderColorScale.domain([0,.5,1]);
+    }
+
 
     var dataToMap = yearNest.filter(function(d){
         return d.key == 2014
@@ -217,7 +315,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
     })
 
     var forceCollide = d3.forceCollide()
-        // .radius(function(d) { return d.radius + 1.5; })
         .radius(function(d) { return d.radius + 1; })
         .iterations(1);
 
@@ -230,15 +327,104 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
          ;
 
     function buildAxis(){
+
      var chartAxis = chartDiv.append("g")
        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
        .attr("class","swarm-axis")
        ;
 
+     var tickData = [.2,.3,.5,.7,.8];
+     if(cut == "race"){
+       tickData = [0,.3,.5,.7,1];
+     }
+
+     var ticks = chartAxis
+       .append("g")
+       .attr("class","swarm-axis-tick-container")
+       .selectAll("g")
+       .data(tickData)
+       .enter()
+       .append("g")
+       .attr("class","swarm-axis-tick-g")
+       ;
+
+      ticks
+       .append("line")
+       .style("stroke",function(d){
+         if(d==.5){
+           return "#888";
+         }
+         return genderColorScale(d);
+       })
+       .attr("x1",function(d){
+         return xScale(d);
+       })
+       .attr("x2",function(d){
+         return xScale(d);
+       })
+       .attr("y1",function(d,i){
+         if(d==.5){
+           return height/2;
+         }
+         return 0
+       })
+       .attr("y2",function(d){
+         if(d==.5){
+           return 0;
+         }
+         return height*.05;
+       })
+       .attr("class","swarm-axis-tick")
+
+     ticks
+      .append("text")
+      .attr("x",function(d){
+        return xScale(d);
+      })
+      .attr("y",-6)
+      .attr("class","swarm-axis-tick-text")
+      .style("text-anchor",function(d,i){
+        if(i==0){
+          return "start"
+        }
+        if(i==tickData.length-1){
+          return "end"
+        }
+        return null
+      })
+      .style("fill",function(d,i){
+        if(d==.5){
+          return "#888";
+        }
+        return genderColorScale(d);
+      })
+      .text(function(d,i){
+        if(i==0){
+          if(cut == "race"){
+            return Math.floor((1-d)*100)+"% White Staff"
+          }
+          return Math.floor((1-d)*100)+"% Male Staff"
+        }
+        if(i==tickData.length-1){
+          if(cut == "race"){
+            return Math.floor(d*100)+"% Non-White Staff"
+          }
+          return Math.floor(d*100)+"% Female Staff"
+        }
+        if(d==.5){
+          return "50/50  Split";
+        }
+        if(d<.5){
+          return Math.floor((1-d)*100)+"%";
+        }
+        return Math.floor(d*100)+"%";
+      })
+      ;
+
      chartAxis.append("g")
        .append("line")
        .attr("x1",0)
-       .attr("x2","100%")
+       .attr("x2",width)
        .attr("y1",height/2)
        .attr("y2",height/2)
        .attr("class","swarm-axis-line")
@@ -259,22 +445,28 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
      chartAverage.append("text")
        .attr("class","swarm-average-text swarm-average-text-label")
        .attr("x",xScale(dataToMap.average))
-       .attr("y",height*.33-19)
+       .attr("y",height*.2-22)
        .text("Overall")
 
       chartAverage.append("text")
         .attr("class","swarm-average-text")
         .attr("x",xScale(dataToMap.average))
-        .attr("y",height*.33-5)
-        .text(Math.round(dataToMap.average*100)+"% Male")
+        .attr("y",height*.2-7)
+        .text(function(){
+          if(cut == "race"){
+            return Math.round((1-dataToMap.average)*100)+"% White"
+          }
+          return Math.round((1-dataToMap.average)*100)+"% Male"
+        })
 
       chartAverage.append("line")
         .attr("class","swarm-average-line")
         .attr("x1",xScale(dataToMap.average))
         .attr("x2",xScale(dataToMap.average))
-        .attr("y1",height*.33)
-        .attr("y2",height*.66)
+        .attr("y1",height*.2)
+        .attr("y2",height*.8)
         ;
+
     }
     buildAverage();
 
@@ -294,14 +486,160 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       })
       .attr("cx", function(d) { return d.x; })
       .attr("cy", function(d) { return d.y; })
+
       .on("mouseover",function(d){
-        console.log(d.male_num/d.total_num);
-        console.log(newsIDName.get(d.NewsID).Company);
+        var data = d;
+        chartToolTip
+          .style("visibility","visible")
+          .style("top",data.y + data.radius +"px")
+          .style("left",data.x + data.radius + 50 +"px")
+          .text(newsIDName.get(d.NewsID).Company+" - "+Math.floor(getPercent(d)*100)+"%");
+      })
+      .on("mouseout",function(d){
+        chartToolTip
+          .style("visibility",null)
+          .text("")
+          ;
       })
       .style("fill",function(d){
-
-
+        var value = getPercent(d);
+        return genderColorScale(value);
         return colorScale(newsMap.get(d.NewsID).value.diff);
+      })
+      ;
+
+    // function searchSpectrum(){
+    //
+    //   var searchArray = [];
+    //   var searchResults = d3.selectAll(".search-results");
+    //   var searchResultMouseOver = false;
+    //
+    //   var searchInput = d3.selectAll(".search-films").select("input")
+    //         .on("keyup", keyupedFilmColumn);
+    //
+    //   function keyupedFilmColumn() {
+    //     searchFilmColumn(this.value.trim());
+    //   }
+    //
+    //   function searchFilmColumn(value) {
+    //     if (value.length > 2) {
+    //       searchResults.style("display","block");
+    //       var re = new RegExp("\\b" + d3.requote(value), "i");
+    //       genreSelected = "all";
+    //       var filteredSpectrumData = spectrumData.filter(function(d,i){
+    //         var string = d.genreList;
+    //         if(genreSelected == "all" && stage == 3){
+    //           return +d.gross > 45;
+    //         }
+    //         else if(genreSelected =="all" && stage == 2){
+    //           return d;
+    //         }
+    //         else if(stage == 3){
+    //           var substring = genreSelected;
+    //           return +d.gross > 45 && string.indexOf(substring) > -1;
+    //         }
+    //         return string.indexOf(substring) > -1
+    //       })
+    //       ;
+    //
+    //       searchArray = _.filter(filteredSpectrumData, function(d,i) {
+    //         return re.test(d["title"]);
+    //       })
+    //       ;
+    //
+    //       //
+    //       var searchDivData = searchResults.selectAll("p")
+    //         .data(searchArray, function(d){
+    //           return d["imdb_id"];
+    //         })
+    //         ;
+    //
+    //       var searchEnter = searchDivData
+    //         .enter()
+    //         .append("p")
+    //         .attr("class","tk-futura-pt search-result")
+    //         .html(function(d){
+    //           var final_str = d.title.replace(re, function(str) {return '<b><u>'+str+'</u></b>'});
+    //           var percent = "<span class='search-result-percent'><span style='color:"+maleColor+";'>"+percentFormat(1-d.female_percent)+"</span>/<span style='color:"+femaleColor+";'>"+percentFormat(d.female_percent)+"</span></span>";
+    //           return final_str + " " + percent;
+    //         })
+    //         .on("click",function(d){
+    //           genreSelected = "all";
+    //           updateSpectrumSearch(d);
+    //           d3.selectAll(".filter-item-spectrum").style("background-color",null).style("box-shadow",null).style("border-color",null).style("font-weight",null);
+    //           d3.select(".filter-item-spectrum").style("background-color","#F5F5F5").style("box-shadow","inset 0 3px 5px rgba(0,0,0,.125)").style("border-color","#adadad").style("font-weight","500");
+    //           if(mobile){
+    //             searchResults.style("display","none");
+    //           }
+    //         })
+    //         ;
+    //
+    //       searchDivData.exit().remove();
+    //
+    //
+    //     } else{
+    //       searchResults.style("display","none");
+    //     }
+    //
+    //   };
+    // }
+    //
+    // searchSpectrum();
+
+    var searchDiv = chartDivContainer.append("div")
+      .attr("class","swarm-chart-search-div")
+
+    searchDiv
+      .append("input")
+      .attr("class","swarm-chart-search")
+      .attr("placeholder","Find a Newsroom")
+      ;
+
+    // searchDiv
+    //   .append("div")
+    //   .attr("class","swarm-chart-search-results");
+
+    chartDivContainer.append("div")
+      .attr("class","swarm-chart-source")
+      .selectAll("p")
+      .data(["Source: ASNE Survey, 2017","At least 50 staff"])
+      .enter()
+      .append("p")
+      .attr("class","swarm-chart-source-text")
+      .text(function(d){
+        return d;
+      })
+      ;
+
+    chartDivContainer.append("div")
+      .attr("class","swarm-chart-logos")
+      .style("transform", "translate(" + margin.left+"px" + "," + margin.top+"px" + ")")
+      .selectAll("div")
+      .data(dataToMap.values)
+      .enter()
+      .append("div")
+      .style("transform",function(d){
+         return "translate(" + d.x+"px" + "," + d.y+"px" + ")"
+      })
+      .attr("class","swarm-chart-logo-container")
+      .append("div")
+      .style("width", function(d){
+        return "1px"
+      })
+      .style("height", function(d){
+        return "1px"
+      })
+      .attr("class","swarm-chart-logo")
+      .style("width", function(d){
+        return d.radius*2+"px"
+      })
+      .style("height", function(d){
+        return d.radius*2+"px"
+      })
+      .style("background-image",function(d){
+        if(newsIDName.get(d.NewsID).Company=="the new york times"){
+          return "url(assets/ny-times-logo.svg)"
+        }
       })
       ;
 

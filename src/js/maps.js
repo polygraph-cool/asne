@@ -54,14 +54,27 @@ var states = [
   ]
   ;
 
-function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
+function init(mapData,latLongData,newsIDLocation,newsIDInfo,stateTopo) {
 
+  var projection = d3.geoAlbersUsa()
+      // .scale(1280)
+      // .translate([width / 2, height / 2]);
 
-  console.log(latLongData);
+  var path = d3.geoPath()
+      .projection(projection)
+      // .pointRadius(1.5)
+      ;
+
+  // var projection = d3.geoAlbersUsa();
+  // var path = d3.geoPath().projection(projection);
 
 	var cut = "gender"
 	// var cut = "supGender"
-  var countMin =  100;
+  var countMin =  19;
+
+  mapData = mapData.filter(function(d){
+    return +d.Year > 2000;
+  })
 
 	function getAverage(data){
 		if(cut == "gender"){
@@ -111,11 +124,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 	});
 
   var margin = {top: 40, right: 40, bottom: 40, left: 40};
-	var width = 500 - margin.left - margin.right;
-  var height = 500 - margin.top - margin.bottom;
+	var width = 600 - margin.left - margin.right;
+  var height = 300 - margin.top - margin.bottom;
 	var horzScale = d3.scaleLinear().domain([0,1]).range([0,width])
-	var container = d3.select(".scatter");
-
+	var container = d3.select(".maps");
 
   var toggles = container.append("div")
     .attr("class","histogram-chart-toggle-wrapper");
@@ -156,24 +168,36 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 
   function buildChart(){
 
-    d3.selectAll(".scatter-chart-wrapper").remove();
+
+
+    d3.selectAll(".maps-chart-wrapper").remove();
 
     var chartDiv = container
       .append("div")
-      .attr("class","scatter-chart-wrapper")
+      .attr("class","maps-chart-wrapper")
 
-    var chartSvg = chartDiv
-      .append("svg")
-      .attr("class","scatter-chart-wrapper-svg")
-      .attr("width",width+margin.left+margin.right)
-      .attr("height",height)
-      .style("width",width+margin.left+margin.right+"px")
-      .style("height",height+"px")
+    var mapSvg = chartDiv.append("svg")
+      .attr("class","maps-chart-svg")
+      .attr("viewBox","0 0 960 600")
       ;
+
+    mapSvg.append("g")
+      .attr("class", "states")
+      .selectAll("path")
+      // .data(topojson.feature(stateTopo, stateTopo.objects.states))
+      .data(topojson.feature(stateTopo, stateTopo.objects.states).features)
+      .enter().append("path")
+      .attr("d", path);
+
+    mapSvg
+      .append("g")
+      .append("path")
+      .attr("class", "state-borders")
+      .attr("d", path(topojson.mesh(stateTopo, stateTopo.objects.states, function(a, b) { return a !== b; })));
 
     var chartSvgDoubleChange = chartDiv
       .append("svg")
-      .attr("class","scatter-chart-wrapper-svg-double-change")
+      .attr("class","maps-chart-wrapper-svg-double-change")
       .attr("width",width+margin.left+margin.right)
       .attr("height",height+margin.top+margin.bottom)
       .style("width",width+margin.left+margin.right+"px")
@@ -217,7 +241,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
     });
 
     for (var item in newsNest){
-      var diff = getPercent(newsNest[item].value.yearMap.get(2014))-getPercent(newsNest[item].value.values[0])
+      var diff = getPercentType("gender",newsNest[item].value.yearMap.get(2014))-getPercentType("gender",newsNest[item].value.values[0])
       cut = "supGender";
       var raceDiff = getPercent(newsNest[item].value.yearMap.get(2014))-getPercent(newsNest[item].value.values[0]);
       cut = "gender"
@@ -226,23 +250,275 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 
       newsNest[item].value.diff = diff;
       newsNest[item].value.raceDiff = raceDiff;
+      if(latLongMap.has(newsNest[item].key)){
+        newsNest[item].value.location = latLongMap.get(newsNest[item].key)
+        newsNest[item].value.hasLocation = true
+      }
+      else{
+        newsNest[item].value.hasLocation = false
+      }
     }
     ;
 
 
+
+    newsNest = newsNest.filter(function(d){
+      var hasLat = false;
+      if(d.value.hasLocation){
+        if(d.value.location.lat != "NULL"){
+          hasLat = true;
+        }
+      }
+      return d.value.hasLocation && hasLat;
+    })
+
     var totalExtent = d3.extent(newsNest,function(d){return +d.value.maxTotal})
-    var radiusScale = d3.scaleLinear().domain(totalExtent).range([5,30]);
+    var radiusScale = d3.scaleLinear().domain(totalExtent).range([3,40]);
     var percentExtent = d3.extent(maxPercentArray,function(d){return d;});
     var diffExtent = d3.extent(diffArray,function(d){return d; });
     var raceDiffExtent = d3.extent(raceDiffArray,function(d){ return d; });
     var diffScale = d3.scaleLinear().domain([diffExtent[0],diffExtent[1]]).range([0,width])
     var raceDiffScale = d3.scaleLinear().domain([raceDiffExtent[0],raceDiffExtent[1]]).range([height,0])
 
+    var totalScale = d3.scaleLinear().domain(totalExtent).range([height,0]);
+    var totalXScale = d3.scaleLinear().domain(totalExtent).range([0,width]);
+
     var colorScale = d3.scaleLinear().domain([diffExtent[0],0,diffExtent[1]]).range(["red","white","green"]);
+
+    var colorScalePercent = d3.scaleLinear().domain([-1,0,.30,.35,.4,.45,.5,.6]).range(["#000000","#000000","rgb(8, 69, 148)","rgb(33, 113, 181)","rgb(204, 219, 163)","rgb(253, 246, 163)","#e2e1e1","rgb(39, 108, 145)"]);
+
     var strokeScale = d3.scaleLinear().domain([diffExtent[0],0,diffExtent[1]]).range(["red","grey","green"]);
 
-    var xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]);
-    var yScale = d3.scaleLinear().domain([.2,.8]).range([height,0]);
+    var xArrowLength = d3.scaleLinear().domain([0,.15]).range([1,30]).clamp(true);
+
+    // newsNest = newsNest.filter(function(d){
+    //   var percent = getPercentType("gender",d.value.yearMap.get(2014));
+    //   return percent > .50;
+    // })
+
+    var xScale = d3.scaleLinear().domain([0,.7]).range([0,width]);
+    var yScale = d3.scaleLinear().domain([.2,.5]).range([height,0]);
+    var lineWidthScale = d3.scaleLinear().domain(totalExtent).range([1.4,2.5]).clamp(true)
+    // var mapMarkers = mapSvg.append("g")
+    //   .attr("class","map-markers")
+    //   .selectAll("circle")
+    //   .data(newsNest)
+    //   .enter()
+    //   .append("circle")
+    //   .attr("class","map-marker")
+    //   .attr("r",function(d){
+    //     return radiusScale(+d.value.maxTotal);
+    //   })
+    //   // .style("fill",function(d){
+    //   //   //     var t0 = yScale(getPercentType("gender",d.value.values[0]))
+    //   //   //     var t1 = yScale(getPercentType("gender",d.value.yearMap.get(2014)))
+    //   //   return "rgb(169, 169, 169)";
+    //   //   return colorScalePercent(getPercentType("gender",d.value.yearMap.get(2014)))
+    //   //   return "red"
+    //   // })
+    //   .attr("transform",function(d){
+    //     var location = d.value.location;
+    //     return "translate("+projection([+location.lng,location.lat])+")";
+    //   })
+    //   .on("mouseover",function(d){
+    //     // console.log(d);
+    //     console.log(newsIDName.get(d.key).Company);
+    //     console.log(getPercentType("gender",d.value.yearMap.get(2014)));
+    //   })
+    //   ;
+
+    var tau = 2 * Math.PI; // http://tauday.com/tau-manifesto
+    var arc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(10)
+      .startAngle(0);
+
+    // radiusScale.range([10,20])
+
+    var theta1 = Math.PI * 0.75;
+    var theta2 = Math.PI * -0.75;
+    var sin1 = Math.sin(theta1);
+    var sin2 = Math.sin(theta2);
+    var cos1 = Math.cos(theta1);
+    var cos2 = Math.cos(theta2);
+
+    var arrowMaps = mapSvg.append("g")
+        .selectAll("g")
+        .data(newsNest)
+        .enter()
+        .append("g")
+        .attr("transform",function(d){
+          var location = d.value.location;
+          return "translate("+projection([+location.lng,location.lat])+")";
+        })
+        .append("path")
+        .attr("class","map-arrow-path")
+        .attr("d", function(d){
+
+          // console.log(getPercentType("gender",d.value.yearMap.get(2014)),getPercentType("gender",newsNest[item].value.values[0]));
+          var xVal = xArrowLength(Math.abs(d.value.diff));
+          var dx = 0;
+          if(d.value.diff > 0){
+            dx = xVal;
+          }
+          else{
+            dx = -xVal;
+          }
+          var dy = -3;
+
+          var stemLen = Math.sqrt(dx * dx + dy * dy);
+          var headLen = Math.min(stemLen * 0.7, 8);
+          var xn = dx / stemLen * headLen;
+          var yn = dy / stemLen * headLen;
+          var ax1 = xn * cos1 - yn * sin1 + dx
+          var ay1 = xn * sin1 + yn * cos1 + dy
+          var ax2 = xn * cos2 - yn * sin2 + dx
+          var ay2 = xn * sin2 + yn * cos2 + dy
+
+          var head = [[ax1,ay1],[dx,dy],[ax2,ay2]];
+
+          return "M0,0"+"L"+dx+","+dy+"L"+head[0][0]+","+head[0][1]+"L"+head[1][0]+","+head[1][1]+"L"+head[2][0]+","+head[2][1];
+          // arc.outerRadius(radiusScale(+d.value.maxTotal));
+          // return arc({endAngle: +getPercentType("gender",d.value.yearMap.get(2014)) * tau});
+        })
+        .attr("stroke-width",function(d){
+          // return lineWidthScale(d.value.maxTotal)
+          return 1.4;
+        })
+        .attr("stroke",function(d){
+          if(d.value.diff > 0){
+            return "#3989cb"
+          }
+          return "rgb(214, 84, 84)";
+        })
+        .on("mouseover",function(d){
+          console.log(d.value.diff);
+          console.log(newsIDName.get(d.key).Company);
+        })
+        ;
+
+    // var arrowMaps = mapSvg.append("g")
+    //     .selectAll("g")
+    //     .data(newsNest)
+    //     .enter()
+    //     .append("g")
+    //     .attr("transform",function(d){
+    //       var location = d.value.location;
+    //       return "translate("+projection([+location.lng,location.lat])+")";
+    //     })
+    //     .append("path")
+    //     .attr("transform",function(d){
+    //       return "translate("+ Math.random()*5+","+Math.random()*5+")";
+    //     })
+    //     .attr("class","map-arrow-path-peak")
+    //     .attr("d", function(d){
+    //
+    //       //height = size
+    //       //left / right = margin
+    //
+    //       var offset = radiusScale(d.value.maxTotal);
+    //
+    //       // var xVal = xArrowLength(Math.abs(d.value.diff));
+    //
+    //       xArrowLength.range([0,offset*3])
+    //       var xVal = xArrowLength(Math.abs(d.value.diff));
+    //
+    //       var dx = 0;
+    //       if(d.value.diff > 0){
+    //         dx = xVal;
+    //       }
+    //       else{
+    //         dx = -xVal;
+    //       }
+    //       var dy = -3;
+    //
+    //       return "M"+ -offset +","+ 0 + "L"+0+","+ -dx +"L"+offset+","+0// [-offset,0][0,dx][offset,0]
+    //
+    //       // return "M0,"+ -offset + "L"+dx+","+"0"+"L"+0+","+offset// [0,-offset][xVal,0][0,offset]
+    //
+    //
+    //       var stemLen = Math.sqrt(dx * dx + dy * dy);
+    //       var headLen = Math.min(stemLen * 0.7, 8);
+    //       var xn = dx / stemLen * headLen;
+    //       var yn = dy / stemLen * headLen;
+    //       var ax1 = xn * cos1 - yn * sin1 + dx
+    //       var ay1 = xn * sin1 + yn * cos1 + dy
+    //       var ax2 = xn * cos2 - yn * sin2 + dx
+    //       var ay2 = xn * sin2 + yn * cos2 + dy
+    //
+    //       var head = [[ax1,ay1],[dx,dy],[ax2,ay2]];
+    //
+    //       return "M0,0"+"L"+dx+","+dy+"L"+head[0][0]+","+head[0][1]+"L"+head[1][0]+","+head[1][1]+"L"+head[2][0]+","+head[2][1];
+    //       // arc.outerRadius(radiusScale(+d.value.maxTotal));
+    //       // return arc({endAngle: +getPercentType("gender",d.value.yearMap.get(2014)) * tau});
+    //     })
+    //     .attr("stroke-width",function(d){
+    //       return lineWidthScale(d.value.maxTotal)
+    //       // return 1.4;
+    //     })
+    //     .attr("stroke",function(d){
+    //       if(d.value.diff > 0){
+    //         return "#3989cb"
+    //       }
+    //       return "rgb(214, 84, 84)";
+    //     })
+    //     .on("mouseover",function(d){
+    //       console.log(d.value.diff);
+    //       console.log(newsIDName.get(d.key).Company);
+    //     })
+    //     ;
+
+
+    // var pieChartBackground = mapSvg.append("g")
+    //   .attr("class","map-markers")
+    //   .selectAll("circle")
+    //   .data(newsNest)
+    //   .enter()
+    //   .append("circle")
+    //   .attr("class","map-marker")
+    //   .attr("r",function(d){
+    //     return radiusScale(+d.value.maxTotal);
+    //   })
+    //   .style("fill",function(d){
+    //     //     var t0 = yScale(getPercentType("gender",d.value.values[0]))
+    //     //     var t1 = yScale(getPercentType("gender",d.value.yearMap.get(2014)))
+    //
+    //     // return colorScalePercent(getPercentType("gender",d.value.yearMap.get(2014)))
+    //     return "#72c1ff"
+    //   })
+    //   .attr("transform",function(d){
+    //     var location = d.value.location;
+    //     return "translate("+projection([+location.lng,location.lat])+")";
+    //   })
+    //   .on("mouseover",function(d){
+    //     // console.log(d);
+    //     console.log(newsIDName.get(d.key).Company);
+    //     console.log(getPercentType("gender",d.value.yearMap.get(2014)));
+    //   })
+    //   ;
+
+    // var pieCharts = mapSvg.append("g")
+    //     .selectAll("g")
+    //     .data(newsNest)
+    //     .enter()
+    //     .append("g")
+    //     .attr("transform",function(d){
+    //       var location = d.value.location;
+    //       return "translate("+projection([+location.lng,location.lat])+")";
+    //     })
+    //     .append("path")
+    //     .attr("class","slice-arc")
+    //     .style("fill",function(d){
+    //       return "blue"
+    //       //     var t0 = yScale(getPercentType("gender",d.value.values[0]))
+    //       //     var t1 = yScale(getPercentType("gender",d.value.yearMap.get(2014)))
+    //       return colorScalePercent(getPercentType("gender",d.value.yearMap.get(2014)))
+    //       return "red"
+    //     })
+    //     .attr("d", function(d){
+    //       arc.outerRadius(radiusScale(+d.value.maxTotal));
+    //       return arc({endAngle: +getPercentType("gender",d.value.yearMap.get(2014)) * tau});
+    //     });
 
     // function buildAxis(){
     //  var chartAxis = chartDiv.append("g")
@@ -261,86 +537,207 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
     // }
     // buildAxis();
 
-    var chartG = chartSvg
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var chartSvgDoubleChangeG = chartSvgDoubleChange
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    chartSvgDoubleChangeG
-      .selectAll("circle")
-      .data(newsNest)
-      .enter()
-      .append("circle")
-      .attr("class","scatter-circle-double-axis")
-      .attr("r", function(d){
-        return radiusScale(d.value.yearMap.get(2014).total_num);
-      })
-      .attr("cx", function(d) {
-        if(getPercentType("supGender",d.value.yearMap.get(2014)) > .4){
-          return width*.75
-        }
-        return width*.25
-        // return xScale(getPercentType("supGender",d.value.yearMap.get(2014)));
-        // return diffScale(d.value.diff);
-      })
-      .attr("cy", function(d) {
-        return yScale(getPercentType("gender",d.value.yearMap.get(2014)));
-        // return raceDiffScale(d.value.raceDiff)
-      })
-      .on("mouseover",function(d){
-        console.log(getPercentType("supGender",d.value.yearMap.get(2014)),getPercentType("gender",d.value.yearMap.get(2014)));
-      })
-      ;
-
-    // chartG
-    //   .selectAll("circle")
+    // var linearGradientDown = chartSvgDoubleChange
+    //   .append("defs")
+    //   .append("linearGradient")
+    //   .attr("id","gradient")
+    //   .attr("x1",0)
+    //   .attr("x2",0)
+    //   .attr("y1",0)
+    //   .attr("y2",1)
+    //
+    // var linearGradientUp = chartSvgDoubleChange
+    //   .append("defs")
+    //   .append("linearGradient")
+    //   .attr("id","gradient-up")
+    //   .attr("x1",0)
+    //   .attr("x2",0)
+    //   .attr("y1",0)
+    //   .attr("y2",1)
+    //
+    // var chartSvgDoubleChangeG = chartSvgDoubleChange
+    //   .append("g")
+    //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    //
+    // linearGradientUp
+    //   .append("stop")
+    //   .attr("stop-color","blue")
+    //   .attr("stop-opacity",1)
+    //
+    // linearGradientUp
+    //   .append("stop")
+    //   .attr("offset","100%")
+    //   .attr("stop-color","blue")
+    //   .attr("stop-opacity",0)
+    //
+    // linearGradientDown
+    //   .append("stop")
+    //   .attr("stop-color","red")
+    //   .attr("stop-opacity",0)
+    //
+    // linearGradientDown
+    //   .append("stop")
+    //   .attr("offset","100%")
+    //   .attr("stop-color","red")
+    //   .attr("stop-opacity",1)
+    //
+    // chartSvgDoubleChangeG.append("marker")
+    //   .attr("id","triangle-up")
+    //   .attr("viewBox","0 0 10 10")
+    //   .attr("refX",0)
+    //   .attr("refY",5)
+    //   .attr("markerUnits","strokeWidth")
+    //   .attr("markerWidth",6)
+    //   .attr("markerHeight",8)
+    //   .attr("orient","auto")
+    //   .append("path")
+    //   .attr("fill","blue")
+    //   .attr("d","M 0 0 L 10 5 L 0 10 z")
+    //
+    // chartSvgDoubleChangeG.append("marker")
+    //   .attr("id","triangle-down")
+    //   .attr("viewBox","0 0 10 10")
+    //   .attr("refX",0)
+    //   .attr("refY",5)
+    //   .attr("markerUnits","strokeWidth")
+    //   .attr("markerWidth",6)
+    //   .attr("markerHeight",8)
+    //   .attr("orient","auto")
+    //   .append("path")
+    //   .attr("fill","red")
+    //   .attr("d","M 0 0 L 10 5 L 0 10 z")
+    //
+    //
+		// function drawArrow (t0,t1) {
+		// 	var d = t1 > t0 ?
+		// 		("M0," + (t1-2) + " L4," + (t1-8) + " L1.5," + (t1-8) + " L0," + t0 + " L-1.5," + (t1-8) + " L-4," + (t1-8) + " Z") :
+		// 		("M0," + (t1+2) + " L4," + (t1+8) + " L1.5," + (t1+8) + " L0," + t0 + " L-1.5," + (t1+8) + " L-4," + (t1+8) + " Z");
+    //
+		// 	return d;
+		// }
+    //
+    // var arrows = chartSvgDoubleChangeG
+    //   .selectAll("path")
     //   .data(newsNest)
     //   .enter()
-    //   .append("circle")
-    //   .attr("class","scatter-circle")
-    //   .attr("r", function(d){
-    //     return radiusScale(d.value.yearMap.get(2014).total_num);
+    //   .append("path")
+    //   .attr("class","arrow-scatter-line")
+    //   .attr("d",function(d){
+    //     var t0 = yScale(getPercentType("gender",d.value.values[0]))
+    //     var t1 = yScale(getPercentType("gender",d.value.yearMap.get(2014)))
+    //     // return null
+    //     //
+    //     return drawArrow(t0,t1)
     //   })
-    //   .attr("cx", function(d) {
-    //     var state = null;
-    //     var region = null;
-    //     if(newsIdMap.has(d.key)){
-    //       state = newsIdMap.get(d.key).State;
+    //   .attr("fill",function(d){
+    //     if(d.value.diff > 0){
+    //       return "url(#gradient-up)"
     //     }
-    //     if(regionMap.has(state)){
-    //       region = regionMap.get(state)[3];
-    //     }
-    //     if(region =="West"){
-    //       return width/4*0
-    //     }
-    //     if(region =="South"){
-    //       return width/4*1
-    //     }
-    //     if(region =="Midwest"){
-    //       return width/4*2
-    //     }
-    //     if(region =="Northeast"){
-    //       return width/4*3
-    //     }
-    //     return 0;
+    //     return "url(#gradient)";
     //   })
-    //   .attr("cy", function(d) {
-    //     return diffScale(d.value.diff)
+    //   .attr("stroke","none")
+    //   .attr("fill-opacity",1)
+    //
+    // var arrowXScale = d3.scaleLinear().domain([0,arrows.size()-1]).range([0,width]);
+    //
+    // arrows
+    //   .sort(function(a,b){
+    //     // return getPercentType("gender",b.value.values[0]) - getPercentType("gender",a.value.values[0])
+    //     return b.value.diff - a.value.diff;
     //   })
-    //   .style("stroke",function(d){
-    //     return strokeScale(d.value.diff);
-    //   })
-    //   .style("fill",function(d){
-    //     return colorScale(d.value.diff);
+    //   .attr("transform",function(d,i){
+    //     return "translate("+arrowXScale(i)+",0)"
+    //     // return "translate("+totalXScale(d.value.yearMap.get(2014).total_num)+",0)"
     //   })
     //   .on("mouseover",function(d){
-    //     console.log(d.male_num/d.total_num);
-    //     console.log(newsIDName.get(d.NewsID).Company);
+    //     console.log(getPercentType("supGender",d.value.yearMap.get(2014)),getPercentType("gender",d.value.yearMap.get(2014)));
     //   })
     //   ;
+
+
+    // chartSvgDoubleChangeG
+    //   .selectAll("line")
+    //   .data(newsNest)
+    //   .enter()
+    //   .append("line")
+    //   .attr("class","arrow-scatter-line")
+    //   .style("stroke-width",function(d){
+    //     if(+d.value.yearMap.get(2014).total_num > 100){
+    //       return "2px"
+    //     }
+    //     if(+d.value.yearMap.get(2014).total_num > 50){
+    //       return "1px"
+    //     }
+    //     if(+d.value.yearMap.get(2014).total_num > 10){
+    //       return ".5px"
+    //     }
+    //   })
+    //   .style("stroke",function(d){
+    //     if(d.value.diff > 0){
+    //       return "blue"
+    //     }
+    //     return "red"
+    //   })
+    //   .attr("x1",function(d){
+    //     return xScale(getPercentType("supGender",d.value.values[0]));
+    //   })
+    //   .attr("x2", function(d) {
+    //     return xScale(getPercentType("supGender",d.value.yearMap.get(2014)));
+    //     // return diffScale(d.value.diff);
+    //   })
+    //   .attr("y1",function(d){
+    //     return totalScale(d.value.yearMap.get(2014).total_num)
+    //     // return yScale(getPercentType("supGender",d.value.values[0]));
+    //   })
+    //   .attr("y2", function(d) {
+    //     return totalScale(d.value.yearMap.get(2014).total_num)
+    //     // return yScale(getPercentType("supGender",d.value.yearMap.get(2014)));
+    //     // return raceDiffScale(d.value.raceDiff)
+    //   })
+    //   .attr("marker-end",function(d){
+    //     if(d.value.diff > 0){
+    //       return "url(#triangle-up)";
+    //     }
+    //     return "url(#triangle-down)";
+    //   })
+    //   // .style("stroke","url(#gradient)")
+    //   .on("mouseover",function(d){
+    //     console.log(getPercentType("supGender",d.value.yearMap.get(2014)),getPercentType("gender",d.value.yearMap.get(2014)));
+    //   })
+    //   ;
+
+    // chartSvgDoubleChangeG
+    //   .append("line")
+    //   .attr("class","arrow-scatter-line-axis")
+    //   .attr("x1",function(d){
+    //     return xScale(.5);
+    //   })
+    //   .attr("x2", function(d) {
+    //     return xScale(.5);
+    //   })
+    //   .attr("y1",function(d){
+    //     return 0;
+    //   })
+    //   .attr("y2", function(d) {
+    //     return height;
+    //   })
+
+    // chartSvgDoubleChangeG
+    //   .append("line")
+    //   .attr("class","arrow-scatter-line-axis")
+    //   .attr("x1",function(d){
+    //     return 0;
+    //   })
+    //   .attr("x2", function(d) {
+    //     return width;
+    //   })
+    //   .attr("y1",function(d){
+    //     return yScale(.5);
+    //   })
+    //   .attr("y2", function(d) {
+    //     return yScale(.5);
+    //   })
+
 
     // function buildAverage(){
     //   var chartAverage = chartDiv.append("g")

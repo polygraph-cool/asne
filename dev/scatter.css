@@ -1,0 +1,370 @@
+.histogram-chart-toggle-size{
+  display: flex;
+  margin-right: 10px;
+}
+
+.histogram-chart-toggle-item{
+  margin-right: 10px;
+  font-family: 'Roboto';
+  font-weight: 300;
+  font-size: 14px;
+  border: 1px solid rgba(127, 125, 156, 0.54);
+  color: black;
+  cursor: pointer;
+  border: solid 1px rgba(127, 125, 156, 0.75);
+  padding: 0px 8px;
+  /* box-shadow: inset 0 1px 2px rgba(0,0,0,0.08); */
+  margin-left: -13px;
+  background: white;
+  text-align: center;
+  line-height: 25px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 11px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  background-color: #fff;
+  height: 25px;
+}
+
+.histogram-chart-toggle-type{
+  display: flex;
+  margin-right: 11px;
+}
+
+.scatter-circle{
+  fill-opacity:.8;
+}
+
+.scatter-chart-wrapper-svg{
+  display: block;
+  overflow: visible;
+}
+
+.scatter-chart-wrapper-svg-double-change{
+  display: block;
+  margin-top: 70px;
+  overflow: visible;
+}
+
+.scatter-circle-double-axis{
+  fill-opacity: .7;
+  stroke: #927523;
+  stroke-opacity: .5;
+  fill: #F3C643;
+  stroke-width: 1.5px;
+}
+.arrow-scatter-chart-wrapper-svg{
+  display: block;
+  overflow: visible;
+}
+
+.arrow-scatter-chart-wrapper-svg-double-change{
+  margin: 0 auto;
+  display: block;
+  overflow: visible;
+}
+.arrow-scatter-line{/* fill: none; *//* fill: url(#grad); *//* stroke-width: 5; *//* fill: url(#C-gradient); *//* stroke: none; */}
+.arrow-scatter-line-axis{
+  shape-rendering:crispEdges;
+  stroke: black;
+  stroke-width: 1;
+}
+
+
+.maps{width: 910px;display: block;margin-bottom: 200px;}
+
+.states {
+  fill: #ececec;
+}
+
+.state-borders {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+
+.maps-chart-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.arrow-scatter {
+    display: block;
+    margin-top: 90px;
+}
+
+.maps-chart-svg{
+  width:100%;
+}
+
+
+.state {
+    fill: #ccc;
+}
+
+.map-marker{
+  stroke: white;
+  stroke-width: .5;
+  mix-blend-mode: multiply;
+  fill: #ff00cb;
+}
+
+.slice-arc{
+  stroke: white;
+  stroke-width: 1px;
+}
+.map-arrow-path{fill: none;}
+.map-arrow-path-peak{fill: none;}
+.news-lab-logo{
+  background: url("/assets/news_lab_logo.png");
+  height: 75px;
+  width: 150px;
+  background-size: contain;
+  margin: 0 auto;
+  background-repeat: no-repeat;
+  margin-top: 20px;
+}
+
+
+.content-title {
+    font-size: 47px;
+    font-family: 'Roboto';
+    text-align: center;
+    font-weight: 100;
+    margin: 0px;
+    color: #222;
+    margin-top: -10px;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+p {
+    margin: 0px;
+}
+
+.chart-title {
+    font-size: 18px;
+    font-family: 'Roboto';
+    text-align: center;
+    font-weight: 500;
+    margin-top: 30px;
+    color: #222;
+}
+
+.histogram-chart-toggle-wrapper {
+    display: flex;
+    justify-content: center;
+    font-family: 'Atlas Grotesk Web';
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.back-curve {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.front-curve {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.toggle-selected{
+  font-weight: 500;
+  background-color: #F5F5F5;
+  color: black;
+  box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+  border-color: #adadad;
+}
+
+
+.swarm-circle {
+    fill: #ffd62c;
+    transition: stroke 300ms;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.swarm-average-text {
+    font-family: 'Roboto';
+    text-anchor: middle;
+    font-size: 13px;
+    fill: black;
+    text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
+}
+
+.swarm-average-line {
+    stroke: black;
+    stroke-width: 2px;
+    shape-rendering: crispEdges;
+}
+
+.swarm-average-text-label {
+    fill: #888;
+    font-size: 13px;
+    fill: #2463f9;
+    text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
+}
+
+.swarm-chart-wrapper {
+    margin: 0 auto;
+}
+
+.swarm-chart-container {
+    margin: 0 auto;
+    position: relative;
+}
+
+.swarm-axis-line {
+    stroke: #C1C1C1;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+.swarm-axis-tick {
+    stroke: black;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+.swarm-axis-tick-text {
+    font-family: 'Roboto';
+    text-anchor: middle;
+    font-size: 12px;
+}
+
+.swarm-chart-search-div {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    height: 30px;
+}
+
+.swarm-chart-search {
+    box-shadow: inset 2px 3px 3px rgba(0,0,0,0.07);
+    border-radius: 3px;
+    box-sizing: border-box;
+    border: 1px #e2e2e2 solid;
+    height: 30px;
+    width: 250px;
+    padding-left: 9px;
+    font-family: 'Roboto';
+    display: block;
+}
+
+.swarm-chart-source-text {
+    font-family: 'Roboto';
+    text-align: right;
+    color: rgb(136, 136, 136);
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.swarm-chart-source {
+    margin-top: -30px;
+}
+
+.swarm-chart-tool-tip {
+    position: absolute;
+    font-family: 'Roboto';
+    font-size: 13px;
+    text-transform: capitalize;
+    background: white;
+    border: 1px solid rgba(193, 193, 193, 0.53);
+    padding: .5rem .5rem;
+    z-index: 1000;
+    border-radius: 1px;
+    text-align: left;
+    width: auto;
+    padding-right: 1.5rem;
+    font-weight: 500;
+    color: #333;
+    visibility: hidden;
+}
+
+.swarm-circle:hover {
+    stroke: rgba(0, 0, 0, 0.69);
+    stroke-width: 1.5px;
+}
+
+
+.swarm-chart-logos {
+    position: absolute;
+    left: 0px;
+    /* display: none; */
+    top: 0px;
+    pointer-events: none;
+}
+
+.swarm-chart-logo {
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    transform: translate(-50%,-50%);
+    left: 50%;
+}
+
+
+.swarm {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.arrow-scatter-chart-wrapper {
+    margin: 0 auto;
+    position: relative;
+}
+
+.slope-mini-multiple-div {
+    display: none;
+}
+
+.arrow-scatter-axis-text {
+    font-family: 'Roboto';
+    font-size: 12px;
+    alignment-baseline: middle;
+    text-anchor: end;
+}
+
+.arrow-scatter-line-text {
+    font-family: 'Roboto';
+    text-anchor: end;
+    font-size: 11px;
+    text-transform: capitalize;
+    display: none;
+}
+
+.arrow-scatter-chart-wrapper-text-div {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin: 0 auto;
+    pointer-events: none;
+}
+
+.arrow-scatter-line-text-div {
+    position: absolute;
+}
+
+.arrow-scatter-line-logo {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    transform: translate(-50%,-90%);
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}

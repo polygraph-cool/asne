@@ -63,7 +63,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 	function getAverage(data){
 		if(cut == "gender"){
       var mean = d3.mean(data,function(d){return +d.male_num/d.total_num});
-      console.log(mean);
 			return mean;
 		}
 		if(cut == "supWhite"){
@@ -358,11 +357,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       .attr("r",2)
       .attr("class","slope-small-dot")
       .style("fill",function(d){
-
-        console.log(newsIDName.get(d.key).Company);
-        console.log(getPercent(d.value.yearMap.get(2014)));
-        console.log(getPercent(d.value.values[0]));
-
         var diff = getPercent(d.value.yearMap.get(2014))-getPercent(d.value.values[0])
         if(diff > .01){
           return "red"
