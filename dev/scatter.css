@@ -122,7 +122,7 @@
 .map-arrow-path{fill: none;}
 .map-arrow-path-peak{fill: none;}
 .news-lab-logo{
-  background: url("/assets/news_lab_logo.png");
+  background: url("assets/news_lab_logo.png");
   height: 75px;
   width: 150px;
   background-size: contain;
