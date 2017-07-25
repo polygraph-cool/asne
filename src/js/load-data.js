@@ -3,7 +3,7 @@ import 'promis'
 import graphic from './graphic'
 import histogram from './histogram'
 import table from './table'
-import newsroom from './newsroom'
+// import newsroom from './newsroom'
 import slope from './slope'
 import swarm from './swarm'
 import scatter from './scatters'
@@ -38,7 +38,7 @@ function init() {
 					histogram.init(result[0],result[1],result[2],result[3]);
 					table.init(result[0],result[1],result[2],result[3]);
 					slope.init(result[0],result[1],result[2],result[3]);
-					newsroom.init();
+					// newsroom.init();
 				}
 			})
 	})

@@ -486,7 +486,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       })
       .attr("cx", function(d) { return d.x; })
       .attr("cy", function(d) { return d.y; })
-
       .on("mouseover",function(d){
         var data = d;
         chartToolTip

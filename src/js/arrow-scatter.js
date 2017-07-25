@@ -301,8 +301,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
     var newsNestAverageT0 = d3.mean(newsNest,function(d){ return getPercent(d.value.values[0])});
     var newsNestAverageT1 = d3.mean(newsNest,function(d){ return getPercent(d.value.yearMap.get(2014))});
 
-    console.log(newsNestAverageT1,newsNestAverageT0);
-
     for (var item in newsNest){
       var diff = getPercent(newsNest[item].value.yearMap.get(2014))-getPercent(newsNest[item].value.values[0])
       cut = "supGender";
@@ -345,6 +343,15 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       .attr("y1",0)
       .attr("y2",1)
 
+    var linearGradientAverage = chartSvgDoubleChange
+      .append("defs")
+      .append("linearGradient")
+      .attr("id","gradient-average")
+      .attr("x1",0)
+      .attr("x2",0)
+      .attr("y1",0)
+      .attr("y2",1)
+
     var linearGradientUp = chartSvgDoubleChange
       .append("defs")
       .append("linearGradient")
@@ -367,6 +374,17 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       .append("stop")
       .attr("offset","100%")
       .attr("stop-color","blue")
+      .attr("stop-opacity",0)
+
+    linearGradientAverage
+      .append("stop")
+      .attr("stop-color","black")
+      .attr("stop-opacity",1)
+
+    linearGradientAverage
+      .append("stop")
+      .attr("offset","100%")
+      .attr("stop-color","black")
       .attr("stop-opacity",0)
 
     linearGradientDown
@@ -424,6 +442,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 
     var arrowXScale = d3.scaleLinear().domain([0,newsNest.length-1]).range([0,width]);
 
+
     var arrowsGs = chartSvgDoubleChangeG
       .selectAll("g")
       .data(newsNest)
@@ -434,11 +453,30 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       })
       .on("mouseover",function(d){
         var company = newsIDName.get(d.value.values[0].NewsID).Company;
-
-        console.log(company);
-        // console.log(d.value.diff);
-        // console.log(getPercentType("gender",d.value.yearMap.get(2014)),getPercentType("gender",d.value.values[0]));
+        console.log(d.value.diff);
+        console.log(getPercentType("gender",d.value.yearMap.get(2014)),getPercentType("gender",d.value.values[0]));
       })
+      ;
+
+    chartSvgDoubleChangeG.append("g")
+      .attr("transform",function(d,i){
+        return "translate("+arrowXScale((newsNest.length-1)/2)+",0)"
+      })
+      .append("path")
+      .attr("class","arrow-scatter-line arrow-scatter-line-average")
+      .attr("d",function(d){
+        var t0 = yScale(newsNestAverageT0)
+        var t1 = yScale(newsNestAverageT1)
+        return drawArrow(t0,t1)
+      })
+      .attr("fill",function(d){
+        if(newsNestAverageT1-newsNestAverageT0 > 0){
+          return "url(#gradient-average)"
+        }
+        return "url(#gradient)";
+      })
+      .attr("stroke","none")
+      .attr("fill-opacity",1)
       ;
 
     var arrows = arrowsGs
@@ -496,14 +534,46 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
             return "url(assets/ny-times-logo.svg)";
           }
       })
-      // .text(function(d){
-      //   var company = newsIDName.get(d.value.values[0].NewsID).Company;
-      //   if(company == "the new york times"){
-      //     return company;
-      //   }
-      //   return null;
-      // })
+      ;
 
+    chartDivText
+      .append("div")
+      .attr("class","arrow-scatter-line-text-div")
+      .style("transform",function(d,i){
+        return "translate("+arrowXScale((newsNest.length-1)/2)+"px,"+yScale(newsNestAverageT1)+"px)"
+      })
+      .append("div")
+      .attr("class","arrow-scatter-line-text-average")
+      .text(function(d){
+        return "Overall";
+      })
+      ;
+
+    chartDivText
+      .append("div")
+      .attr("class","arrow-scatter-line-text-div")
+      .style("transform",function(d,i){
+        return "translate("+arrowXScale((newsNest.length-1)/2)+"px,"+yScale(newsNestAverageT1)+"px)"
+      })
+      .append("div")
+      .attr("class","arrow-scatter-line-text-average arrow-scatter-line-text-average-num-top")
+      .text(function(d){
+        return Math.floor(100*newsNestAverageT1)+"%";
+      })
+      ;
+
+    chartDivText
+      .append("div")
+      .attr("class","arrow-scatter-line-text-div")
+      .style("transform",function(d,i){
+        return "translate("+arrowXScale((newsNest.length-1)/2)+"px,"+yScale(newsNestAverageT0)+"px)"
+      })
+      .append("div")
+      .attr("class","arrow-scatter-line-text-average arrow-scatter-line-text-average-num-bottom")
+      .text(function(d){
+        return Math.floor(100*newsNestAverageT0)+"%";
+      })
+      ;
 
     var axisGs = chartSvgDoubleChangeG
       .append("g")

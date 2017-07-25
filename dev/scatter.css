@@ -368,3 +368,6 @@ p {
     background-size: contain;
     background-repeat: no-repeat;
 }
+.arrow-scatter-line-text-average{position: absolute;top: 50%;-webkit-transform: translateY(-50%);-moz-transform: translateY(-50%);transform: translate(-50%,-163%);width: auto;height: auto;background-size: contain;background-repeat: no-repeat;font-family: 'Roboto';text-transform: capitalize;font-size: 13px;}
+.arrow-scatter-line-text-average-num-top{transform: translate(-7px,-90%);font-size: 10px;font-weight: 500;}
+.arrow-scatter-line-text-average-num-bottom{transform: translate(-7px,-16%);font-size: 10px;font-weight: 500;}
