@@ -289,12 +289,19 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       .entries(filteredMapData)
       ;
 
+
+
     newsNest = newsNest.filter(function(d){
       if(d.value.yearMap.has(2014) && d.value.values.length > 1){
         return d;
       }
       return null;
     });
+
+    var newsNestAverageT0 = d3.mean(newsNest,function(d){ return getPercent(d.value.values[0])});
+    var newsNestAverageT1 = d3.mean(newsNest,function(d){ return getPercent(d.value.yearMap.get(2014))});
+
+    console.log(newsNestAverageT1,newsNestAverageT0);
 
     for (var item in newsNest){
       var diff = getPercent(newsNest[item].value.yearMap.get(2014))-getPercent(newsNest[item].value.values[0])
@@ -303,7 +310,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       cut = "gender"
       diffArray.push(diff);
       raceDiffArray.push(raceDiff);
-
       newsNest[item].value.diff = diff;
       newsNest[item].value.raceDiff = raceDiff;
     }
@@ -965,28 +971,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
     //   })
     //   ;
   }
-  // function backgroundFunction(d){
-  //   var state = null;
-  //   var region = null;
-  //   if(newsIdMap.has(d.NewsID)){
-  //     state = newsIdMap.get(d.NewsID).State;
-  //   }
-  //   if(regionMap.has(state)){
-  //     region = regionMap.get(state)[3];
-  //   }
-  //   if(region =="West"){
-  //     return "green"
-  //   }
-  //   if(region =="South"){
-  //     return "blue"
-  //   }
-  //   if(region =="Midwest"){
-  //     return "purple"
-  //   }
-  //   if(region =="Northeast"){
-  //     return "yellow"
-  //   }
-  // }
   buildChart();
 
 }
