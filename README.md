@@ -8,6 +8,7 @@
 * 2x2 with racial statistics
 * racial and gender growth
 * map chart
+* add leadership toggle to swarm
 
 # queries
 

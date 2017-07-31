@@ -142,10 +142,17 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       .append("div")
       .attr("class","stepper-container")
 
-    stepperContainer.append("p")
+
+    var stepperTextArray = [
+      "The Newsroom Employment Diversity Survey measures the percentage of minorities working in newsrooms nationwide",
+      "Newsrooms are about 32 percetage points more white than the demographics they report on.",
+      "When leadership goes up, so do newsroom"
+    ];
+
+    var stepperText = stepperContainer.append("p")
       .attr("class","stepper-container-text")
       .text(function(d){
-        return "The ASNE Newsroom Employment Diversity Survey (previously known as the Newsroom Employment Census), sponsored by a significant grant from the John S. and James L. Knight Foundation, is a tool ASNE uses to measure the success of its goal of having the percentage of minorities working in newsrooms nationwide equal to the percentage of minorities in the nation's population by 2025.";
+        return stepperTextArray[0];
       })
       ;
 
@@ -173,7 +180,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       .append("div")
       .attr("class","stepper-item-container")
       .selectAll("p")
-      .data(["swarm","swarm-scatter","arrow-scatter"])
+      .data(["swarm","swarm","swarm-scatter"])
       .enter()
       .append("p")
       .attr("class",function(d,i){
@@ -185,15 +192,36 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       .text(function(d,i){
         return i+1;
       })
-      .on("click",function(d){
+      .on("click",function(d,i){
+
+        var num = i;
+
+        stepperText
+          .transition()
+          .duration(500)
+          .style("opacity",0)
+          .on("end",function(){
+            stepperText.text(stepperTextArray[i])
+              .transition()
+              .duration(500)
+              .style("opacity",1)
+              ;
+          });
+
         var dataSelected = d;
-        d3.select(this.parentNode).selectAll("p").classed("stepper-item-selected",function(d){
-          if(d==dataSelected){
+        d3.select(this.parentNode).selectAll("p").classed("stepper-item-selected",function(d,i){
+          if(i==num){
             return true;
           }
           return false;
         })
         currentChart = d;
+        if(i==1){
+          cut = "race";
+        }
+        else if(i==0){
+          cut = "gender"
+        }
         buildChart(d);
       })
       ;
@@ -1385,7 +1413,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
     toggles
       .append("div")
-      .attr("class","histogram-chart-toggle-type")
+      .attr("class","histogram-chart-toggle-type histogram-chart-toggle-first")
       .selectAll("p")
       .data(raceGenderToggleData)
       .enter()

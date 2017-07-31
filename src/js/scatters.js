@@ -161,7 +161,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 
     toggles
       .append("div")
-      .attr("class","histogram-chart-toggle-type")
+      .attr("class","histogram-chart-toggle-type histogram-chart-toggle-first")
       .selectAll("p")
       .data(raceGenderToggleData)
       .enter()
@@ -264,6 +264,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
     var maxPercentArray = [];
     var diffArray = [];
     var raceDiffArray = []
+
     var newsNest = d3.nest()
       .key(function(d){
         return +d.NewsID
