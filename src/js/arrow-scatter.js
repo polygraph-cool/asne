@@ -249,6 +249,15 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       .attr("height",height+margin.top+margin.bottom)
       ;
 
+    // var searchDiv = container.append("div")
+    //   .attr("class","swarm-chart-search-div")
+    //
+    // searchDiv
+    //   .append("input")
+    //   .attr("class","swarm-chart-search")
+    //   .attr("placeholder","Find a Newsroom")
+    //   ;
+
     var chartDivText = chartDiv.append("div")
       .attr("class","arrow-scatter-chart-wrapper-text-div")
       .style("transform", "translate(" + margin.left+"px" + "," + margin.top+"px" + ")")
@@ -288,8 +297,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       })
       .entries(filteredMapData)
       ;
-
-
 
     newsNest = newsNest.filter(function(d){
       if(d.value.yearMap.has(2014) && d.value.values.length > 1){
@@ -374,7 +381,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       .append("stop")
       .attr("offset","100%")
       .attr("stop-color","blue")
-      .attr("stop-opacity",0)
+      .attr("stop-opacity",.3)
 
     linearGradientAverage
       .append("stop")
@@ -385,12 +392,12 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       .append("stop")
       .attr("offset","100%")
       .attr("stop-color","black")
-      .attr("stop-opacity",0)
+      .attr("stop-opacity",.3)
 
     linearGradientDown
       .append("stop")
       .attr("stop-color","red")
-      .attr("stop-opacity",0)
+      .attr("stop-opacity",.3)
 
     linearGradientDown
       .append("stop")
@@ -441,7 +448,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
     }
 
     var arrowXScale = d3.scaleLinear().domain([0,newsNest.length-1]).range([0,width]);
-
 
     var arrowsGs = chartSvgDoubleChangeG
       .selectAll("g")
@@ -827,124 +833,252 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
     //   })
     //   ;
     //
-    // var miniWidth = 40;
-    // var miniHeight = 100;
+    var miniMargin = {top: 0, right: 10, bottom: 0, left: 10};
+    var miniWidth = 50-miniMargin.left - miniMargin.right;
+    var miniHeight = 80 - miniMargin.top - miniMargin.bottom;
+    var genderColorScale = d3.scaleLinear().domain([.2,.5,.8]).range(["#2161fa","#dddddd","#ff3333"]);
+
+    var multipleY = d3.scaleLinear().domain([.2,.5]).range([miniHeight,0]);
+
+
+    miniMultiple.append("p")
+      .attr("class","chart-title")
+      .text("Change in Break-down of Female Staff, 2001 - 2016")
+      ;
+
+    var miniMultipleWrapper = miniMultiple
+      .append("div")
+      .attr("class","mini-multiple-div-container")
+      .selectAll("div")
+      .data(newsNest.sort(function(a,b){
+        return +b.value.maxTotal - +a.value.maxTotal;
+      }).slice(0,25))
+      .enter()
+      .append("div")
+      .attr("class","mini-multiple-div")
+      ;
+
+    // var searchDivMini = miniMultiple.append("div")
+    //   .attr("class","swarm-chart-search-div")
     //
-    // var multipleY = d3.scaleLinear().domain([.3,1]).range([miniHeight,0]);
-    //
-    // var miniMultipleWrapper = miniMultiple.selectAll("div")
-    //   .data(newsNest)
-    //   .enter()
-    //   .append("div")
-    //   .attr("class","mini-multiple-div")
+    // searchDivMini
+    //   .append("input")
+    //   .attr("class","swarm-chart-search")
+    //   .attr("placeholder","Find a Newsroom")
     //   ;
+
+    miniMultipleWrapper
+      .append("div")
+      .attr("class","mini-multiple-text-container")
+      .append("p")
+      .attr("class","mini-multiple-text")
+      .style("margin-top",20)
+      .text(function(d){
+        var company = newsIDName.get(d.value.values[0].NewsID).Company.replace("the","");
+        if(company.length > 20){
+          return company.slice(0,17)+"..."
+        }
+        return company;
+      })
+      ;
+
+    var miniMultipleWrapperSvg = miniMultipleWrapper
+      .append("svg")
+      .attr("class","slope-mini-svg")
+      .attr("width",miniWidth+miniMargin.left+miniMargin.right)
+      .attr("height",miniHeight+miniMargin.top + miniMargin.bottom)
+
+    var miniMultipleWrapperG = miniMultipleWrapperSvg
+      .append("g")
+      .style("transform", "translate(" + miniMargin.left+"px" + "," + miniMargin.top+"px" + ")")
+      ;
+
+    var miniMultipleWrapperAxis = miniMultipleWrapperG
+      .append("g")
+      .attr("class","slope-line-axis-container")
+
+    miniMultipleWrapperG
+      .append("circle")
+      .attr("cx",function(d){
+        return 0;
+      })
+      .attr("cy",function(d){
+        return multipleY(getPercentType("gender",d.value.values[0]));
+      })
+      .attr("r",3)
+      .attr("class","slope-small-dot")
+      .style("fill",function(d){
+        if(d.value.diff > 0){
+          return "blue"
+        }
+        return "red"
+        // return genderColorScale(getPercentType("gender",d.value.values[0]))
+      })
+      ;
+
+    miniMultipleWrapperG
+      .append("text")
+      .attr("x",function(d){
+        return 0;
+      })
+      .attr("y",function(d,i){
+        if(i==0){
+          return multipleY(getPercentType("gender",d.value.values[0]))+27;
+        }
+        return multipleY(getPercentType("gender",d.value.values[0]))+15;
+      })
+      .attr("class","slope-small-text")
+      .text(function(d,i){
+        if(i==0){
+          return Math.floor(100*getPercentType("gender",d.value.values[0]))+"%";
+        }
+        return Math.floor(100*getPercentType("gender",d.value.values[0]));
+      })
+      ;
+
+    miniMultipleWrapperG
+      .append("text")
+      .attr("x",function(d){
+        return 0;
+      })
+      .attr("y",function(d,i){
+        if(i==0){
+          return multipleY(getPercentType("gender",d.value.values[0]))+15;
+        }
+        return null;
+      })
+      .attr("class","slope-small-text slope-small-text-bold")
+      .text(function(d,i){
+        if(i==0){
+          return "2001";
+        }
+        return null;
+      })
+      ;
+
+    miniMultipleWrapperG
+      .append("text")
+      .attr("x",function(d){
+        return miniWidth;
+      })
+      .attr("y",function(d,i){
+        if(i==0){
+          return multipleY(getPercentType("gender",d.value.yearMap.get(2014)))+15;
+        }
+        return null
+      })
+      .attr("class","slope-small-text slope-small-text-bold")
+      .text(function(d,i){
+        if(i==0){
+          return "2016";
+        }
+        return null;
+      })
+      .style("text-anchor",function(d,i){
+        if(i==0){
+          return "start";
+        }
+        return null;
+      })
+      ;
+
+    miniMultipleWrapperG
+      .append("text")
+      .attr("x",function(d){
+        return miniWidth;
+      })
+      .attr("y",function(d,i){
+        if(i==0){
+          return multipleY(getPercentType("gender",d.value.yearMap.get(2014)))+27;
+        }
+        return multipleY(getPercentType("gender",d.value.yearMap.get(2014)))+15;
+      })
+      .attr("class","slope-small-text")
+      .text(function(d,i){
+        if(i==0){
+          return Math.floor(100*getPercentType("gender",d.value.yearMap.get(2014)))+"%";
+        }
+        return Math.floor(100*getPercentType("gender",d.value.yearMap.get(2014)));
+      })
+      .style("text-anchor",function(d,i){
+        if(i==0){
+          return "start";
+        }
+        return null;
+      })
+      ;
+
+    miniMultipleWrapperG
+      .append("circle")
+      .attr("cx",function(d){
+        return miniWidth;
+      })
+      .attr("cy",function(d){
+        return multipleY(getPercentType("gender",d.value.yearMap.get(2014)));
+      })
+      .attr("r",3)
+      .attr("class","slope-small-dot")
+      .style("fill",function(d){
+        if(d.value.diff > 0){
+          return "blue"
+        }
+        return "red"
+        // return genderColorScale(getPercentType("gender",d.value.values[0]))
+      })
+      ;
     //
-    // miniMultipleWrapper.append("p")
-    //   .attr("class","mini-multiple-text")
-    //   .style("margin-top",20)
-    //   .text(function(d){
-    //     return newsIDName.get(d.value.values[0].NewsID).Company;
-    //   })
-    //   ;
     //
-    // var miniMultipleWrapperSvg = miniMultipleWrapper
-    //   .append("svg")
-    //   .attr("class","slope-mini-svg")
-    //   .attr("height",miniHeight)
-    //   .style("height",miniHeight+"px")
-    //   ;
-    //
-    // miniMultipleWrapperSvg
-    //   .append("circle")
-    //   .attr("cx",function(d){
-    //     return 0;
-    //   })
-    //   .attr("cy",function(d){
-    //     return multipleY(getPercent(d.value.values[0]));
-    //   })
-    //   .attr("r",2)
-    //   .attr("class","slope-small-dot")
-    //   .style("fill",function(d){
-    //
-    //     console.log(newsIDName.get(d.key).Company);
-    //     console.log(getPercent(d.value.yearMap.get(2014)));
-    //     console.log(getPercent(d.value.values[0]));
-    //
-    //     var diff = getPercent(d.value.yearMap.get(2014))-getPercent(d.value.values[0])
-    //     if(diff > .01){
-    //       return "red"
-    //     }
-    //     if(diff < .01){
-    //       return "green";
-    //     }
-    //   })
-    //   ;
-    //
-    // miniMultipleWrapperSvg
-    //   .append("circle")
-    //   .attr("cx",function(d){
-    //     return miniWidth;
-    //   })
-    //   .attr("cy",function(d){
-    //     return multipleY(getPercent(d.value.yearMap.get(2014)));
-    //   })
-    //   .attr("r",2)
-    //   .attr("class","slope-small-dot")
-    //   .style("fill",function(d){
-    //     var diff = getPercent(d.value.yearMap.get(2014))-getPercent(d.value.values[0])
-    //     if(diff > .01){
-    //       return "red"
-    //     }
-    //     if(diff < .01){
-    //       return "green";
-    //     }
-    //   })
-    //   ;
-    //
-    // miniMultipleWrapperSvg
-    //   .selectAll("line")
-    //   .data([0,1,2,4,5])
-    //   .enter()
-    //   .append("line")
-    //   .attr("class","slope-line-axis")
-    //   .attr("y1", function(d,i) {
-    //     return i*20+"%";
-    //   })
-    //   .attr("x1", function(d) {
-    //     return 0;
-    //   })
-    //   .attr("y2", function(d,i) {
-    //     return i*20+"%";
-    //   })
-    //   .attr("x2", function(d) {
-    //     return miniWidth;
-    //   })
-    //
-    // miniMultipleWrapperSvg
-    //   .append("line")
-    //   .attr("class","slope-line")
-    //   .attr("y1", function(d) {
-    //     return multipleY(getPercent(d.value.values[0]));
-    //   })
-    //   .attr("x1", function(d) {
-    //     return 0;
-    //   })
-    //   .attr("y2", function(d) {
-    //     return multipleY(getPercent(d.value.yearMap.get(2014)));
-    //   })
-    //   .attr("x2", function(d) {
-    //     return miniWidth;
-    //   })
-    //   .style("stroke",function(d){
-    //     var diff = getPercent(d.value.yearMap.get(2014))-getPercent(d.value.values[0])
-    //     if(diff > .01){
-    //       return "red"
-    //     }
-    //     if(diff < .01){
-    //       return "green";
-    //     }
-    //   })
-    //   ;
+    miniMultipleWrapperG
+      .append("line")
+      .attr("class","slope-line")
+      .attr("y1", function(d) {
+        return multipleY(getPercentType("gender",d.value.values[0]));
+      })
+      .attr("x1", function(d) {
+        return 0;
+      })
+      .attr("y2", function(d) {
+        return multipleY(getPercentType("gender",d.value.yearMap.get(2014)));
+      })
+      .attr("x2", function(d) {
+        return miniWidth;
+      })
+      .attr("stroke-linecap","round")
+      .attr("stroke-linejoin","round")
+      .attr("stroke-width",1.8)
+      .style("stroke",function(d){
+        if(d.value.diff > 0){
+          return "blue"
+        }
+        return "red"
+        // return genderColorScale(getPercentType("gender",d.value.values[0]))
+      })
+      ;
+
+    miniMultipleWrapperAxis
+      .selectAll("line")
+      .data([.2,.3,.4,.5])
+      .enter()
+      .append("line")
+      .attr("class","slope-line-axis")
+      .attr("y1", function(d,i) {
+        return multipleY(d)
+        // return i*20+"%";
+      })
+      .attr("x1", function(d) {
+        return 0;
+      })
+      .attr("y2", function(d,i) {
+        return multipleY(d)
+      })
+      .attr("x2", function(d) {
+        return miniWidth;
+      })
+      .style("stroke",function(d){
+        if(d==.5){
+          return "black";
+        }
+      })
     //
 
     // cell

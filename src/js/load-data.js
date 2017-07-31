@@ -8,6 +8,7 @@ import slope from './slope'
 import swarm from './swarm'
 import scatter from './scatters'
 import arrowScatter from './arrow-scatter'
+import swarmLeader from './swarm-leader'
 import maps from './maps'
 
 
@@ -22,9 +23,11 @@ function init() {
 		d3.queue()
 			.defer(d3.csv,'assets/map_data_3.csv')
 			.defer(d3.csv,'assets/lats.csv')
-			.defer(d3.csv,'assets/cleannewsids.csv')
+			.defer(d3.csv,'assets/newsidsunique_2.csv')
 			.defer(d3.csv,'assets/news_ids.csv')
 			.defer(d3.json,'assets/usJson.json')
+			.defer(d3.csv,'assets/top_3.csv')
+			.defer(d3.csv,'assets/census.csv')
 			.awaitAll((err, result) => {
 				if (err){
 					reject(err)
@@ -33,7 +36,8 @@ function init() {
 					maps.init(result[0],result[1],result[2],result[3],result[4]);
 					arrowScatter.init(result[0],result[1],result[2],result[3]);
 					scatter.init(result[0],result[1],result[2],result[3]);
-					swarm.init(result[0],result[1],result[2],result[3]);
+					swarm.init(result[0],result[1],result[2],result[3],result[5],result[6]);
+					swarmLeader.init(result[0],result[1],result[2],result[3],result[5]);
 					graphic.init(result[0],result[1],result[2],result[3]);
 					histogram.init(result[0],result[1],result[2],result[3]);
 					table.init(result[0],result[1],result[2],result[3]);

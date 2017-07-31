@@ -1,3 +1,14 @@
+# queries
+
+for race data:
+select lower(concat(a.City," ",b.Abbv)) as city_state,White_2015 as white_2015,White_2000 as white_2000
+from race_data a
+left join states b
+on a.State = b.State
+where a.White_2015 is not null
+group by 1,2
+
+
 # starter
 
 A starter template for projects. Check out the companion [style guide](https://polygraph-cool.github.io/starter) for best practices.

@@ -1,6 +1,7 @@
 .histogram-chart-toggle-size{
   display: flex;
   margin-right: 10px;
+  display: none;
 }
 
 .histogram-chart-toggle-item{
@@ -44,8 +45,8 @@
 
 .scatter-chart-wrapper-svg-double-change{
   display: block;
-  margin-top: 70px;
   overflow: visible;
+  margin: 0 auto;
 }
 
 .scatter-circle-double-axis{
@@ -64,6 +65,7 @@
   margin: 0 auto;
   display: block;
   overflow: visible;
+  margin-bottom: -10px;
 }
 .arrow-scatter-line{/* fill: none; *//* fill: url(#grad); *//* stroke-width: 5; *//* fill: url(#C-gradient); *//* stroke: none; */}
 .arrow-scatter-line-axis{
@@ -96,7 +98,7 @@
 
 .arrow-scatter {
     display: block;
-    margin-top: 90px;
+    margin-top: 170px;
 }
 
 .maps-chart-svg{
@@ -156,16 +158,24 @@ p {
     font-family: 'Roboto';
     text-align: center;
     font-weight: 500;
-    margin-top: 30px;
+    margin-top: 20px;
     color: #222;
+    /* position: absolute; */
+    /* left: 0px; */
+    /* right: 0px; */
+    /* margin: 0 auto; */
+    /* top: 47px; */
+    margin-bottom: 20px;
 }
 
 .histogram-chart-toggle-wrapper {
     display: flex;
     justify-content: center;
     font-family: 'Atlas Grotesk Web';
-    margin-top: 20px;
-    margin-bottom: 20px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
 }
 
 .back-curve {
@@ -189,15 +199,16 @@ p {
 
 .swarm-circle {
     fill: #ffd62c;
-    transition: stroke 300ms;
     cursor: pointer;
     cursor: hand;
+    stroke: #c1a427;
+    stroke-width: 1px;
 }
 
 .swarm-average-text {
     font-family: 'Roboto';
     text-anchor: middle;
-    font-size: 13px;
+    font-size: 12px;
     fill: black;
     text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
 }
@@ -210,9 +221,11 @@ p {
 
 .swarm-average-text-label {
     fill: #888;
-    font-size: 13px;
+    font-size: 10px;
     fill: #2463f9;
-    text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
+    text-shadow: 0 1px 0 #ffffff, 1px 0 0 #ffffff, 0 -1px 0 #ffffff, -1px 0 0 #ffffff;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 .swarm-chart-wrapper {
@@ -240,6 +253,8 @@ p {
     font-family: 'Roboto';
     text-anchor: middle;
     font-size: 12px;
+    dominant-baseline: central;
+    font-weight: 500;
 }
 
 .swarm-chart-search-div {
@@ -247,6 +262,11 @@ p {
     display: flex;
     justify-content: center;
     height: 30px;
+    margin-bottom: 20px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
 }
 
 .swarm-chart-search {
@@ -270,7 +290,8 @@ p {
 }
 
 .swarm-chart-source {
-    margin-top: -30px;
+    pointer-events: none;
+    order: 2;
 }
 
 .swarm-chart-tool-tip {
@@ -280,9 +301,9 @@ p {
     text-transform: capitalize;
     background: white;
     border: 1px solid rgba(193, 193, 193, 0.53);
-    padding: .5rem .5rem;
+    padding: 4px 9px;
     z-index: 1000;
-    border-radius: 1px;
+    border-radius: 5px;
     text-align: left;
     width: auto;
     padding-right: 1.5rem;
@@ -292,8 +313,8 @@ p {
 }
 
 .swarm-circle:hover {
-    stroke: rgba(0, 0, 0, 0.69);
-    stroke-width: 1.5px;
+    /* stroke: rgba(0, 0, 0, 0.69); */
+    /* stroke-width: 1.8px; */
 }
 
 
@@ -303,6 +324,7 @@ p {
     /* display: none; */
     top: 0px;
     pointer-events: none;
+    opacity: .6;
 }
 
 .swarm-chart-logo {
@@ -319,6 +341,7 @@ p {
 .swarm {
     max-width: 1000px;
     margin: 0 auto;
+    position: relative;
 }
 
 .arrow-scatter-chart-wrapper {
@@ -326,9 +349,7 @@ p {
     position: relative;
 }
 
-.slope-mini-multiple-div {
-    display: none;
-}
+.slope-mini-multiple-div {margin-top: 90px;margin-bottom: 110px;}
 
 .arrow-scatter-axis-text {
     font-family: 'Roboto';
@@ -371,3 +392,223 @@ p {
 .arrow-scatter-line-text-average{position: absolute;top: 50%;-webkit-transform: translateY(-50%);-moz-transform: translateY(-50%);transform: translate(-50%,-163%);width: auto;height: auto;background-size: contain;background-repeat: no-repeat;font-family: 'Roboto';text-transform: capitalize;font-size: 13px;}
 .arrow-scatter-line-text-average-num-top{transform: translate(-7px,-90%);font-size: 10px;font-weight: 500;}
 .arrow-scatter-line-text-average-num-bottom{transform: translate(-7px,-16%);font-size: 10px;font-weight: 500;}
+
+
+.mini-multiple-text {
+    font-family: 'Roboto';
+    text-transform: capitalize;
+    font-size: 11px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.mini-multiple-div-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 60rem;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.mini-multiple-div {
+    width: 56px;
+    margin-bottom: 20px;
+    padding: 0 7px;
+}
+
+.slope-line {stroke-width: 1.5;}
+
+.slope-line-axis {
+    stroke: #cacaca;
+    shape-rendering: crispEdges;
+    /* stroke-width: 1.4px; */
+}
+
+.slope-mini-svg {
+    margin: 0 auto;
+    display: block;
+    overflow: visible;
+}
+
+.mini-multiple-text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 50px;
+    margin-bottom: -1px;
+    /* border-bottom: 1px solid #c3c3c3; */
+    padding-bottom: 12px;
+}
+
+.slope-small-text {
+    font-size: 11px;
+    text-anchor: middle;
+    font-family: 'Roboto';
+    font-weight: 400;
+}
+
+.slope-small-text-bold {
+    font-weight: 600;
+}
+
+.scatter-chart-wrapper {
+    margin: 0 auto;
+    position: relative;
+}
+
+.scatter{
+  margin-top: 110px;
+  display: none;
+}
+
+
+.stepper-container {
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    width: 280px;
+    flex-wrap: wrap;
+}
+
+.stepper-item {
+    padding-right: 9px;
+    cursor: hand;
+    cursor: pointer;
+    opacity: .5;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.stepper-item-selected {
+    color: black;
+    opacity: 1;
+}
+
+.swarm-image {
+    pointer-events: none;
+    transform: translate(-50%,-50%);
+}
+
+.footer {}
+
+.footer-container {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    width: 100%;
+    position: absolute;
+    transform: translate(0,100%);
+    top: 100%;
+}
+
+.table-rows .histogram-chart-toggle-wrapper {
+    display: none;
+}
+
+.slope-chart .histogram-chart-toggle-wrapper {
+    display: none;
+}
+
+.histogram .histogram-chart-toggle-wrapper {
+    display: none;
+}
+
+.maps .histogram-chart-toggle-wrapper {
+    display: none;
+}
+
+.arrow-scatter .histogram-chart-toggle-wrapper {
+    display: none;
+}
+
+.swarm-leader .histogram-chart-toggle-wrapper {
+    display: none;
+}
+
+.scatter
+ .histogram-chart-toggle-wrapper {
+    display: none;
+}
+
+.chart-top-section {
+    position: relative;
+    margin-top: 13px;
+    height: auto;
+}
+
+.stepper-container-text {
+    font-size: 13px;
+    font-weight: 500;
+    height: 49px;
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.48);
+    line-height: 16px;
+}
+
+.stepper-toggle-row {
+    width: 100%;
+    display: flex;
+    margin-top: 9px;
+}
+
+.stepper-item-container {
+    display: flex;
+    margin-left: 10px;
+    line-height: 23px;
+}
+
+.stepper-play-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: #222;
+    letter-spacing: .4px;
+    pointer-events: none;
+}
+
+.stepper-play-button {
+    border: 1px solid #e2e2e2;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: flex;
+    cursor: pointer;
+    cursor: hand;
+    transition: all 300ms;
+}
+
+.stepper-arrow {.arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 60px solid transparent;
+    border-bottom: 60px solid transparent;
+    border-left: 60px solid green; }
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 10px solid #333c45;
+    margin-top: 4px;
+    margin-right: 5px;
+    pointer-events: none;
+}
+
+.stepper-item.stepper-item:hover {
+    text-decoration: underline;
+}
+
+.stepper-play-button:hover{font-weight: 500;background-color: #F5F5F5;color: black;box-shadow: inset 0 3px 5px rgba(0,0,0,.125);border-color: #adadad;}
+
+
+.swarm-axis-tick-rect {
+    fill: white;
+}
+
+.swarm-circle-average {
+    fill: black;
+}
+
+.swarm-leader {
+    display: none;
+}
