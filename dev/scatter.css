@@ -126,11 +126,14 @@
 .news-lab-logo{
   background: url("assets/news_lab_logo.png");
   height: 75px;
-  width: 170px;
+  width: 150px;
   background-size: contain;
   background-repeat: no-repeat;
-  margin-top: 20px;
-  margin-left: 24px;
+  margin-top: 2px;
+  margin-left: 14px;
+  /* display: none; */
+  background-position-x: -30px;
+  order: 2;
 }
 
 
@@ -770,5 +773,18 @@ p {
     width: 70px;
     background-size: contain;
     background-repeat: no-repeat;
-    margin-top: 27px;
+    margin-top: 9px;
+    /* filter: grayscale(100%); */
+    margin-left: 53px;
+    position: relative;
+    margin-right: 23px;
+}
+
+.asne-logo:after {
+    content: 'with';
+    font-family: 'Roboto';
+    font-size: 12px;
+    position: absolute;
+    right: -31px;
+    top: 21px;
 }
