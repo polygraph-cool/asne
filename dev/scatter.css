@@ -230,6 +230,7 @@ p {
 
 .swarm-chart-wrapper {
     margin: 0 auto;
+    overflow: visible;
 }
 
 .swarm-chart-container {
@@ -259,7 +260,6 @@ p {
 
 .swarm-chart-search-div {
     margin: 0 auto;
-    display: flex;
     justify-content: center;
     height: 30px;
     margin-bottom: 20px;
@@ -267,6 +267,7 @@ p {
     top: 0px;
     left: 0px;
     right: 0px;
+    width: 250px;
 }
 
 .swarm-chart-search {
@@ -275,7 +276,7 @@ p {
     box-sizing: border-box;
     border: 1px #e2e2e2 solid;
     height: 30px;
-    width: 250px;
+    width: 100%;
     padding-left: 9px;
     font-family: 'Roboto';
     display: block;
@@ -611,4 +612,103 @@ p {
 
 .swarm-leader {
     display: none;
+}
+
+.swarm-chart-search-results {
+    position: absolute;
+    width: 248px;
+    bottom: -8px;
+    background: white;
+    z-index: 1000;
+    margin-top: 12px;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transform: translate(0,100%);
+    display: none;
+}
+
+.swarm-chart-search-results-alpha-label {
+    font-family: 'Roboto';
+    font-size: 12px;
+    text-transform: capitalize;
+    color: rgba(84, 84, 84, 0.47);
+    font-weight: 500;
+    display: none;
+}
+
+.swarm-chart-search-results-alpha-item-container {
+    display: flex;
+    /* margin-left: 4px; */
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.swarm-chart-search-results-alpha-item {
+    font-family: 'Roboto';
+    font-size: 10.5px;
+    color: rgba(0, 0, 0, 0.64);
+    font-weight: 500;
+    cursor: pointer;
+    cursor: hand;
+    text-transform: uppercase;
+    line-height: 17px;
+}
+
+.swarm-chart-search-results-alpha-container {
+    display: flex;
+    padding-bottom: 7px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.swarm-chart-search-results-alpha-item:hover {
+    text-decoration: underline;
+}
+
+.swarm-chart-search-results-result-container {
+    padding-top: 6px;
+    border-top: 1px solid #c1c1c1;
+    height: 400px;
+    overflow: scroll;
+}
+
+.swarm-chart-search-results-result-text {
+    font-size: 12.5px;
+    font-family: 'Roboto';
+    color: rgba(0, 0, 0, 0.39);
+    font-weight: 500;
+    text-transform: capitalize;
+    width: 90%;
+    margin: 0 auto;
+    line-height: 20px;
+    pointer-events: none;
+}
+
+.swarm-chart-search-results-result {
+    cursor: hand;
+    cursor: pointer;
+}
+
+.swarm-chart-search-results-result:hover {
+    background: #dadada;
+}
+
+
+.swarm-axis-annotation-text {
+    font-family: 'Roboto';
+    text-anchor: middle;
+    text-transform: capitalize;
+    font-size: 11.5px;
+    font-weight: 400;
+    fill: #555;
+    dominant-baseline: middle;
+}
+
+.swarm-axis-annotation-line {
+    stroke: #ccc;
+    shape-rendering: crispEdges;
+    stroke-dasharray: 3,2;
 }

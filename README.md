@@ -1,3 +1,14 @@
+# to do
+* search commands
+* geo highlight
+* geo highlighted stroke color is darker than fill
+* write changing text per screen
+* mini multiple chart (with highlight)
+* get other logos
+* 2x2 with racial statistics
+* racial and gender growth
+* map chart
+
 # queries
 
 for race data:
