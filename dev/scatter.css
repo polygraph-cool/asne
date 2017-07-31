@@ -126,11 +126,11 @@
 .news-lab-logo{
   background: url("assets/news_lab_logo.png");
   height: 75px;
-  width: 150px;
+  width: 170px;
   background-size: contain;
-  margin: 0 auto;
   background-repeat: no-repeat;
   margin-top: 20px;
+  margin-left: 24px;
 }
 
 
@@ -230,7 +230,6 @@ p {
 
 .swarm-chart-wrapper {
     margin: 0 auto;
-    overflow: visible;
 }
 
 .swarm-chart-container {
@@ -755,4 +754,21 @@ p {
 
 .table-rows {
     display: none;
+}
+
+.logos {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.asne-logo {
+    background-image: url(assets/asne-logo.jpg);
+    width: 120px;
+    height: 100px;
+    height: 65px;
+    width: 70px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: 27px;
 }

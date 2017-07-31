@@ -66,7 +66,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
   var countMin =  50;
   var mouseoverOffsetX = 20;
   var mouseoverOffsetY = -14;
-
+  var stepperSequence = ["swarm","swarm","swarm-scatter","mini-multiple"];
 	function getAverage(data){
 
 		if(cut == "gender" && group == "all"){
@@ -180,7 +180,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       .append("div")
       .attr("class","stepper-item-container")
       .selectAll("p")
-      .data(["swarm","swarm","swarm-scatter"])
+      .data(stepperSequence)
       .enter()
       .append("p")
       .attr("class",function(d,i){
@@ -616,6 +616,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         yScale = d3.scaleLinear().domain([.2,.8]).range([height,0]).clamp(true);
         newsNestAverageT1 = d3.mean(newsNest,function(d){ return d.value.currentYear;});
       }
+      if(chartType == "mini-multiple"){
+        width = 1000 - margin.left - margin.right;
+        height = 500 - margin.top - margin.bottom;
+      }
 
       chartDivContainer
         .transition()
@@ -648,6 +652,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
     }
     changeTitle();
+
     if(chartType!="new"){
       setWidths(chartType);
     }
@@ -1349,6 +1354,42 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         ;
       buildAxis();
       buildAverage();
+
+    }
+    if(chartType == "mini-multiple"){
+        var miniMargin = {top: 0, right: 10, bottom: 0, left: 10};
+        var miniWidth = 50-miniMargin.left - miniMargin.right;
+        var miniHeight = 80 - miniMargin.top - miniMargin.bottom;
+        var multipleY = d3.scaleLinear().domain([.2,.5]).range([miniHeight,0]);
+
+        var miniMulitpleCount = Math.floor(width/(miniWidth+miniMargin.left+miniMargin.right));
+        console.log(miniMulitpleCount);
+
+        var total = cellImages.size();
+
+        cellImages
+          .filter(function(d,i){
+            return i > total-23;
+          })
+          .each(function(d){
+            console.log("here");
+          })
+          .transition()
+          .duration(duration)
+          .attr("transform", function(d,i){
+            console.log(i);
+            return "translate(" + i*miniMultipleWidth + "," + yScale(getPercentType("supGender",d.value)) + ")"
+          });
+          ;
+        //
+        // cellImages
+        //   .transition()
+        //   .duration(duration)
+        //   .attr("transform", function(d,i){
+        //     return "translate(" +  + "," + yScale(getPercentType("supGender",d.value)) + ")"
+        //   });
+        //   ;
+
 
     }
   }
