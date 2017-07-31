@@ -522,6 +522,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     }
 
     function mouseOverEvents(data,element){
+      console.log(data);
       if(chartType == "swarm" || chartType == "new"){
 
         element.style("stroke",function(){
