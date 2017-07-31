@@ -462,6 +462,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         whiteCensus = +censusMap.get(cityState).white_2015/100;
         // console.log(newsNest[item].value.companyName,newsNest[item].key,cityState);
       }
+      else{
+        console.log(newsNest[item]);
+      }
       newsNest[item].value.whiteCensus = whiteCensus;
       newsNest[item].value.whiteDelta = getPercentType("race",newsNest[item].value)
       newsNest[item].value.diff = diff;
@@ -481,6 +484,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
   var newsNestSupAverageT1 = d3.mean(newsNest,function(d){ return d.value.currentSup;});
 
   var newsMap = d3.map(newsNest,function(d){return d.key});
+
+  console.log(newsNest);
 
   var diffExtent = d3.extent(diffArray,function(d){return d; });
   var colorScale = d3.scaleLinear().domain(diffExtent).range(["green","red"]);
