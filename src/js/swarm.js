@@ -67,6 +67,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
   var mouseoverOffsetX = 20;
   var mouseoverOffsetY = -14;
   var stepperSequence = ["swarm","swarm","swarm-scatter","mini-multiple"];
+  var companyImages = ["the new york times","the wall street journal","los angeles times","usa today"]
+
 	function getAverage(data){
 
 		if(cut == "gender" && group == "all"){
@@ -128,12 +130,13 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
   var height = 250 - margin.top - margin.bottom;
   var container = d3.select(".swarm");
 
-  var chartTitle = container.append("p")
-    .attr("class","chart-title")
-    .text("Newsrooms, Broken-down by Gender")
-    ;
   var chartTopSection = container.append("div")
     .attr("class","chart-top-section")
+    ;
+
+  var chartTitle = container.append("p")
+    .attr("class","chart-title")
+    .html("Newsrooms, Broken-down <span>by Gender</span>")
     ;
 
   function buildStepper(){
@@ -173,7 +176,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
     var stepperPlayText = stepperPlay.append("p")
       .attr("class","stepper-play-text")
-      .text("Start")
+      .text("Start Tour")
       ;
 
     stepperContainerToggle
@@ -306,61 +309,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     //
     // searchSpectrum();
 
-
-  var searchDiv = chartTopSection.append("div")
-    .attr("class","swarm-chart-search-div")
-
-  searchDiv
-    .append("input")
-    .attr("class","swarm-chart-search")
-    .attr("placeholder","Find a Newsroom")
-    .on("focus",function(d){
-      searchResultsContainer.style("display","block")
-    })
-    .on("focusout",function(d){
-      searchResultsContainer.style("display",null)
-    })
-    ;
-
-  var searchResultsContainer = searchDiv
-    .append("div")
-    .attr("class","swarm-chart-search-results");
-
-  var searchAlphaSort = searchResultsContainer
-    .append("div")
-    .attr("class","swarm-chart-search-results-alpha-container");
-
-  searchAlphaSort.append("p")
-    .text("filter")
-    .attr("class","swarm-chart-search-results-alpha-label");
-
-  searchAlphaSort
-    .append("div")
-    .attr("class","swarm-chart-search-results-alpha-item-container")
-    .selectAll("p")
-    .data(["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"])
-    .enter()
-    .append("p")
-    .attr("class","swarm-chart-search-results-alpha-item")
-    .text(function(d){
-      return d;
-    })
-    ;
-
-  var searchResults = searchResultsContainer.append("div")
-    .attr("class","swarm-chart-search-results-result-container")
-    .selectAll("div")
-    .data(newsIDInfo)
-    .enter()
-    .append("div")
-    .attr("class","swarm-chart-search-results-result")
-    .append("p")
-    .attr("class","swarm-chart-search-results-result-text")
-    .text(function(d){
-      return d.Company;
-    })
-    ;
-
   var xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]);
   var yScale = d3.scaleLinear().domain([0,.1]).range([height,0]);
 
@@ -485,8 +433,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
   var newsMap = d3.map(newsNest,function(d){return d.key});
 
-  console.log(newsNest);
-
   var diffExtent = d3.extent(diffArray,function(d){return d; });
   var colorScale = d3.scaleLinear().domain(diffExtent).range(["green","red"]);
   var genderColorScale = d3.scaleLinear().domain([.2,.5,.8]).range(["#2161fa","#dddddd","#ff3333"]);
@@ -497,6 +443,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
   var cell;
   var cellCircle;
   var cellImages;
+  var cellText;
 
   var chartAxis = chartDiv.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -522,7 +469,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     }
 
     function mouseOverEvents(data,element){
-      console.log(data);
       if(chartType == "swarm" || chartType == "new"){
 
         element.style("stroke",function(){
@@ -586,7 +532,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     }
 
     function changeTitle(){
-      var title = "Newsrooms, Broken Down by Gender";
+      var title = "Newsrooms, Broken Down <span>by Gender</span>";
       if(cut=="race"){
         var title = "White/Non-White Breakdown of Newsrooms vs. City";
       }
@@ -596,11 +542,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       else if(chartType == "arrow-scatter"){
         title = "Change in Gender Breakdown from 2002 - 2017"
       }
-      chartTitle.text(title);
+      chartTitle.html(title);
     }
     function setWidths(chartType){
       if(chartType == "swarm"){
-        // margin = {top: 40, right: 100, bottom: 20, left: 100};
+        margin = {top: 40, right: 20, bottom: 20, left: 20};
         width = 1000 - margin.left - margin.right;
         height = 250 - margin.top - margin.bottom;
         if(cut == "race"){
@@ -615,7 +561,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         }
       }
       if(chartType == "swarm-scatter"){
-        // margin = {top: 40, right: 100, bottom: 20, left: 100};
+        margin = {top: 40, right: 20, bottom: 20, left: 20};
         width = 800 - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
         xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]).clamp(true);
@@ -623,6 +569,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         newsNestAverageT1 = d3.mean(newsNest,function(d){ return d.value.currentYear;});
       }
       if(chartType == "mini-multiple"){
+        margin = {top: 40, right: 50, bottom: 20, left: 50};
         width = 1000 - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
       }
@@ -643,7 +590,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .attr("height",height+margin.top+margin.bottom)
         .transition()
         .duration(duration)
-        .attr("width",width+margin.top+margin.bottom)
+        .attr("width",width+margin.left+margin.right)
         ;
 
       chartG
@@ -657,7 +604,26 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     }
+    // function cellTextShow(){
+    //
+    //   if (chartType == "mini-multiple"){
+    //     cellText
+    //       .style("opacity",function(d){
+    //         if(d.value.top25==true){
+    //           return 1;
+    //         }
+    //         return null;
+    //       })
+    //       ;
+    //   }
+    //   else if(chartType !="new"){
+    //     cellText
+    //       .style("opacity",null);
+    //   }
+    // }
+
     changeTitle();
+    // cellTextShow();
 
     if(chartType!="new"){
       setWidths(chartType);
@@ -1334,9 +1300,22 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           return "translate(" + d.x + "," + d.y + ")";
         })
         .attr("class","swarm-image-container")
+
+      // cellImages
+        // .each(function(d,i){
+        //   d.value.top25 = false;
+        //   if(i < 23){// > cellImages.size()-23){
+        //      d.value.top25 = true;
+        //   }
+        // })
         ;
 
       cellImages
+        // .filter(function(d){
+        //   if(companyImages.indexOf(d.value.companyName)> -1){
+        //     return d;
+        //   }
+        // })
         .append("image")
         .attr("class","swarm-image")
         .attr("xlink:href",function(d){
@@ -1349,6 +1328,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           if(d.value.companyName == "los angeles times"){
             return "assets/la-times-logo.png"
           }
+          if(d.value.companyName == "usa today"){
+            return "assets/usa-today-logo.svg"
+          }
           return null;
         })
         .attr("width",function(d){
@@ -1358,44 +1340,95 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           return d.value.radius*2*.7;
         })
         ;
+      function capitalizeFirstLetter(string) {
+          return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+
+      function wrap(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.1, // ems
+              y = text.attr("y"),
+              dy = parseFloat(text.attr("dy")),
+              tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+          while (word = words.pop()) {
+            line.push(capitalizeFirstLetter(word));
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [capitalizeFirstLetter(word)];
+              tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", lineHeight + dy + "em").text(capitalizeFirstLetter(word));
+            }
+          }
+        });
+      }
+
+      // cellText = cellImages
+      //   .filter(function(d){
+      //     if(companyImages.indexOf(d.value.companyName) == -1){
+      //       return d;
+      //     }
+      //   })
+      //   .append("text")
+      //   .attr("class","swarm-company-name")
+      //   .text(function(d){
+      //     return d.value.companyName;
+      //   })
+      //   .attr("dy",0)
+      //   .style("opacity",0)
+      //   ;
+
+      // cellText
+      //   .call(wrap, 70);
+      //   ;
+
       buildAxis();
       buildAverage();
 
     }
     if(chartType == "mini-multiple"){
-        var miniMargin = {top: 0, right: 10, bottom: 0, left: 10};
-        var miniWidth = 50-miniMargin.left - miniMargin.right;
-        var miniHeight = 80 - miniMargin.top - miniMargin.bottom;
+
+        var miniMargin = {top: 0, right: 20, bottom: 0, left: 20};
+        var miniWidth = 70-miniMargin.left - miniMargin.right;
+        var miniHeight = 161 - miniMargin.top - miniMargin.bottom;
         var multipleY = d3.scaleLinear().domain([.2,.5]).range([miniHeight,0]);
-
-        var miniMulitpleCount = Math.floor(width/(miniWidth+miniMargin.left+miniMargin.right));
-        console.log(miniMulitpleCount);
-
-        var total = cellImages.size();
-
-        cellImages
-          .filter(function(d,i){
-            return i > total-23;
-          })
-          .each(function(d){
-            console.log("here");
-          })
-          .transition()
-          .duration(duration)
-          .attr("transform", function(d,i){
-            console.log(i);
-            return "translate(" + i*miniMultipleWidth + "," + yScale(getPercentType("supGender",d.value)) + ")"
-          });
-          ;
+        var miniTextHeight = 46;
+        var miniMulitpleCount = Math.floor(width/(miniWidth+miniMargin.left+miniMargin.right))+1;
+        //
+        // cellImages.selectAll("image")
+        //   .attr("width",miniWidth+miniMargin.left+miniMargin.right)
+        //   .attr("height",miniTextHeight)
+        //   ;
+        //
+        // chartAxis
+        //   .select("g")
+        //   .transition()
+        //   .duration(250)
+        //   .style("opacity",0)
+        //   .on("end",function(d){
+        //     d3.select(this).remove();
+        //   })
+        //   ;
+        //
+        // chartDiv.select(".swarm-average").remove();
         //
         // cellImages
+        //   .filter(function(d){
+        //     return d.value.top25 == true;
+        //   })
         //   .transition()
         //   .duration(duration)
         //   .attr("transform", function(d,i){
-        //     return "translate(" +  + "," + yScale(getPercentType("supGender",d.value)) + ")"
-        //   });
+        //     var left = +i%miniMulitpleCount*(miniWidth+miniMargin.left+miniMargin.right);
+        //     var top = +Math.floor(i/miniMulitpleCount)*(miniHeight+miniMargin.top+miniMargin.bottom);
+        //     return "translate(" + left + "," + top + ")"
+        //   })
         //   ;
-
 
     }
   }
@@ -1404,6 +1437,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
   var footerContainer = container.append("div")
     .attr("class","footer-container")
+    ;
+
+  footerContainer.append("div")
+    .attr("class","news-lab-logo")
     ;
 
   footerContainer.append("div")
@@ -1417,6 +1454,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       return d;
     })
     ;
+
 
   function buildToggles(){
     var toggles = footerContainer.append("div")
@@ -1492,6 +1530,61 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         buildChart(currentChart);
       })
       ;
+
+    var searchDiv = toggles.append("div")
+      .attr("class","swarm-chart-search-div")
+
+    searchDiv
+      .append("input")
+      .attr("class","swarm-chart-search")
+      .attr("placeholder","Find a Newsroom")
+      .on("focus",function(d){
+        searchResultsContainer.style("display","block")
+      })
+      .on("focusout",function(d){
+        searchResultsContainer.style("display",null)
+      })
+      ;
+
+    var searchResultsContainer = searchDiv
+      .append("div")
+      .attr("class","swarm-chart-search-results");
+
+    var searchAlphaSort = searchResultsContainer
+      .append("div")
+      .attr("class","swarm-chart-search-results-alpha-container");
+
+    searchAlphaSort.append("p")
+      .text("filter")
+      .attr("class","swarm-chart-search-results-alpha-label");
+
+    searchAlphaSort
+      .append("div")
+      .attr("class","swarm-chart-search-results-alpha-item-container")
+      .selectAll("p")
+      .data(["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"])
+      .enter()
+      .append("p")
+      .attr("class","swarm-chart-search-results-alpha-item")
+      .text(function(d){
+        return d;
+      })
+      ;
+
+    var searchResults = searchResultsContainer.append("div")
+      .attr("class","swarm-chart-search-results-result-container")
+      .selectAll("div")
+      .data(newsIDInfo)
+      .enter()
+      .append("div")
+      .attr("class","swarm-chart-search-results-result")
+      .append("p")
+      .attr("class","swarm-chart-search-results-result-text")
+      .text(function(d){
+        return d.Company;
+      })
+      ;
+
 
     var leaderToggleData = ["all","leader"];
     //

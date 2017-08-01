@@ -249,15 +249,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       .attr("height",height+margin.top+margin.bottom)
       ;
 
-    // var searchDiv = container.append("div")
-    //   .attr("class","swarm-chart-search-div")
-    //
-    // searchDiv
-    //   .append("input")
-    //   .attr("class","swarm-chart-search")
-    //   .attr("placeholder","Find a Newsroom")
-    //   ;
-
     var chartDivText = chartDiv.append("div")
       .attr("class","arrow-scatter-chart-wrapper-text-div")
       .style("transform", "translate(" + margin.left+"px" + "," + margin.top+"px" + ")")

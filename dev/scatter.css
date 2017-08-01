@@ -12,7 +12,7 @@
   border: 1px solid rgba(127, 125, 156, 0.54);
   color: black;
   cursor: pointer;
-  border: solid 1px rgba(127, 125, 156, 0.75);
+  /* border: solid 1px rgba(127, 125, 156, 0.75); */
   padding: 0px 8px;
   /* box-shadow: inset 0 1px 2px rgba(0,0,0,0.08); */
   margin-left: -13px;
@@ -26,7 +26,7 @@
   margin-top: 0px;
   margin-bottom: 0px;
   background-color: #fff;
-  height: 25px;
+  height: 28px;
 }
 
 .histogram-chart-toggle-type{
@@ -129,22 +129,23 @@
   width: 150px;
   background-size: contain;
   background-repeat: no-repeat;
-  margin-top: 2px;
-  margin-left: 14px;
   /* display: none; */
   background-position-x: -30px;
   order: 2;
+  background-position-y: -9px;
+  padding-top: 1px;
 }
 
 
 .content-title {
-    font-size: 47px;
+    font-size: 35px;
     font-family: 'Roboto';
     text-align: center;
-    font-weight: 100;
+    font-weight: 300;
     margin: 0px;
-    color: #222;
+    color: rgba(0, 0, 0, 0.77);
     margin-top: -10px;
+    -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -157,18 +158,19 @@ p {
 }
 
 .chart-title {
-    font-size: 18px;
+    font-size: 13px;
     font-family: 'Roboto';
     text-align: center;
-    font-weight: 500;
-    margin-top: 20px;
+    font-weight: 400;
+    margin-top: 30px;
     color: #222;
     /* position: absolute; */
     /* left: 0px; */
     /* right: 0px; */
     /* margin: 0 auto; */
     /* top: 47px; */
-    margin-bottom: 20px;
+    text-align: left;
+    padding-left: 20px;
 }
 
 .histogram-chart-toggle-wrapper {
@@ -179,6 +181,8 @@ p {
     left: 0px;
     right: 0px;
     top: 0px;
+    width: 380px;
+    margin: 0 auto;
 }
 
 .back-curve {
@@ -265,10 +269,6 @@ p {
     justify-content: center;
     height: 30px;
     margin-bottom: 20px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
     width: 250px;
 }
 
@@ -472,8 +472,10 @@ p {
     font-size: 14px;
     font-weight: 500;
     display: flex;
-    width: 280px;
+    width: 550px;
     flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
 }
 
 .stepper-item {
@@ -499,12 +501,12 @@ p {
 
 .footer-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     position: relative;
     width: 100%;
     position: absolute;
     transform: translate(0,100%);
-    top: 100%;
+    bottom: -30px;
 }
 
 .table-rows .histogram-chart-toggle-wrapper {
@@ -543,20 +545,21 @@ p {
 }
 
 .stepper-container-text {
-    font-size: 13px;
-    font-weight: 500;
-    height: 49px;
+    font-size: 17px;
+    font-weight: 300;
     overflow: hidden;
-    color: rgba(0, 0, 0, 0.48);
-    line-height: 16px;
+    color: #222;
     display: block;
-    width: 100%;
+    line-height: 24px;
+    margin-top: 14px;
+    text-align: center;
 }
 
 .stepper-toggle-row {
     width: 100%;
     display: flex;
-    margin-top: 9px;
+    margin-top: 15px;
+    justify-content: center;
 }
 
 .stepper-item-container {
@@ -569,7 +572,7 @@ p {
     font-size: 12px;
     font-weight: 500;
     color: #222;
-    letter-spacing: .3px;
+    letter-spacing: .2px;
     pointer-events: none;
 }
 
@@ -622,10 +625,9 @@ p {
 .swarm-chart-search-results {
     position: absolute;
     width: 248px;
-    bottom: -8px;
+    bottom: 12px;
     background: white;
     z-index: 1000;
-    margin-top: 12px;
     padding: 8px 0;
     background-color: #fff;
     border: 1px solid #ccc;
@@ -729,8 +731,8 @@ p {
     font-weight: 500;
     color: #989898;
     letter-spacing: .5px;
-    top: -25px;
-    left: 16px;
+    top: 0px;
+    left: -59px;
 }
 
 
@@ -763,6 +765,7 @@ p {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
+    margin-top: 60px;
 }
 
 .asne-logo {
@@ -787,4 +790,51 @@ p {
     position: absolute;
     right: -31px;
     top: 21px;
+}
+
+.swarm-company-name {
+    font-family: 'Roboto';
+    text-anchor: start;
+    font-size: 11.5px;
+    text-transform: capitalize;
+    font-weight: 500;
+    fill: rgba(0, 0, 0, 0.74);
+    pointer-events: none;
+    opacity: 0;
+    dominant-baseline: text-after-edge;
+}
+
+.swarm-company-name tspan {
+    text-transform: capitalize;
+}
+
+.asne-logo-text {
+    font-family: 'Roboto';
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: 900;
+    color: rgba(0, 0, 0, 0.37);
+    letter-spacing: .3px;
+}
+
+.asne-logo-text span {
+    text-transform: lowercase;
+    font-weight: 500;
+}
+
+.news-lab-logo:before {
+    content: 'In Partnership';
+    font-family: 'Roboto';
+    font-size: 11px;
+    left: 5px;
+    top: 0px;
+    position: absolute;
+    color: rgb(136, 136, 136);
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.chart-title span {
+    font-weight: 600;
+    color: #444;
 }
