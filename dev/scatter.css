@@ -126,7 +126,7 @@
 .news-lab-logo{
   background: url("assets/news_lab_logo.png");
   height: 75px;
-  width: 150px;
+  width: 220px;
   background-size: contain;
   background-repeat: no-repeat;
   /* display: none; */
@@ -138,14 +138,15 @@
 
 
 .content-title {
-    font-size: 35px;
+    font-size: 42px;
     font-family: 'Roboto';
     text-align: center;
     font-weight: 300;
     margin: 0px;
     color: rgba(0, 0, 0, 0.77);
-    margin-top: -10px;
+    margin-top: -6px;
     -webkit-font-smoothing: antialiased;
+    letter-spacing: -.5px;
 }
 
 body {
