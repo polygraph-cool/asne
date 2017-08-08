@@ -1,4 +1,5 @@
 # to do
+* add headlines
 * search commands
 * geo highlight
 * geo highlighted stroke color is darker than fill
@@ -11,6 +12,9 @@
 * add leadership toggle to swarm
 * iframes
 * hosting
+* profile pages
+* underlying data points for race
+* start tour button does resume thing when viz is finished loading
 
 # queries
 

@@ -18,7 +18,7 @@
   margin-left: -13px;
   background: white;
   text-align: center;
-  line-height: 25px;
+  line-height: 28px;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -27,6 +27,12 @@
   margin-bottom: 0px;
   background-color: #fff;
   height: 28px;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently                                   supported by Chrome and Opera */
 }
 
 .histogram-chart-toggle-type{
@@ -163,7 +169,6 @@ p {
     font-family: 'Roboto';
     text-align: center;
     font-weight: 400;
-    margin-top: 30px;
     color: #222;
     /* position: absolute; */
     /* left: 0px; */
@@ -171,7 +176,8 @@ p {
     /* margin: 0 auto; */
     /* top: 47px; */
     text-align: left;
-    padding-left: 20px;
+    margin: 0 auto;
+    margin-top: 30px;
 }
 
 .histogram-chart-toggle-wrapper {
@@ -277,7 +283,7 @@ p {
     box-shadow: inset 2px 3px 3px rgba(0,0,0,0.07);
     border-radius: 3px;
     box-sizing: border-box;
-    border: 1px #e2e2e2 solid;
+    border: 1px #d0cece solid;
     height: 30px;
     width: 100%;
     padding-left: 9px;
@@ -567,6 +573,7 @@ p {
     display: flex;
     margin-left: 10px;
     line-height: 23px;
+    position: relative;
 }
 
 .stepper-play-text {
@@ -605,7 +612,9 @@ p {
 }
 
 .stepper-item.stepper-item:hover {
-    text-decoration: underline;
+    color: #2161fa;
+    opacity: 1;
+    font-weight: 500;
 }
 
 .stepper-play-button:hover{font-weight: 500;background-color: #F5F5F5;color: black;box-shadow: inset 0 3px 5px rgba(0,0,0,.125);border-color: #adadad;}
@@ -628,7 +637,7 @@ p {
     width: 248px;
     bottom: 12px;
     background: white;
-    z-index: 1000;
+    z-index: 1000000000;
     padding: 8px 0;
     background-color: #fff;
     border: 1px solid #ccc;
@@ -732,7 +741,7 @@ p {
     font-weight: 500;
     color: #989898;
     letter-spacing: .5px;
-    top: 0px;
+    top: 2px;
     left: -59px;
 }
 
@@ -828,7 +837,7 @@ p {
     font-family: 'Roboto';
     font-size: 11px;
     left: 5px;
-    top: 0px;
+    top: 3px;
     position: absolute;
     color: rgb(136, 136, 136);
     font-size: 11px;
@@ -837,5 +846,166 @@ p {
 
 .chart-title span {
     font-weight: 600;
-    color: #444;
+    color: #222;
+}
+
+.stepper-item-hover {
+    position: absolute;
+    width: 140px;
+    background: white;
+    top: 45px;
+    transform: translateX(calc(-50% + 3px ));
+    border: 1px solid #d8d8d8;
+    border-radius: 4px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.10);
+    font-size: 12px;
+    text-align: center;
+    padding: .3rem .3rem;
+    line-height: 15px;
+    font-weight: 400;
+    color: #222;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.stepper-item-hover:after, .stepper-item-hover:before {
+  bottom: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.stepper-item-hover:after{
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #ffffff;
+  border-width: 9px;
+  left: 0px;
+  right: 0px;
+  margin: 0 auto;
+}
+
+.stepper-item-hover:before{
+  border-color: rgba(194, 225, 245, 0);
+  border-bottom-color: #b1b1b1;
+  border-width: 10px;
+  left: 0px;
+  right: 0px;
+  margin: 0 auto;
+}
+
+.stepper-item-hover span{
+  font-weight:600;
+}
+
+
+.swarm-annnotation-line {
+    stroke: #d8d8d8;
+    stroke-width: 5px;
+}
+
+.swarm-annnotation-text {
+    text-anchor: end;
+    transform: translateX(-10px);
+    dominant-baseline: middle;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    fill: #b3b3b3;
+}
+
+.swarm-scatter-x-axis-lines .swarm-axis-line{
+  stroke:rgba(0,0,0,.15);
+  stroke-dasharray:1px,2px;
+  shape-rendering: initial;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.swarm-scatter-y-axis-lines .swarm-axis-line{
+  stroke:rgba(0,0,0,.15);
+  stroke-dasharray:1px,2px;
+  shape-rendering: initial;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* stroke: #E6E6E6; */
+}
+.scatter-axis-chart-text{
+  font-size: 13px;
+  font-weight: 600;
+  fill: #333;
+  transform: translateY(20px);
+  dominant-baseline: text-before-edge;
+  /* text-transform: uppercase; */
+}
+
+
+.scatter-axis-chart-regular {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.scatter-axis-chart-text-side-one {
+    font-weight: 400;
+}
+
+.scatter-axis-chart-side-one {
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.scatter-axis-chart-side-one:after {
+    content: "→";
+    position: absolute;
+    right: -22px;
+    top: -2px;
+    content: "←";
+    position: absolute;
+    left: -22px;
+    top: -2px;
+}
+
+.scatter-axis-chart-side {
+    font-weight: 400;
+    font-size: 12px;
+    transform: translateY(21px);
+}
+
+
+.swarm-scatter-rect-gender-line {
+    stroke: whitesmoke;
+    stroke-width: 70px;
+}
+
+.scatter-axis-chart-text-y {
+    font-weight: 400;
+    font-size: 14px;
+    text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
+    dominant-baseline: middle;
+}
+
+.swarm-scatter-regression-line {
+    stroke: rgba(253, 204, 0, 0.61);
+    stroke-width: 3px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.swarm-scatter-regression-annotation-text {
+    font-family: 'Roboto';
+    text-anchor: end;
+    font-size: 12px;
+    text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
+}
+
+.swarm-scatter-regression-annotation-line{
+  stroke:black;
+}
+
+
+.swarm-scatter-y-annnotation-text {
+    text-anchor: end;
+    /* transform: initial; */
 }

@@ -166,7 +166,38 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     var stepperPlay = stepperContainerToggle.append("div")
       .attr("class","stepper-play-button")
       .on("click",function(d){
-        buildChart("swarm-scatter");
+        stepperPlayText.text("Resume Tour")
+
+        var previous;
+
+        stepperContainerToggleContainerSteps
+          .each(function(d,i){
+            console.log(d3.select(this));
+            if(d3.select(this).classed("stepper-item-selected")==true){
+              previous = i;
+            }
+          })
+          ;
+
+        console.log(previous);
+
+        currentChart = stepperSequence[previous+1]
+
+        stepperContainerToggleContainerSteps.classed("stepper-item-selected",function(d,i){
+          if(d==currentChart && i == previous+1){
+            return true;
+          }
+          return false;
+        })
+        ;
+
+        if(previous+1==1){
+          cut = "race";
+        }
+        else if(previous+1==0){
+          cut = "gender"
+        }
+        buildChart(currentChart);
       })
       ;
 
@@ -179,9 +210,13 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       .text("Start Tour")
       ;
 
-    stepperContainerToggle
+    var stepperContainerToggleContainer = stepperContainerToggle
       .append("div")
       .attr("class","stepper-item-container")
+
+    var toggleText = ["Newsroom <span>by Gender</span>","Newsroom <span>by Race</span>","Staff vs. Leadership, <span>by Gender</span>"];
+
+    var stepperContainerToggleContainerSteps = stepperContainerToggleContainer
       .selectAll("p")
       .data(stepperSequence)
       .enter()
@@ -194,6 +229,22 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       })
       .text(function(d,i){
         return i+1;
+      })
+      .on("mouseover",function(d,i){
+        var item = i;
+        stepperContainerToggleContainerHover
+          .style("left",function(d,i){
+            var left = item*15.89;
+            return left+"px";
+          })
+          .style("visibility","visible")
+          .html(function(){
+            return toggleText[item];
+          })
+          ;
+      })
+      .on("mouseout",function(){
+        stepperContainerToggleContainerHover.style("visibility",null);
       })
       .on("click",function(d,i){
 
@@ -226,6 +277,14 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           cut = "gender"
         }
         buildChart(d);
+      })
+      ;
+
+    var stepperContainerToggleContainerHover = stepperContainerToggleContainer
+      .append("div")
+      .attr("class","stepper-item-hover")
+      .html(function(d){
+        return "";
       })
       ;
   }
@@ -331,6 +390,36 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     .attr("class","swarm-chart-wrapper")
     .attr("width",width+margin.left+margin.right)
     .attr("height",height+margin.top+margin.bottom)
+    ;
+
+  var defs = chartDiv.append("svg:defs")
+
+  defs
+    .append("marker")    // This section adds in the arrows
+    .attr("id", "arrow-head")
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 0)
+    .attr("refY", 0)
+    .attr("markerWidth", 5)
+    .attr("markerHeight", 3)
+    .attr("orient", "auto")
+    .append("path")
+    .attr("d", "M0,-5L10,0L0,5")
+    .attr("fill","#d8d8d8")
+    ;
+
+  defs
+    .append("marker")    // This section adds in the arrows
+    .attr("id", "arrow-head-black")
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 0)
+    .attr("refY", 0)
+    .attr("markerWidth", 7)
+    .attr("markerHeight", 10)
+    .attr("orient", "auto")
+    .append("path")
+    .attr("d", "M0,-5L10,0L0,5")
+    .attr("fill","#000000")
     ;
 
   var filteredMapData = mapData.filter(function(d){
@@ -534,7 +623,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     function changeTitle(){
       var title = "Newsrooms, Broken Down <span>by Gender</span>";
       if(cut=="race"){
-        var title = "White/Non-White Breakdown of Newsrooms vs. City";
+        var title = " <span>White/Non-White</span> Breakdown of Newsrooms vs. City";
       }
       if(chartType == "swarm-scatter"){
         title = "Gender Break-down of Staff vs. Leaders";
@@ -561,7 +650,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         }
       }
       if(chartType == "swarm-scatter"){
-        margin = {top: 40, right: 20, bottom: 20, left: 20};
+        margin = {top: 40, right: 20, bottom: 40, left: 20};
         width = 800 - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
         xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]).clamp(true);
@@ -573,6 +662,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         width = 1000 - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
       }
+
+      chartTitle.transition().duration(500).style("width",width+"px")
 
       chartDivContainer
         .transition()
@@ -675,118 +766,297 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         })
         ;
 
+      function wrapTwo(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.3, // ems
+              y = text.attr("y"),
+              dy = parseFloat(text.attr("dy")),
+              tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+          }
+        });
+      }
+
+      function wrap(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.05, // ems
+              y = text.attr("y"),
+              dy = parseFloat(text.attr("dy")),
+              tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em").style("font-weight", 500);
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").style("font-size","12px").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+          }
+        });
+      }
+
       function buildAxis(){
+
+
+        function leastSquares(xSeries, ySeries) {
+      		var reduceSumFunc = function(prev, cur) { return prev + cur; };
+
+      		var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
+      		var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
+
+      		var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
+      			.reduce(reduceSumFunc);
+
+      		var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
+      			.reduce(reduceSumFunc);
+
+      		var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
+      			.reduce(reduceSumFunc);
+
+      		var slope = ssXY / ssXX;
+      		var intercept = yBar - (xBar * slope);
+      		var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
+
+      		return {slope:slope,intercept:intercept,r2:rSquare};
+      	}
+
+        var xValues = cellCircle.data().map(function(d){
+          return getPercentType("gender",d.value);
+        });
+        var yValues = cellCircle.data().map(function(d){
+          return getPercentType("supGender",d.value);
+        });
 
         var chartAxisContainer = chartAxis.append("g")
 
         var chartAxisLines = chartAxisContainer.append("g")
 
+        var linear = leastSquares(xValues,yValues);
+
+        chartAxisLines
+          .append("g")
+          .attr("class","swarm-scatter-rect-gender-g")
+          .append("line")
+          .attr("class","swarm-scatter-rect-gender-line")
+          .attr("x1",0)
+          .attr("x2",width)
+          .attr("y1",function(d){
+            return height/2;
+          })
+          .attr("y2",function(d){
+            return height/2;
+          })
+          ;
+
         chartAxisLines.append("line")
-         .attr("x1",width/2)
-         .attr("x2",width/2)
+          .attr("class","swarm-scatter-regression-line")
+          .attr("x1", 0)
+          .attr("y1", yScale(linear.intercept))
+          .attr("x2", xScale(.8))
+          .attr("y2", yScale( (.8 * linear.slope) + linear.intercept ))
+          ;
+
+        var regressionAnnotation = chartAxisLines.append("g")
+          .attr("class","swarm-scatter-regression-annotation")
+          .attr("transform","translate("+xScale(.8*.8)+","+yScale( (.8*.8 * linear.slope) + linear.intercept )+")")
+
+        regressionAnnotation
+          .append("text")
+          .attr("class","swarm-scatter-regression-annotation-text")
+          .text("Newsrooms with female leadership tend to have more women on staff")
+          .attr("transform","translate("+-40+","+-55+")")
+          .attr("dy",0)
+          .call(wrapTwo,200)
+          ;
+
+        regressionAnnotation
+          .append("line")
+          .attr("class","swarm-scatter-regression-annotation-line")
+          .attr("x1", -35)
+          .attr("y1", -35)
+          .attr("x2", -5)
+          .attr("y2", -5)
+          .attr("marker-end","url(#arrow-head-black)")
+          ;
+
+        chartAxisLines
+         .append("g")
+         .attr("class","swarm-scatter-x-axis-lines")
+         .selectAll("line")
+         .data([.25,.35,.45,.55,.65,.75])
+         .enter()
+         .append("line")
+         .attr("x1",function(d){
+           return xScale(d);
+         })
+         .attr("x2",function(d){
+           return xScale(d);
+         })
          .attr("y1",0)
          .attr("y2",height)
          .attr("class","swarm-axis-line")
+         ;
 
         chartAxisLines.append("g")
+          .attr("class","swarm-scatter-y-axis-lines")
+          .selectAll("line")
+          .data([.3,.5,.4,.6,.7])
+          .enter()
           .append("line")
           .attr("x1",0)
           .attr("x2",width)
-          .attr("y1",height/2)
-          .attr("y2",height/2)
+          .attr("y1",function(d){
+            return yScale(d);
+          })
+          .attr("y2",function(d){
+            return yScale(d);
+          })
           .attr("class","swarm-axis-line")
+          ;
 
         var chartAxisText = chartAxisContainer.append("g")
 
         chartAxisText
           .append("g")
           .selectAll("text")
-          .data(["100% Female Leaders","100% Male Leaders"])
+          .data(["← More Male","Staff Gender","More Female →"])
           .enter()
           .append("text")
           .attr("x",function(d,i){
-            return width/2;
+            if(i==1){
+              return width/2;
+            }
+            if(i==0){
+              return width/2 - 200;
+            }
+            return width/2 + 200;
           })
           .attr("y",function(d,i){
-            if(i==0){
-              return 0;
-            }
             return height
           })
-          .attr("class","swarm-axis-tick-text")
+          .attr("class",function(d,i){
+            if(i!=1){
+              return "swarm-axis-tick-text scatter-axis-chart-text scatter-axis-chart-side"
+            }
+            return "swarm-axis-tick-text scatter-axis-chart-text";
+          })
           .text(function(d){
             return d;
           })
           .style("text-anchor",function(d,i){
-            return "middle"
-          })
-          .style("dominant-baseline",function(d,i){
-            if(i==1){
-              return "text-before-edge";
-            }
-            return "text-after-edge"
-          })
-          ;
-
-        chartAxisText
-          .append("g")
-          .selectAll("rect")
-          .data(["100% Male Staff","100% Female Staff"])
-          .enter()
-          .append("rect")
-          .attr("x",function(d,i){
             if(i==0){
-              return 0
+              return "end"
             }
-            return width
-          })
-          .attr("y",height/2)
-          .attr("width",100)
-          .attr("height",32)
-          .attr("class","swarm-axis-tick-rect")
-          .style("transform",function(d,i){
             if(i==1){
-              return "translate(-100%,0)"
+              return "middle"
             }
-            return null;
-            // return "translate(100%,0)"
+            return "start"
           })
           ;
 
         chartAxisText
           .append("g")
           .selectAll("text")
-          .data(["100% Male Staff","100% Female Staff"])
+          .data([{text:"75% Leaders are Female",value:.75},{text:"65% Female",value:.65},{text:"Leaders: 50-50 Male/Female",value:.5},{text:"35% Female",value:.35},{text:"25% Leaders are Female",value:.25}])
           .enter()
           .append("text")
-          .attr("x",function(d,i){
-            if(i==0){
-              return 0
-            }
-            return width
+          .attr("transform","translate("+(width-10)+",0)")
+          // .attr("x",function(d,i){
+          //   return width
+          // })
+          .attr("y",function(d,i){
+            return yScale(d.value);
           })
-          .attr("y",height/2)
-          .attr("class","swarm-axis-tick-text")
-          .text(function(d){
-            return d;
+          .attr("class",function(d,i){
+            return "swarm-axis-tick-text scatter-axis-chart-text-y";
           })
           .style("text-anchor",function(d,i){
-            if(i==0){
-              return "start";
-            }
             return "end"
           })
+          .text(function(d){
+            return d.text;
+          })
+          .attr("dy",0)
+          .call(wrap,95)
           ;
       }
 
       function buildAverage(){
 
           chartDiv.select(".swarm-average").remove();
+          chartDiv.select(".swarm-annnotation").remove();
 
-          var chartAverage = chartDiv.append("g")
+         var chartAverage = chartDiv.append("g")
              .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
              .attr("class","swarm-average")
              ;
+
+         var chartAnnotation = chartAverage.append("g")
+          .attr("class","swarm-annnotation")
+          ;
+
+        chartAnnotation.append("line")
+          .attr("x1",xScale(.65))
+          .attr("x2",xScale(.7))
+          .attr("y1",height-20)
+          .attr("y2",height-20)
+          .attr("class","swarm-annnotation-line")
+          .attr("marker-end", function(d){
+            return "url(#arrow-head)"
+          })
+          ;
+
+        chartAnnotation.append("text")
+          .style("transform",function(){
+            var transform = "translate("+(xScale(.65)-10)+"px,"+(height-20)+"px) rotate(0)";
+            return transform;
+          })
+          .attr("class","swarm-annnotation-text swarm-scatter-y-annnotation-text")
+          .text("Women Staff")
+          ;
+
+         chartAnnotation.append("line")
+           .attr("x1",20)
+           .attr("x2",20)
+           .attr("y1",yScale(.75))
+           .attr("y2",0)
+           .attr("class","swarm-annnotation-line")
+           .attr("marker-end", function(d){
+             return "url(#arrow-head)"
+           })
+           ;
+
+         chartAnnotation.append("text")
+           .style("transform",function(){
+             var transform = "translate("+20+"px,"+(yScale(.75)+10)+"px) rotate(270deg)";
+             console.log(transform);
+             return transform;
+           })
+           .attr("class","swarm-annnotation-text swarm-scatter-y-annnotation-text")
+           .text("Women Leaders")
+           ;
+
+
+
 
          chartAverage.append("circle")
            .attr("class","swarm-circle swarm-circle-average")
@@ -1005,6 +1275,31 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       function buildAverage(){
 
           chartDiv.select(".swarm-average").remove();
+          chartDiv.select(".swarm-annnotation").remove();
+
+          var chartAnnotation = chartDiv.append("g")
+             .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+             .attr("class","swarm-annnotation")
+             ;
+
+          chartAnnotation.append("line")
+            .attr("x1",width-147)
+            .attr("x2",width-10)
+            .attr("y1",height/2+25)
+            .attr("y2",height/2+25)
+            .attr("class","swarm-annnotation-line")
+            .attr("marker-end", function(d){
+              return "url(#arrow-head)"
+            })
+            ;
+
+          chartAnnotation.append("text")
+            .attr("x",width-147)
+            .attr("y",height/2+25)
+            .attr("class","swarm-annnotation-text")
+            .text("More Women")
+            ;
+
 
           var chartAverage = chartDiv.append("g")
              .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -1187,6 +1482,30 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       function buildAverage(){
 
           chartDiv.select(".swarm-average").remove();
+          chartDiv.select(".swarm-annnotation").remove();
+
+          var chartAnnotation = chartDiv.append("g")
+             .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+             .attr("class","swarm-annnotation")
+             ;
+
+          chartAnnotation.append("line")
+            .attr("x1",width-147)
+            .attr("x2",width-10)
+            .attr("y1",height/2+25)
+            .attr("y2",height/2+25)
+            .attr("class","swarm-annnotation-line")
+            .attr("marker-end", function(d){
+              return "url(#arrow-head)"
+            })
+            ;
+
+          chartAnnotation.append("text")
+            .attr("x",width-147)
+            .attr("y",height/2+25)
+            .attr("class","swarm-annnotation-text")
+            .text("More Women")
+            ;
 
           var chartAverage = chartDiv.append("g")
              .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -1344,29 +1663,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           return string.charAt(0).toUpperCase() + string.slice(1);
       }
 
-      function wrap(text, width) {
-        text.each(function() {
-          var text = d3.select(this),
-              words = text.text().split(/\s+/).reverse(),
-              word,
-              line = [],
-              lineNumber = 0,
-              lineHeight = 1.1, // ems
-              y = text.attr("y"),
-              dy = parseFloat(text.attr("dy")),
-              tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-          while (word = words.pop()) {
-            line.push(capitalizeFirstLetter(word));
-            tspan.text(line.join(" "));
-            if (tspan.node().getComputedTextLength() > width) {
-              line.pop();
-              tspan.text(line.join(" "));
-              line = [capitalizeFirstLetter(word)];
-              tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", lineHeight + dy + "em").text(capitalizeFirstLetter(word));
-            }
-          }
-        });
-      }
+
 
       // cellText = cellImages
       //   .filter(function(d){
