@@ -15,6 +15,8 @@
 * profile pages
 * underlying data points for race
 * start tour button does resume thing when viz is finished loading
+* comparisons to other industries
+* toggles need to match view of viz if use tour buttons
 
 # queries
 
