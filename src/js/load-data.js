@@ -11,7 +11,6 @@ import arrowScatter from './arrow-scatter'
 import swarmLeader from './swarm-leader'
 import maps from './maps'
 
-
 function cleanTk(d) {
 	return {
 		...d,
