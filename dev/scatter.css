@@ -105,6 +105,7 @@
 .arrow-scatter {
     display: block;
     margin-top: 170px;
+    position: relative;
 }
 
 .maps-chart-svg{
@@ -158,6 +159,8 @@
 body {
     margin: 0px;
     padding: 0px;
+    /* height: 1000px; */
+    /* overflow: hidden; */
 }
 
 p {
@@ -177,7 +180,8 @@ p {
     /* top: 47px; */
     text-align: left;
     margin: 0 auto;
-    margin-top: 20px;
+    position: absolute;
+    top: 0px;
 }
 
 .histogram-chart-toggle-wrapper {
@@ -353,6 +357,7 @@ p {
     max-width: 1000px;
     margin: 0 auto;
     position: relative;
+    padding-bottom: 100px;
 }
 
 .arrow-scatter-chart-wrapper {
@@ -360,7 +365,10 @@ p {
     position: relative;
 }
 
-.slope-mini-multiple-div {margin-top: 90px;margin-bottom: 110px;}
+.slope-mini-multiple-div {
+    position: absolute;
+    left: 0px;
+}
 
 .arrow-scatter-axis-text {
     font-family: 'Roboto';
@@ -408,25 +416,22 @@ p {
 .mini-multiple-text {
     font-family: 'Roboto';
     text-transform: capitalize;
-    font-size: 11px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 400;
     text-align: center;
+    line-height: 13px;
+    color: rgba(0, 0, 0, 0.86);
 }
 
 .mini-multiple-div-container {
-    display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    max-width: 60rem;
     margin: 0 auto;
-    margin-top: 20px;
-    margin-bottom: 40px;
 }
 
 .mini-multiple-div {
-    width: 56px;
     margin-bottom: 20px;
-    padding: 0 7px;
+    position: absolute;
 }
 
 .slope-line {stroke-width: 1.5;}
@@ -447,10 +452,9 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 50px;
+    height: 60px;
     margin-bottom: -1px;
-    /* border-bottom: 1px solid #c3c3c3; */
-    padding-bottom: 12px;
+    padding-bottom: 10px;
 }
 
 .slope-small-text {
@@ -458,6 +462,7 @@ p {
     text-anchor: middle;
     font-family: 'Roboto';
     font-weight: 400;
+    text-shadow: 0 1px 0 #ffffff, 1px 0 0 #ffffff, 0 -1px 0 #ffffff, -1px 0 0 #ffffff;
 }
 
 .slope-small-text-bold {
@@ -512,9 +517,10 @@ p {
     justify-content: space-between;
     position: relative;
     width: 100%;
-    position: absolute;
-    transform: translate(0,100%);
-    bottom: -30px;
+    /* position: absolute; */
+    /* transform: translate(0,100%); */
+    /* bottom: -83px; */
+    margin-top: 14px;
 }
 
 .table-rows .histogram-chart-toggle-wrapper {
@@ -637,7 +643,7 @@ p {
 .swarm-chart-search-results {
     position: absolute;
     width: 248px;
-    bottom: 12px;
+    bottom: 16px;
     background: white;
     z-index: 1000000000;
     padding: 8px 0;
@@ -681,6 +687,7 @@ p {
     padding-bottom: 7px;
     width: 90%;
     margin: 0 auto;
+    display: none;
 }
 
 .swarm-chart-search-results-alpha-item:hover {
@@ -688,9 +695,9 @@ p {
 }
 
 .swarm-chart-search-results-result-container {
-    padding-top: 6px;
-    border-top: 1px solid #c1c1c1;
-    height: 90px;
+    /* padding-top: 6px; */
+    /* border-top: 1px solid #c1c1c1; */
+    height: 100px;
     overflow: scroll;
 }
 
@@ -776,7 +783,7 @@ p {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 .asne-logo {
@@ -867,6 +874,7 @@ p {
     color: #222;
     pointer-events: none;
     visibility: hidden;
+    z-index: 100;
 }
 
 .stepper-item-hover:after, .stepper-item-hover:before {

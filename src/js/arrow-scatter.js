@@ -112,10 +112,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 	var horzScale = d3.scaleLinear().domain([0,1]).range([0,width])
 	var container = d3.select(".arrow-scatter");
 
-  container.append("p")
-    .attr("class","chart-title")
-    .text("Change in Gender Break-down from 2002 - 2017")
-    ;
+  // container.append("p")
+  //   .attr("class","chart-title")
+  //   .text("Change in Gender Break-down from 2002 - 2017")
+  //   ;
 
   function buildToggles(){
     var toggles = container.append("div")
@@ -602,7 +602,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
         return null;
       })
 
-
     axisGs
       .append("line")
       .attr("class","arrow-scatter-line-axis")
@@ -832,10 +831,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
     var multipleY = d3.scaleLinear().domain([.2,.5]).range([miniHeight,0]);
 
 
-    miniMultiple.append("p")
-      .attr("class","chart-title")
-      .text("Change in Break-down of Female Staff, 2001 - 2016")
-      ;
+    // miniMultiple.append("p")
+    //   .attr("class","chart-title")
+    //   .text("Change in Break-down of Female Staff, 2001 - 2016")
+    //   ;
 
     var miniMultipleWrapper = miniMultiple
       .append("div")
@@ -848,15 +847,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
       .append("div")
       .attr("class","mini-multiple-div")
       ;
-
-    // var searchDivMini = miniMultiple.append("div")
-    //   .attr("class","swarm-chart-search-div")
-    //
-    // searchDivMini
-    //   .append("input")
-    //   .attr("class","swarm-chart-search")
-    //   .attr("placeholder","Find a Newsroom")
-    //   ;
 
     miniMultipleWrapper
       .append("div")

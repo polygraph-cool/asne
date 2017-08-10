@@ -18,6 +18,8 @@
 * comparisons to other industries
 * toggles need to match view of viz if use tour buttons
 * tool tips on scatter plots
+* search pushes node to the top
+* down arrow on the saerch box
 
 # queries
 

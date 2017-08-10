@@ -105,10 +105,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data) {
 	var horzScale = d3.scaleLinear().domain([0,1]).range([0,width])
 	var container = d3.select(".swarm-leader");
 
-  container.append("p")
-    .attr("class","chart-title")
-    .text("Newsrooms Broken-down by Gender")
-    ;
+  // container.append("p")
+  //   .attr("class","chart-title")
+  //   .text("Newsrooms Broken-down by Gender")
+  //   ;
 
   var toggles = container.append("div")
     .attr("class","histogram-chart-toggle-wrapper");

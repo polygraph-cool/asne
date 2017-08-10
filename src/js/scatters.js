@@ -114,10 +114,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 	var container = d3.select(".scatter");
 
 
-  container.append("p")
-    .attr("class","chart-title")
-    .text("Gender Break-down of Staff vs. Leaders")
-    ;
+  // container.append("p")
+  //   .attr("class","chart-title")
+  //   .text("Gender Break-down of Staff vs. Leaders")
+  //   ;
 
   function buildToggles(){
     var toggles = container.append("div")
