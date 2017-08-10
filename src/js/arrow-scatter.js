@@ -57,7 +57,7 @@ var states = [
 function init(mapData,latLongData,newsIDLocation,newsIDInfo) {
 
 	var cut = "gender"
-  var countMin =  99;
+  var countMin =  50;
 
 	function getAverage(data){
 		if(cut == "gender"){

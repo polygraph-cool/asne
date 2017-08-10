@@ -20,6 +20,8 @@
 * tool tips on scatter plots
 * search pushes node to the top
 * down arrow on the saerch box
+* get white black asian numbers in tool tips
+* tool tip for leadership chart
 
 # queries
 

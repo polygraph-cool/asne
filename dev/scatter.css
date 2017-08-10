@@ -312,18 +312,18 @@ p {
 .swarm-chart-tool-tip {
     position: absolute;
     font-family: 'Roboto';
-    font-size: 13px;
+    font-size: 14px;
     text-transform: capitalize;
     background: white;
-    border: 1px solid rgba(193, 193, 193, 0.53);
+    border: 1px solid rgba(193, 193, 193, 0.8);
     padding: 4px 9px;
     z-index: 1000;
-    border-radius: 5px;
+    border-radius: 2px;
     text-align: left;
     width: auto;
     padding-right: 1.5rem;
-    font-weight: 500;
-    color: #333;
+    font-weight: 600;
+    color: #353535;
     visibility: hidden;
 }
 
@@ -1017,4 +1017,66 @@ p {
 .swarm-scatter-y-annnotation-text {
     text-anchor: end;
     /* transform: initial; */
+}
+
+.swarm-chart-race-col p:last-of-type{
+  border-bottom:none;
+}
+
+.swarm-chart-tool-tip div:last-of-type{
+  border-bottom:none;
+}
+
+.swarm-chart-tool-tip-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.swarm-chart-tool-tip-label{
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+}
+
+.swarm-chart-race-col .swarm-chart-tool-tip-label {
+    border-bottom: 1px solid #ccc;
+}
+
+.swarm-chart-tool-tip-company {
+    margin-bottom: 5px;
+}
+
+.swarm-chart-tool-tip-gender {
+    font-size: 16px;
+}
+
+
+.swarm-chart-tool-tip-gender span {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 11px;
+}
+
+
+.swarm-chart-tool-tip-gender-label {}
+
+.swarm-chart-race-col {width: 65px;}
+
+.swarm-chart-tool-tip-race-container {
+    display: flex;
+}
+
+
+.swarm-chart-tool-tip-race-text {
+    line-height: 24px;
+    font-size: 16px;
+    text-align: right;
+    border-bottom: 1px solid #ccc;
+}
+
+.swarm-chart-race-col {
+}
+
+.swarm-chart-race-col-race-text {
+    flex-grow: 1;
 }
