@@ -22,6 +22,12 @@
 * down arrow on the saerch box
 * get white black asian numbers in tool tips
 * tool tip for leadership chart
+* fade in line on mini-multiple after tween
+* more impactful titles
+* arrow attribute tween
+* fix color scales to match film dialgoeu project
+* add in averages for arrow chart full
+* add in annotations ofr arrow chart full
 
 # queries
 

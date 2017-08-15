@@ -172,7 +172,7 @@ p {
     font-family: 'Roboto';
     text-align: center;
     font-weight: 400;
-    color: #222;
+    color: #8a8787;
     /* position: absolute; */
     /* left: 0px; */
     /* right: 0px; */
@@ -182,6 +182,7 @@ p {
     margin: 0 auto;
     position: absolute;
     top: 0px;
+    display: none;
 }
 
 .histogram-chart-toggle-wrapper {
@@ -325,6 +326,7 @@ p {
     font-weight: 600;
     color: #353535;
     visibility: hidden;
+    min-width: 120px;
 }
 
 .swarm-circle:hover {
@@ -853,8 +855,7 @@ p {
 }
 
 .chart-title span {
-    font-weight: 600;
-    color: #222;
+    /* font-weight: 600; */
 }
 
 .stepper-item-hover {
@@ -934,9 +935,15 @@ p {
   stroke-linejoin: round;
 }
 .swarm-scatter-y-axis-lines .swarm-axis-line{
-  stroke:rgba(0,0,0,.15);
+  stroke: rgba(0, 0, 0, 0.36);
   stroke-dasharray:1px,2px;
-  shape-rendering: initial;
+  /* shape-rendering: initial; */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* stroke: #E6E6E6; */
+  stroke: rgba(0, 0, 0, 0.36);
+  stroke-dasharray: 1px,2px;
+  /* shape-rendering: initial; */
   stroke-linecap: round;
   stroke-linejoin: round;
   /* stroke: #E6E6E6; */
@@ -1079,4 +1086,88 @@ p {
 
 .swarm-chart-race-col-race-text {
     flex-grow: 1;
+}
+
+
+.swarm-text {
+    font-family: 'Roboto';
+    font-size: 11px;
+    text-transform: capitalize;
+    font-weight: 400;
+    fill: rgba(0, 0, 0, 0.8);
+    transform: translate(-7px,1px);
+    dominant-baseline: middle;
+    text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
+    text-anchor: end;
+    pointer-events: none;
+    /* fill-opacity: .8; */
+}
+
+.swarm-arrow-x-axis-lines .swarm-axis-line{stroke: rgba(0, 0, 0, 0.15);/* stroke-dasharray: 1px,2px; */stroke-linecap: round;stroke-linejoin: round;}
+.swarm-arrow-tick-text{
+  text-anchor: middle;
+  font-family: 'Roboto';
+  font-size: 11px;
+  transform: translate(0,-13px);
+  font-weight: 400;
+  font-family: 'Roboto';
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 400;
+  fill: #9e9e9e;
+}
+
+
+.swarm-circle-two {
+    opacity: 0;
+    fill: #8e8e8e;
+    cursor: pointer;
+    cursor: hand;
+    stroke: #565656;
+    stroke-width: 1px;
+}
+
+.swarm-line {
+    opacity: 0;
+    /* fill: #868686; */
+    stroke-width: 1px;
+    /* stroke: none; */
+    stroke: rgba(167, 167, 167, 0.34);
+}
+
+.swarm-arrow-annotation-top-line {
+    stroke: rgba(0, 0, 0, 0.46);
+    stroke-width: 2px;
+    shape-rendering: crispEdges;
+    stroke-opacity: .5;
+}
+
+.swarm-arrow-annotation-top-text {
+    font-size: 13px;
+    font-family: 'Roboto';
+    fill: black;
+    text-anchor: middle;
+    font-weight: 400;
+    transform: translate(0,-5px);
+    letter-spacing: -.3px;
+}
+
+.swarm-arrow-annotation-left {
+    text-anchor: end;
+    font-family: 'Roboto';
+    font-size: 11.5px;
+    font-weight: 500;
+    transform: translate(-16px,-4px);
+    /* text-transform: uppercase; */
+    fill: #191919;
+}
+
+.swarm-text:before {
+}
+
+.swarm-text-dash {
+    stroke: #4c4c4c;
+    /* shape-rendering: crispEdges; */
+    stroke-width: 1px;
+    opacity: 0;
 }
