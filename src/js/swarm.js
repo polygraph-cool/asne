@@ -1,3 +1,73 @@
+function wrapTwo(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.3, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
+}
+
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.05, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em").style("font-weight", 500);
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").style("font-size","12px").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
+}
+function wrapThree(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.2, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
+}
 
 var states = [
   ["Maine","ME",1,"Northeast",23],
@@ -518,13 +588,31 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     ;
 
   var linearGradientRight = defs
-    .append("defs")
     .append("linearGradient")
     .attr("id","gradient-blue")
     .attr("x1",0)
     .attr("x2",1)
     .attr("y1",0)
     .attr("y2",0)
+
+  var linearGradientAverage = defs
+    .append("linearGradient")
+    .attr("id","gradient-average")
+    .attr("x1",0)
+    .attr("x2",1)
+    .attr("y1",0)
+    .attr("y2",0)
+
+  linearGradientAverage
+    .append("stop")
+    .attr("stop-color","black")
+    .attr("stop-opacity",.15)
+
+  linearGradientAverage
+    .append("stop")
+    .attr("offset","100%")
+    .attr("stop-color","black")
+    .attr("stop-opacity",1)
 
   linearGradientRight
     .append("stop")
@@ -538,7 +626,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     .attr("stop-opacity",1)
 
   var linearGradientLeft = defs
-    .append("defs")
     .append("linearGradient")
     .attr("id","gradient-red")
     .attr("x1",1)
@@ -558,7 +645,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     .attr("stop-opacity",1)
 
   var linearGradientStartRight = defs
-    .append("defs")
     .append("linearGradient")
     .attr("id","gradient-right")
     .attr("x1",0)
@@ -578,7 +664,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     .attr("stop-opacity",1)
 
   var linearGradientStartLeft = defs
-    .append("defs")
     .append("linearGradient")
     .attr("id","gradient-left")
     .attr("x1",1)
@@ -987,7 +1072,26 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         width = 1000 - margin.left - margin.right;
         height = 2*(miniTextHeight+miniHeight+miniMargin.top+miniMargin.bottom) - margin.top - margin.bottom;
       }
-      if(chartType=="arrow-scatter" || chartType == "arrow-scatter-full"){
+      if(chartType=="arrow-scatter"){
+        margin = {top: 70, right: 60, bottom: 40, left: 200};
+        width = 800 - margin.left - margin.right;
+        height = 500 - margin.top - margin.bottom;
+        xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]).clamp(true);
+        yScale = d3.scaleLinear().domain([.2,.8]).range([height,0]).clamp(true);
+      }
+      if(chartType=="arrow-scatter-full"){
+        margin = {top: 70, right: 60, bottom: 40, left: 60};
+        width = 800 - margin.left - margin.right;
+        height = 500 - margin.top - margin.bottom;
+        xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]).clamp(true);
+        yScale = d3.scaleLinear().domain([.2,.8]).range([height,0]).clamp(true);
+        if(cut=="gender"){
+          newsNestAverageT0 = d3.mean(newsNest,function(d){ return d.value.previousYear;});
+          newsNestAverageT1 = d3.mean(newsNest,function(d){ return d.value.currentYear;});
+        }
+      }
+
+      if(chartType=="swarm-profile"){
         margin = {top: 70, right: 60, bottom: 40, left: 60};
         width = 800 - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
@@ -1118,54 +1222,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             buildAxis();
           })
           ;
-      }
-
-      function wrapTwo(text, width) {
-        text.each(function() {
-          var text = d3.select(this),
-              words = text.text().split(/\s+/).reverse(),
-              word,
-              line = [],
-              lineNumber = 0,
-              lineHeight = 1.3, // ems
-              y = text.attr("y"),
-              dy = parseFloat(text.attr("dy")),
-              tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-          while (word = words.pop()) {
-            line.push(word);
-            tspan.text(line.join(" "));
-            if (tspan.node().getComputedTextLength() > width) {
-              line.pop();
-              tspan.text(line.join(" "));
-              line = [word];
-              tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-            }
-          }
-        });
-      }
-
-      function wrap(text, width) {
-        text.each(function() {
-          var text = d3.select(this),
-              words = text.text().split(/\s+/).reverse(),
-              word,
-              line = [],
-              lineNumber = 0,
-              lineHeight = 1.05, // ems
-              y = text.attr("y"),
-              dy = parseFloat(text.attr("dy")),
-              tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em").style("font-weight", 500);
-          while (word = words.pop()) {
-            line.push(word);
-            tspan.text(line.join(" "));
-            if (tspan.node().getComputedTextLength() > width) {
-              line.pop();
-              tspan.text(line.join(" "));
-              line = [word];
-              tspan = text.append("tspan").style("font-size","12px").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-            }
-          }
-        });
       }
 
       function buildAxis(){
@@ -1488,14 +1544,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
              return "Women Leaders";
            })
            ;
-
-          console.log(newsNestAverageT1,newsNestSupAverageT1,yScale.domain(),yScale.range());
-
          chartAverage.append("circle")
            .attr("class","swarm-circle swarm-circle-average")
            .attr("cx",xScale(newsNestAverageT1))
            .attr("cy",function(d){
-             console.log(yScale(newsNestSupAverageT1));
              return yScale(newsNestSupAverageT1);
            })
            .attr("r",6)
@@ -2488,7 +2540,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
       var items = cellFiltered.size()+2;
 
-      var delay = duration+1000;
+      var delay = duration+500;
 
       cell
         .filter(function(d){
@@ -2594,18 +2646,14 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         })
         .attr("d",function(d){
           var t0 = xScale(getPercentType("gender-old",d.value))
-          var t1 = xScale(getPercentType("gender",d.value))
-
-          if(Math.abs(d.value.diff) < .01){
+          var t1 = xScale(getPercentType("gender-old",d.value))
+          if(Math.abs(d.value.diff) < .02){
             return "";
           }
-          // if(Math.abs(d.value.diff) < .008){
-          //   return drawDiamond(t0,t1)
-          // }
-          // if(d.value.arrowSort==0){
-          //   return drawArrow(0,width,(d.value.arrowSort*rowSpacing + rowSpacing/2))
-          // }
-          return drawArrow(t0,t1,(d.value.arrowSort*rowSpacing + rowSpacing/2))
+          if(d.value.diff>.02){
+            return drawArrow(xScale(getPercentType("gender-old",d.value)),xScale(getPercentType("gender-old",d.value)+.02),(d.value.arrowSort*rowSpacing + rowSpacing/2))
+          }
+          return drawArrow(xScale(getPercentType("gender-old",d.value)),xScale(getPercentType("gender-old",d.value)-.02),(d.value.arrowSort*rowSpacing + rowSpacing/2))
         })
         .attr("fill",function(d){
           if(d.value.diff > 0){
@@ -2619,6 +2667,27 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           return d.value.arrowSort*10+delay+duration;
         })
         .style("opacity",1)
+        .transition()
+        .duration(1000)
+        .delay(function(d,i){
+          return d.value.arrowSort*30;
+        })
+        .attrTween("d",function(d){
+          var t0 = xScale(getPercentType("gender-old",d.value))
+          var t1 = xScale(getPercentType("gender",d.value))
+          return function(t){
+            if(Math.abs(d.value.diff) < .02){
+              return "";
+            }
+            if(d.value.diff>.02){
+              return drawArrow(xScale(getPercentType("gender-old",d.value)),(xScale(getPercentType("gender",d.value))-xScale(getPercentType("gender-old",d.value)+.02))*t+xScale(getPercentType("gender-old",d.value)+.02),(d.value.arrowSort*rowSpacing + rowSpacing/2))
+            }
+            else if(d.value.diff<-.02){
+              return drawArrow(xScale(getPercentType("gender-old",d.value)),xScale(getPercentType("gender-old",d.value)-.02)-(Math.abs(xScale(getPercentType("gender",d.value))-xScale(getPercentType("gender-old",d.value)-.02))*t),(d.value.arrowSort*rowSpacing + rowSpacing/2))
+            }
+          }
+
+        })
         ;
 
       // cellCircle
@@ -2869,11 +2938,14 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
       var chartAnnotationData;
 
+      var annotationDataDiff = [];
+
       var cellFiltered = cell
         .sort(function(a,b){
           return b.value.diff - a.value.diff;
         })
         .each(function(d,i){
+          annotationDataDiff.push(d.value.diff)
           d.value.arrowSort = i;
         })
 
@@ -2892,7 +2964,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .duration(duration)
         .style("opacity",0)
         ;
-
 
       cellText
         .style("opacity",function(d,i){
@@ -2971,7 +3042,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           }
           return xScale(getPercentType("gender",d.value))+4;
         })
-
 
       // cellCircleTwo
       //   .filter(function(d){
@@ -3066,7 +3136,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       //   })
       //   ;
 
-
       if(rebuildAxis){
         chartAxis
           .select("g")
@@ -3115,30 +3184,30 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
          })
          ;
 
-      //  chartAxisLines.append("g")
-      //    .attr("class","swarm-scatter-y-axis-lines")
-      //    .selectAll("line")
-      //    .data(d3.range(items))
-      //    .enter()
-      //    .append("line")
-      //    .attr("x1",function(d,i){
-      //      return -15
-      //    })
-      //    .attr("x2",width+15)
-      //    .attr("y1",function(d,i){
-      //      return i*rowSpacing;
-      //    })
-      //    .attr("y2",function(d,i){
-      //      return i*rowSpacing;
-      //    })
-      //    .attr("class","swarm-axis-line")
-      //    .style("opacity",function(d,i){
-      //      if(i%5 == 0){
-      //        return 1
-      //      }
-      //      return 0;
-      //    })
-      //    ;
+        //  chartAxisLines.append("g")
+        //    .attr("class","swarm-scatter-y-axis-lines")
+        //    .selectAll("line")
+        //    .data(d3.range(items))
+        //    .enter()
+        //    .append("line")
+        //    .attr("x1",function(d,i){
+        //      return -15
+        //    })
+        //    .attr("x2",width+15)
+        //    .attr("y1",function(d,i){
+        //      return i*rowSpacing;
+        //    })
+        //    .attr("y2",function(d,i){
+        //      return i*rowSpacing;
+        //    })
+        //    .attr("class","swarm-axis-line")
+        //    .style("opacity",function(d,i){
+        //      if(i%5 == 0){
+        //        return 1
+        //      }
+        //      return 0;
+        //    })
+        //    ;
 
        var chartAxisText = chartAxisContainer.append("g")
 
@@ -3190,6 +3259,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
        chartDiv.select(".swarm-average").remove();
        chartDiv.select(".swarm-annnotation").remove();
 
+       var annotationDataDiffData = [0,0];
+
        var chartAverage = chartDiv.append("g")
            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
            .attr("class","swarm-average")
@@ -3199,82 +3270,94 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .attr("class","swarm-annnotation")
         ;
 
-        // var chartAnnotationTop = chartAnnotation
-        //   .append("g")
-        //   .selectAll("g")
-        //   .data(["gender-old","gender"])
-        //   .enter()
-        //   .append("g")
-        //   .attr("class","swarm-arrow-annotation-top")
-        //   .attr("transform",function(d,i){
-        //     return "translate("+xScale(getPercentType(d,chartAnnotationData.value))+","+0+")"
-        //   })
-        //   .style("opacity",0)
-        //   ;
-        //
-        // chartAnnotationTop
-        //   .transition()
-        //   .duration(duration)
-        //   .delay(function(d,i){
-        //     if(i==0){
-        //       return delay;
-        //     }
-        //     return 0;
-        //   })
-        //   .style("opacity",1)
+       chartAverage.append("g")
+        // .attr("transform",function(d,i){
+        //   return "translate("+arrowXScale((newsNest.length-1)/2)+",0)"
+        // })
+        .append("path")
+        .attr("class","arrow-scatter-line arrow-scatter-line-average")
+        .attr("d",function(d){
+          console.log(newsNestAverageT0,newsNestAverageT1);
+          var t0 = xScale(newsNestAverageT0)
+          var t1 = xScale(newsNestAverageT1)
 
-        // var chartAnnotationLeft = chartAnnotation
-        //   .append("g")
-        //   .selectAll("text")
-        //   .data(["Gender Diversity Improved","Gender Diversity Dropped"])
-        //   .enter()
-        //   .append("text")
-        //   .attr("class","swarm-arrow-annotation-left")
-        //   .attr("x",0)
-        //   .attr("y",function(d,i){
-        //     if(i==0){
-        //       return 0;
-        //     }
-        //     return rowSpacing*(switchNum);
-        //   })
-        //   .text(function(d){
-        //     return d;
-        //   })
-        //   ;
-        //
-        // var chartAnnotationTopOffset = -30;
-        //
-        // chartAnnotationTop.append("text")
-        //   .attr("y",chartAnnotationTopOffset)
-        //   .attr("x",0)
-        //   .attr("class","swarm-arrow-annotation-top-text")
-        //   .style("fill",function(d){
-        //     if(d=="gender"){
-        //       return "#c1a427"
-        //     }
-        //     return "#888"
-        //   })
-        //   .text(function(d){
-        //     if(d=="gender"){
-        //       return "Staff in 2017"
-        //     }
-        //     return "Staff in 2001"
-        //   })
-        //   ;
-        //
-        // chartAnnotationTop.append("line")
-        //   .attr("y1",0)
-        //   .attr("y2",chartAnnotationTopOffset)
-        //   .attr("x1",0)
-        //   .attr("x2",0)
-        //   .attr("class","swarm-arrow-annotation-top-line")
-        //   .style("stroke",function(d){
-        //     if(d=="gender"){
-        //       return "#c1a427"
-        //     }
-        //     return "#888"
-        //   })
-        //   ;
+          if(Math.abs(newsNestAverageT1-newsNestAverageT0) < .02){
+            return drawDiamond(t0,t1,height/2+20)
+          }
+          // if(d.value.arrowSort==0){
+          //   return drawArrow(0,width,(d.value.arrowSort*rowSpacing + rowSpacing/2))
+          // }
+          return drawArrow(t0,t1,height/2+20)
+        })
+        .attr("fill",function(d){
+          if(newsNestAverageT1-newsNestAverageT0 > 0){
+            return "url(#gradient-average)"
+          }
+          return "url(#gradient)";
+        })
+        .attr("stroke","none")
+        .attr("fill-opacity",1)
+        ;
+
+       var chartAverageText = chartAverage
+          .append("g")
+          .attr("class","arrow-scatter-average-text")
+          .attr("transform",function(d,i){
+            return "translate("+xScale(newsNestAverageT1)+","+(height/2+20)+")"
+          })
+          ;
+
+        chartAverageText
+          .append("text")
+          .attr("class","arrow-scatter-average-text-label")
+          .text(function(d){
+            return "Overall";
+          })
+          ;
+
+       for (var item in annotationDataDiff){
+         if(annotationDataDiff[item]> .02){
+           annotationDataDiffData[0] =  annotationDataDiffData[0]+1
+         }
+         else if(annotationDataDiff[item] < -.02){
+           annotationDataDiffData[1] =  annotationDataDiffData[1]+1
+         }
+       }
+
+      console.log(annotationDataDiffData);
+
+       var chartAnnotationDiff = chartAnnotation
+        .selectAll("text")
+        .data(annotationDataDiffData)
+        .enter()
+        .append("text")
+        .attr("class","swarm-arrow-full-annotation-diff")
+        .attr("transform",function(d,i){
+          if(i==0){
+            return "translate("+xScale(.62)+","+(height*annotationDataDiffData[0]/items/2)+")"
+          }
+          return "translate("+xScale(.62)+","+height*(1-(annotationDataDiffData[1]/items/2))+")"
+        })
+        .text(function(d,i){
+          if(i==0){
+            return Math.round(d/items*100)+"% of newsrooms are comprised of more women vs. 2001"
+          }
+          return Math.round(d/items*100)+"% of newsrooms are comprised of fewer women vs. 2001"
+        })
+        .style("fill",function(d,i){
+          if(i==0){
+            return d3.color("blue").darker(.5)
+          }
+          return d3.color("red").darker(.5)
+        })
+        .attr("x",0)
+        .attr("y",0)
+        .attr("dy",0)
+        .call(wrapThree,200)
+        ;
+
+
+
 
 
       }

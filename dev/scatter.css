@@ -73,7 +73,7 @@
   overflow: visible;
   margin-bottom: -10px;
 }
-.arrow-scatter-line{/* fill: none; *//* fill: url(#grad); *//* stroke-width: 5; *//* fill: url(#C-gradient); *//* stroke: none; */}
+.arrow-scatter-line{/* fill: none; *//* fill: url(#grad); *//* stroke-width: 5; *//* fill: url(#C-gradient); *//* stroke: none; */fill: black;}
 .arrow-scatter-line-axis{
   shape-rendering:crispEdges;
   stroke: black;
@@ -1167,7 +1167,22 @@ p {
 
 .swarm-text-dash {
     stroke: #4c4c4c;
-    /* shape-rendering: crispEdges; */
+    shape-rendering: crispEdges;
     stroke-width: 1px;
     opacity: 0;
+}
+
+.swarm-arrow-full-annotation-diff tspan {
+    font-family: 'Roboto';
+    font-size: 15px;
+    text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
+    font-weight: 400;
+}
+
+.arrow-scatter-average-text-label {
+    dominant-baseline: middle;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 500;
+    text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
 }
