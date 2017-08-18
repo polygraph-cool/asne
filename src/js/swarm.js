@@ -865,7 +865,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
     var rebuildAxis = false;
 
-    if(previousCut!=cut || previousChart!=chartType){
+    if(previousCut!=cut || previousChart!=chartType || chartType == "table"){
       previousCut = cut;
       previousChart = chartType;
       rebuildAxis = true;
