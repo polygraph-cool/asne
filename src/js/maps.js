@@ -299,6 +299,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,stateTopo) {
   //   var xScale = d3.scaleLinear().domain([0,.7]).range([0,width]);
   //   var yScale = d3.scaleLinear().domain([.2,.5]).range([height,0]);
   //   var lineWidthScale = d3.scaleLinear().domain(totalExtent).range([1.4,2.5]).clamp(true)
+  //
   //   // var mapMarkers = mapSvg.append("g")
   //   //   .attr("class","map-markers")
   //   //   .selectAll("circle")
