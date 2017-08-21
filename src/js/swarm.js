@@ -2098,19 +2098,19 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
            var locations = [];
 
-           result = {
-           	ip: '24.194.26.74',
-           	country_code: 'US',
-           	country_name: 'United States',
-           	region_code: 'MA',
-           	region_name: 'Massachusetts',
-           	city: 'Boston',
-           	zip_code: '01230',
-           	time_zone: 'America/New_York',
-           	latitude: 42.3601,
-           	longitude: -71.0589,
-           	metro_code: 532,
-           };
+          //  result = {
+          //  	ip: '24.194.26.74',
+          //  	country_code: 'US',
+          //  	country_name: 'United States',
+          //  	region_code: 'MA',
+          //  	region_name: 'Massachusetts',
+          //  	city: 'Boston',
+          //  	zip_code: '01230',
+          //  	time_zone: 'America/New_York',
+          //  	latitude: 42.3601,
+          //  	longitude: -71.0589,
+          //  	metro_code: 532,
+          //  };
 
            cell
              .each(function(d){
