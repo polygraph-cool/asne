@@ -1,4 +1,5 @@
 import geolib from 'geolib'
+import locate from './utils/locate'
 
 function wrapTwo(text, width) {
   text.each(function() {
@@ -127,6 +128,7 @@ var states = [
   ;
 
 function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusData,stateTopo) {
+
   var alphaSort = ""
   var searchMap;
   var chartTableItem;
@@ -159,7 +161,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
   var mouseoverOffsetY = -14;
   var stepperSequence = ["swarm","swarm-scatter","arrow-scatter","arrow-scatter-full","table"];
   var companyImages = ["the new york times","the wall street journal","los angeles times","usa today"]
-  var tableData;
+  var tableData = [];
 	function getAverage(data){
 
 		if(cut == "gender" && group == "all"){
@@ -862,26 +864,26 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
   var duration = 750;
 
   function buildChart(chartType){
-
     var rebuildAxis = false;
 
-    if(previousCut!=cut || previousChart!=chartType || chartType == "table"){
-      previousCut = cut;
-      previousChart = chartType;
-      rebuildAxis = true;
+    if(chartType != "new"){
+      if(previousChart!=chartType || chartType == "table"){
+        previousChart = chartType;
+        rebuildAxis = true;
+      }
+      else{
+        rebuildAxis = false;
+      }
     }
-    else{
-      rebuildAxis = false;
-    }
-
 
     var highlightedPosition = [0,0,0];
 
-    var highlightedStrokeColor = "#4b487d"
+    var highlightedStrokeColor = "#555555"
+    var highlightedCircleStrokeDarkness = 2;
 
     function highlightedItem(selectedItem){
       if(chartType=="swarm" || chartType == "new"){
-        selectedItem.style("stroke-width","2px").style("stroke",highlightedStrokeColor);
+        selectedItem.style("stroke-width","2px").style("stroke",d3.color(selectedItem.style("stroke")).darker(highlightedCircleStrokeDarkness));
       }
     }
 
@@ -1002,13 +1004,18 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     function mouseOutEvents(data,element){
       if(chartType == "swarm" || chartType == "new"){
 
-        element.style("stroke",function(d){
-          if(+data.key == newsIdSelected){
-            return highlightedStrokeColor;
-          }
-          var value = getPercentType(cut,data.value);
-          return d3.color(genderColorScale(value)).darker(1);
-        });
+        element
+          .style("stroke",function(d){
+            var value = getPercentType(cut,d.value);
+            if(+d.key == newsIDSearch){
+              return newsIDSearchColor;
+            }
+            if(d.key == newsIdSelected){
+              return d3.color(genderColorScale(value)).darker(highlightedCircleStrokeDarkness);
+            }
+            return d3.color(genderColorScale(value)).darker(1);
+          })
+          ;
 
         chartToolTip
           .style("visibility",null)
@@ -1794,14 +1801,20 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           return d.value.radius
         })
         .style("stroke",function(d){
+          var value = getPercentType(cut,d.value);
           if(+d.key == newsIDSearch){
             return newsIDSearchColor;
           }
           if(d.key == newsIdSelected){
-            return highlightedStrokeColor
+            return d3.color(genderColorScale(value)).darker(highlightedCircleStrokeDarkness);
           }
-          var value = getPercentType(cut,d.value);
           return d3.color(genderColorScale(value)).darker(1);
+        })
+        .style("stroke-width",function(d){
+          if(d.key==newsIdSelected){
+            return "2px";
+          }
+          return null;
         })
         ;
 
@@ -1921,9 +1934,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         chartAverage.transition().duration(duration).delay(duration).style("opacity",1)
 
       }
-      if(rebuildAxis){
-        buildAverage();
-      }
+
+      buildAverage();
 
     }
     else if(chartType == "new"){
@@ -2082,28 +2094,78 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
              .attr("class","swarm-average")
              ;
 
-         var highlightedAnnotationOffset = height - highlightedPosition[1];
+         locate((err, result) => {
 
-         var highlightedAnnotation = chartAverage.append("g")
-            .attr("transform","translate("+highlightedPosition[0]+","+highlightedPosition[1]+")")
+           var locations = [];
 
-         highlightedAnnotation
-           .append("line")
-           .attr("class","swarm-axis-annotation-line")
-           .attr("x1",0)
-           .attr("x2",0)
-           .attr("y1",highlightedPosition[2])
-           .attr("y2",highlightedAnnotationOffset)
-           .style("stroke",highlightedStrokeColor)
-           ;
+           result = {
+           	ip: '24.194.26.74',
+           	country_code: 'US',
+           	country_name: 'United States',
+           	region_code: 'MA',
+           	region_name: 'Massachusetts',
+           	city: 'Boston',
+           	zip_code: '01230',
+           	time_zone: 'America/New_York',
+           	latitude: 42.3601,
+           	longitude: -71.0589,
+           	metro_code: 532,
+           };
 
-         highlightedAnnotation
-          .append("text")
-          .text(newsIdMap.get(newsIdSelected).Company)
-          .attr("class","swarm-axis-annotation-text")
-          .attr("y",highlightedAnnotationOffset+10)
-          ;
+           cell
+             .each(function(d){
+               if(d.value.hasLocation){
+                 var itemB = d.value.location;
+                 var distance = geolib.getDistanceSimple(result, itemB)
+                 if(distance < 200000){
+                   locations.push(d);
+                 }
+               }
+             })
+             ;
+             console.log(locations);
 
+           if(locations.length > 4){
+             locations = locations.sort(function(a,b){
+               return +b.value.maxTotal - +a.value.maxTotal;
+             }).slice(0,4)
+           }
+           if(locations.length != 0){
+             tableData = locations;
+             newsIdSelected = +locations[0].key;
+             highlightedPosition = [locations[0].x,locations[0].y,locations[0].value.radius];
+             console.log(locations[0]);
+
+             var highlightedAnnotationOffset = height - highlightedPosition[1];
+
+             var highlightedAnnotation = chartAverage.append("g")
+                .attr("transform","translate("+highlightedPosition[0]+","+highlightedPosition[1]+")")
+
+             highlightedAnnotation
+               .append("line")
+               .attr("class","swarm-axis-annotation-line")
+               .attr("x1",0)
+               .attr("x2",0)
+               .attr("y1",highlightedPosition[2])
+               .attr("y2",highlightedAnnotationOffset)
+               .style("stroke",highlightedStrokeColor)
+               ;
+
+             highlightedAnnotation
+              .append("text")
+              .text(newsIdMap.get(newsIdSelected).Company)
+              .attr("class","swarm-axis-annotation-text")
+              .attr("y",highlightedAnnotationOffset+10)
+              ;
+
+            cellCircle.each(function(d,i,j){
+              if(+d.key == newsIdSelected){
+                highlightedItem(d3.select(this));
+              }
+            })
+
+           }
+         })
          chartAverage.append("text")
            .attr("class","swarm-average-text swarm-average-text-label")
            .attr("x",xScale(newsNestAverageT1))
@@ -2139,12 +2201,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .enter()
         .append("g")
         .attr("class","swarm-cell-g")
-        .each(function(d){
-          if(d.key == newsIdSelected){
-            highlightedPosition = [d.x,d.y,d.value.radius];
-          }
-        })
         ;
+
       cellLine = cell
         .append("path")
         .attr("class","swarm-line")
@@ -2188,11 +2246,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .style("stroke",function(d){
           var value = getPercentType("gender",d.value);
           return d3.color(genderColorScale(value)).darker(1);
-        })
-        .each(function(d){
-          if(d.key == newsIdSelected){
-            highlightedItem(d3.select(this));
-          }
         })
         ;
 
@@ -3430,6 +3483,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       }
 
       function buildTable(){
+
         chartTableItem = chartDivContainerTable.selectAll("div")
           .data(tableData)
           .enter()
@@ -3566,7 +3620,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
     }
   }
-  tableData = newsNest.slice(0,4);
+  // tableData = newsNest.slice(0,4);
+  // table =
   buildChart("new");
 
   var footerContainer = container.append("div")
@@ -3782,7 +3837,24 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         }
         return null;
       })
+      .each(function(d){
+        if(d.value.hasLocation){
+          // var itemB = d.value.location;
+          // var distance = geolib.getDistanceSimple(location, itemB)
+          // if(distance < 200000){
+          //   distanceArray.push(d);
+          // }
+        }
+      })
+      // if(distanceArray.length > 4){
+      //   distanceArray = distanceArray.sort(function(a,b){
+      //     return +b.value.maxTotal - +a.value.maxTotal;
+      //   }).slice(0,4)
+      // }
+      // tableData = distanceArray;
+      // buildChart("table");
       .on("click",function(d){
+
         var location = d.value.location;
         var project = projection([+location.longitude,location.latitude]);
 
@@ -3793,6 +3865,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           ;
 
         var distanceArray = [];
+
         mapMarkers.each(function(d){
           if(d.value.hasLocation){
             var itemB = d.value.location;

@@ -26,6 +26,7 @@
 * more impactful titles
 * fix color scales to match film dialgoeu project
 * make annotations pop more on full arrow scatter
+* incorporate caitlyn's data on census
 
 # queries
 

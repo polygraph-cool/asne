@@ -733,11 +733,13 @@ p {
 .swarm-axis-annotation-text {
     font-family: 'Roboto';
     text-anchor: middle;
-    text-transform: capitalize;
-    font-size: 11.5px;
-    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 500;
     fill: #555;
     dominant-baseline: middle;
+    /* transform: translate(0,3px); */
+    letter-spacing: .5px;
 }
 
 .swarm-axis-annotation-line {
