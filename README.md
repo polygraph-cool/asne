@@ -1,32 +1,24 @@
 # to do
 * add headlines
+
 * search commands
-* geo highlight
+* geo highlight on other charts
 * geo highlighted stroke color is darker than fill
-* write changing text per screen
-* mini multiple chart (with highlight)
 * get other logos
 * 2x2 with racial statistics
-* racial and gender growth
-* map chart
 * add leadership toggle to swarm
 * iframes
 * hosting
-* profile pages
-* underlying data points for race
-* start tour button does resume thing when viz is finished loading
+* mouseover events on all charts
 * comparisons to other industries
 * toggles need to match view of viz if use tour buttons
-* tool tips on scatter plots
 * search pushes node to the top
 * down arrow on the saerch box
 * get white black asian numbers in tool tips
-* tool tip for leadership chart
-* fade in line on mini-multiple after tween
 * more impactful titles
 * fix color scales to match film dialgoeu project
-* make annotations pop more on full arrow scatter
 * incorporate caitlyn's data on census
+* have a default paper if not near a big one – set get location function as false until true
 
 # queries
 

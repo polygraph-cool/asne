@@ -278,7 +278,18 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     var stepperPlay = stepperContainerToggle.append("div")
       .attr("class","stepper-play-button")
       .on("click",function(d){
-        stepperPlayText.text("Resume Tour")
+        stepperPlayText
+          .transition()
+          .duration(750)
+          .text("Loading...")
+          .transition()
+          .duration(250)
+          .style("opacity",0)
+          .transition()
+          .duration(250)
+          .style("opacity",1)
+          .text("Resume Tour")
+          ;
 
         var previous;
 
@@ -1101,15 +1112,15 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         height = 2*(miniTextHeight+miniHeight+miniMargin.top+miniMargin.bottom) - margin.top - margin.bottom;
       }
       else if(chartType=="arrow-scatter"){
-        margin = {top: 70, right: 60, bottom: 40, left: 200};
-        width = 800 - margin.left - margin.right;
+        margin = {top: 70, right: 100, bottom: 40, left: 200};
+        width = 950 - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
         xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]).clamp(true);
         yScale = d3.scaleLinear().domain([.2,.8]).range([height,0]).clamp(true);
       }
       else if(chartType=="arrow-scatter-full"){
-        margin = {top: 70, right: 60, bottom: 40, left: 60};
-        width = 800 - margin.left - margin.right;
+        margin = {top: 70, right: 150, bottom: 40, left: 150};
+        width = 950 - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
         xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]).clamp(true);
         yScale = d3.scaleLinear().domain([.2,.8]).range([height,0]).clamp(true);
@@ -3014,9 +3025,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           })
           .text(function(d){
             if(d=="gender"){
-              return "Staff in 2017"
+              return "Staff Gender in 2017"
             }
-            return "Staff in 2001"
+            return "Staff Gender in 2001"
           })
           ;
 
@@ -3048,6 +3059,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       var chartAnnotationData;
 
       var annotationDataDiff = [];
+      var annotationTextArray = [];
 
       var cellFiltered = cell
         .sort(function(a,b){
@@ -3055,8 +3067,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         })
         .each(function(d,i){
           annotationDataDiff.push(d.value.diff)
+          annotationTextArray.push(getPercentType("gender",d.value))
           d.value.arrowSort = i;
         })
+
+      var annotationDataExtent = d3.extent(annotationTextArray);
 
       var items = cellFiltered.size();
 
@@ -3077,12 +3092,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       var textAmount = 15;
 
       cellText
-        .style("opacity",function(d,i){
-          if(d.value.arrowSort % textAmount == 0){
-            return 1
-          }
-          return 0;
-        })
         .transition()
         .duration(duration)
         .attr("x", function(d) {
@@ -3093,6 +3102,12 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             return xScale(getPercentType("gender",d.value))+6;
           }
           return xScale(getPercentType("gender",d.value))-6;
+        })
+        .style("opacity",function(d,i,j){
+          if(getPercentType("gender",d.value) == annotationDataExtent[0] || getPercentType("gender",d.value) == annotationDataExtent[1]){
+            return 1
+          }
+          return 0;
         })
         .style("fill",function(d){
           if(Math.abs(d.value.diff) < .02){
@@ -3123,8 +3138,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         ;
 
       cellDash
-        .style("opacity",function(d,i){
-          if(d.value.arrowSort % textAmount == 0){
+        .style("opacity",function(d,i,j){
+          if(getPercentType("gender",d.value) == annotationDataExtent[0] || getPercentType("gender",d.value) == annotationDataExtent[1]){
             return 1
           }
           return 0;
@@ -3199,6 +3214,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           return "url(#gradient-red)";
         })
         .style("stroke","none")
+        .transition()
+        .duration(750)
+        .delay(function(d,i){
+          return 250+d.value.arrowSort*10;
+        })
         .style("opacity",1)
         ;
 
@@ -3364,6 +3384,140 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .attr("class","swarm-annnotation")
         ;
 
+       var chartMouseoverBox = chartAverage.append("g")
+        .attr("class","arrow-swarm-full-mouseover")
+        .selectAll("rect")
+        .data(cellFiltered.data())
+        .enter()
+        .append("rect")
+        .attr("width",width)
+        .attr("height",rowSpacing)
+        .attr("x",function(d,i){
+          return 0
+        })
+        .attr("y",function(d){
+          return (d.value.arrowSort*rowSpacing) - rowSpacing/2;
+        })
+        .attr("class","arrow-swarm-full-mouseover-rect")
+        .on("mouseover",function(d){
+
+
+          chartAnnotationAverage.style("opacity",.5);
+          chartAnnotationDiff.style("opacity",.5);
+
+          var item = d.key;
+
+          chartAverageText
+            .style("visibility","hidden")
+            ;
+
+          cellText
+            .style("opacity",function(d,i,j){
+              if(d.key == item){
+                return 1
+              }
+              return 0;
+            })
+            .style("fill",function(d){
+              if(d.key == item){
+                return "black"
+              }
+              if(Math.abs(d.value.diff) < .02){
+                return "#888"
+              }
+              if(d.value.diff > 0){
+                return "blue";
+              }
+              return "red";
+            })
+            .style("font-size","14px");
+            ;
+
+          cellDash
+            .style("opacity",function(d,i,j){
+              if(d.key == item){
+                return 1
+              }
+              return 0;
+            })
+
+          cellLine
+            .attr("fill",function(d){
+              if(d.key == item){
+                return "black"
+              }
+              if(Math.abs(d.value.diff) < .02){
+                return "#888"
+              }
+              if(d.value.diff > 0){
+                return "url(#gradient-blue)";
+              }
+              return "url(#gradient-red)";
+            })
+            .style("stroke",function(d){
+              if(d.key == item){
+                return "black"
+              }
+              return "none"
+            })
+            ;
+
+        })
+        .on("mouseout",function(d){
+
+          chartAnnotationAverage.style("opacity",null);
+          chartAnnotationDiff.style("opacity",null);
+
+          chartAverageText
+            .style("visibility",null)
+            ;
+
+          cellDash
+            .style("opacity",function(d,i,j){
+              if(getPercentType("gender",d.value) == annotationDataExtent[0] || getPercentType("gender",d.value) == annotationDataExtent[1]){
+                return 1
+              }
+              return 0;
+            })
+
+          cellText
+            .style("opacity",function(d,i,j){
+              if(getPercentType("gender",d.value) == annotationDataExtent[0] || getPercentType("gender",d.value) == annotationDataExtent[1]){
+                return 1
+              }
+              return 0;
+            })
+            .style("fill",function(d){
+              if(Math.abs(d.value.diff) < .02){
+                return "#888"
+              }
+              if(d.value.diff > 0){
+                return "blue";
+              }
+              return "red";
+            })
+            .style("font-size",null);
+            ;
+
+          cellLine
+            .attr("fill",function(d){
+              if(Math.abs(d.value.diff) < .02){
+                return "#888"
+              }
+              if(d.value.diff > 0){
+                return "url(#gradient-blue)";
+              }
+              return "url(#gradient-red)";
+            })
+            .style("stroke",function(d){
+              return "none"
+            })
+            ;
+
+        })
+        ;
+
+
        chartAverage.append("g")
         // .attr("transform",function(d,i){
         //   return "translate("+arrowXScale((newsNest.length-1)/2)+",0)"
@@ -3371,7 +3525,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .append("path")
         .attr("class","arrow-scatter-line arrow-scatter-line-average")
         .attr("d",function(d){
-          console.log(newsNestAverageT0,newsNestAverageT1);
           var t0 = xScale(newsNestAverageT0)
           var t1 = xScale(newsNestAverageT1)
 
@@ -3399,13 +3552,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           .attr("transform",function(d,i){
             return "translate("+xScale(newsNestAverageT1)+","+(height/2+20)+")"
           })
-          ;
-
-        chartAverageText
           .append("text")
           .attr("class","arrow-scatter-average-text-label")
           .text(function(d){
-            return "Overall";
+            return "Average";
           })
           ;
 
@@ -3430,12 +3580,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           }
           return "translate("+xScale(.55)+","+height*(1-(annotationDataDiffData[1]/items/2))+")"
         })
-        .text(function(d,i){
-          if(i==0){
-            return Math.round(d/items*100)+"% of newsrooms are comprised of more women vs. 2001"
-          }
-          return Math.round(d/items*100)+"% of newsrooms are comprised of fewer women vs. 2001"
-        })
         .style("fill",function(d,i){
           if(i==0){
             return d3.color("blue");
@@ -3445,8 +3589,50 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .attr("x",0)
         .attr("y",0)
         .attr("dy",0)
-        .call(wrapThree,210)
+        .selectAll("tspan")
+        .data(function(d,i){
+            if(i==0){
+              return [Math.round(d/items*100)+"%"," of newsrooms ","gained","gender diversity, 2001 - 2017"];
+            }
+            return [Math.round(d/items*100)+"%"," of newsrooms ","lost","gender diversity, 2001 - 2017"];
+        })
+        .enter()
+        .append("tspan")
+        .attr("x",function(d,i){
+          if(i==3){
+            return "0";
+          }
+          return null;
+        })
+        .attr("y",0)
+        .attr("dy",function(d,i){
+          if(i==3){
+            return "1.4em";
+          }
+        })
+        // .style("text-decoration",function(d,i){
+        //   if(i==2){
+        //     return "underline";
+        //   }
+        //   return null;
+        // })
+        .text(function(d){
+          return d;
+        })
         ;
+
+      var chartAnnotationAverage = chartAverage
+         .append("g")
+         .attr("class","arrow-scatter-annoation-average")
+         .attr("transform",function(d,i){
+           return "translate("+xScale(.55)+","+(height/2+20)+")"
+         })
+         .append("text")
+         .attr("class","arrow-scatter-annoation-average-text")
+         .text(function(d){
+           return "Average change was a "+(Math.round((newsNestAverageT1-newsNestAverageT0)*1000)/10)+"% gain";
+         })
+         ;
 
       }
 

@@ -608,6 +608,8 @@ p {
     cursor: hand;
     transition: all 300ms;
     padding-bottom: 4px;
+    width: 93px;
+    justify-content: center;
 }
 
 .stepper-arrow {.arrow-right {
@@ -1154,7 +1156,7 @@ p {
     font-family: 'Roboto';
     fill: black;
     text-anchor: middle;
-    font-weight: 500;
+    font-weight: 400;
     transform: translate(0,-5px);
     letter-spacing: -.3px;
 }
@@ -1177,16 +1179,16 @@ p {
     shape-rendering: crispEdges;
     stroke-width: 1px;
     opacity: 0;
-    display: none;
 }
 
 .swarm-arrow-full-annotation-diff tspan {
     font-family: 'Roboto';
-    font-size: 12px;
-    /* text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff; */
+    font-size: 15px;
+    text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
     font-weight: 400;
-    fill: black;
+    fill: #2b2b2b;
     text-anchor: start;
+    -webkit-font-smoothing: antialiased;
 }
 
 .arrow-scatter-average-text-label {
@@ -1196,6 +1198,7 @@ p {
     font-weight: 500;
     text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
     text-transform: uppercase;
+    pointer-events: none;
 }
 
 .swarm-chart-container-table {
@@ -1418,3 +1421,40 @@ p {
 
 .map-close:hover {
     background: #8282
+}
+
+.arrow-swarm-full-mouseover-rect{
+  fill: none;
+  pointer-events: all;
+  cursor: hand;
+  cursor: pointer;
+}
+
+
+.swarm-arrow-full-annotation-diff {
+    font-size: 15px;
+}
+
+.swarm-arrow-full-annotation-diff tspan:first-of-type{
+  font-size: 23px;
+  font-weight: 400;
+  fill:red;
+}
+
+.swarm-annnotation .swarm-arrow-full-annotation-diff:first-of-type tspan:first-of-type{
+  fill:blue;
+}
+
+
+.arrow-scatter-annoation-average {}
+
+.arrow-scatter-annoation-average-text {
+    font-family: 'Roboto';
+    font-size: 15px;
+    text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
+    font-weight: 400;
+    fill: #2b2b2b;
+    text-anchor: start;
+    -webkit-font-smoothing: antialiased;
+    /* letter-spacing: .1px; */
+}
