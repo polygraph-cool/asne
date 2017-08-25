@@ -390,30 +390,38 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       .append("div")
       .attr("class","stepper-item-container")
 
-    var toggleText = ["Newsroom <span>by Gender</span>","Newsroom <span>by Race</span>","Staff vs. Leadership, <span>by Gender</span>","change over time","change over time"];
+    var toggleText = ["View 2017 <span>Gender</span> and <span>Race</span> Data","How Leadership Compares","How Top Newsrooms Changed","Overall Change for All Newsrooms","Data For Newsrooms Near You"];
+
+    var stepNumToText = ["&lsquo;17 results","Leadership","&lsquo;01 vs. &lsquo;15: Top Newsrooms","Overall Change","Detailed Tables"];
 
     var stepperContainerToggleContainerSteps = stepperContainerToggleContainer
-      .selectAll("p")
+      .selectAll("div")
       .data(stepperSequence)
       .enter()
-      .append("p")
+      .append("div")
       .attr("class",function(d,i){
         if(i==0){
           return "stepper-item stepper-item-selected"
         }
         return "stepper-item"
       })
-      .text(function(d,i){
-        return i+1;
+      .html(function(d,i){
+        if(i==4){
+          return "<span class='stepper-text'>"+stepNumToText[i]+"</span>";
+        }
+        return "<span class='stepper-text'>"+stepNumToText[i]+"</span>" + "<span class='stepper-bar'> | </span>";
+        // return i+1;
       })
       .on("mouseover",function(d,i){
         var item = i;
+        var dataSelected = d;
         stepperContainerToggleContainerHover
-          .style("left",function(d,i){
-            var left = item*15.89;
-            return left+"px";
+          .style("visibility",function(d,i){
+            if (d == dataSelected){
+              return "visible"
+            }
+            return null;
           })
-          .style("visibility","visible")
           .html(function(){
             return toggleText[item];
           })
@@ -450,13 +458,15 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       })
       ;
 
-    var stepperContainerToggleContainerHover = stepperContainerToggleContainer
+    var stepperContainerToggleContainerHover = stepperContainerToggleContainerSteps
       .append("div")
       .attr("class","stepper-item-hover")
       .html(function(d){
         return "";
       })
       ;
+
+
   }
   buildStepper();
 
@@ -932,7 +942,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     console.log(previousCut,cut);
     var rebuildAxis = false;
 
-    if(chartType != "new"){
+    if(chartType != "new" && chartType != "swarm"){
       stepperBack.style("visibility","visible").style("pointer-events","all");
       if(previousChart!=chartType || chartType == "table"){
         previousChart = chartType;
@@ -945,6 +955,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       else{
         rebuildAxis = false;
       }
+    } else{
+      stepperBack.style("visibility",null).style("pointer-events",null);
     }
 
     var highlightedPosition = [0,0,0];

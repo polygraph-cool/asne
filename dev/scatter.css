@@ -85,7 +85,7 @@
 .maps{width: 910px;display: block;margin-bottom: 200px;display: none;}
 
 .states {
-  fill: #d2d2d2;
+  fill: #c5c5c5;
 }
 
 .state-borders {
@@ -294,7 +294,7 @@ p {
     box-shadow: inset 2px 3px 3px rgba(0,0,0,0.07);
     border-radius: 3px;
     box-sizing: border-box;
-    border: 1px #d0cece solid;
+    border: 1px #afafaf solid;
     height: 30px;
     width: 100%;
     padding-left: 9px;
@@ -494,24 +494,33 @@ p {
     font-size: 14px;
     font-weight: 500;
     display: flex;
-    width: 590px;
     flex-wrap: wrap;
     justify-content: center;
     margin: 0 auto;
 }
 
 .stepper-item {
-    padding-right: 9px;
     cursor: hand;
     cursor: pointer;
-    opacity: .5;
-    font-size: 12px;
-    font-weight: 600;
+    opacity: 1;
+    font-size: 11.5px;
+    font-weight: 400;
+    position: relative;
+    line-height: 17px;
+    height: 17px;
+    margin-top: 3px;
+    color: #9a9a9a;
+    padding-left: 4px;
+    text-transform: uppercase;
+    /* text-decoration: underline; */
+    position: relative;
 }
 
 .stepper-item-selected {
     color: black;
     opacity: 1;
+    font-weight: 600;
+    text-decoration: none;
 }
 
 .swarm-image {
@@ -529,7 +538,7 @@ p {
     /* position: absolute; */
     /* transform: translate(0,100%); */
     /* bottom: -83px; */
-    background: #f9f9f9;
+    background: #f1f1f1;
     padding-top: 10px;
     flex-grow: 1;
     margin-top: 6px;
@@ -567,7 +576,7 @@ p {
 .chart-top-section {
     position: relative;
     height: auto;
-    margin-top: 7px;
+    margin-top: 3px;
 }
 
 .stepper-container-text {
@@ -577,9 +586,11 @@ p {
     display: block;
     /* line-height: 24px; */
     text-align: center;
-    color: #676767;
+    /* color: black; */
     line-height: 21px;
-    margin-bottom: 3px;
+    margin-bottom: 9px;
+    width: 590px;
+    margin-top: 6px;
 }
 
 .stepper-toggle-row {
@@ -601,7 +612,6 @@ p {
     font-size: 12px;
     font-weight: 500;
     color: #222;
-    letter-spacing: .2px;
     pointer-events: none;
 }
 
@@ -637,7 +647,7 @@ p {
 }
 
 .stepper-item.stepper-item:hover {
-    color: #2161fa;
+    color: #000000;
     opacity: 1;
     font-weight: 500;
 }
@@ -878,9 +888,9 @@ p {
 
 .stepper-item-hover {
     position: absolute;
-    width: 140px;
+    width: 70px;
     background: white;
-    transform: translateX(calc(-50% + 3px ));
+    transform: translate(calc(0%),0px);
     border: 1px solid #d8d8d8;
     border-radius: 4px;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.10);
@@ -894,6 +904,10 @@ p {
     visibility: hidden;
     z-index: 100;
     bottom: 33px;
+    text-transform: none;
+    right: 0px;
+    left: 0px;
+    margin: 0 auto;
 }
 
 .stepper-item-hover:after, .stepper-item-hover:before {
@@ -1420,7 +1434,7 @@ p {
     position: absolute;
     text-transform: uppercase;
     font-weight: 500;
-    color: #989898;
+    color: #4c4c4c;
     letter-spacing: .5px;
     z-index: 1000;
 }
@@ -1575,4 +1589,31 @@ main {
 .search-results-top-shift{
   transform: translate(0,calc(-100% - -58px));
   bottom: 0px;
+}
+
+
+.stepper-item:after {
+    /* content: '|'; */
+    /* position: absolute; */
+    /* right: 3px; */
+}
+
+.stepper-item .stepper-bar {
+    color: #000000;
+    opacity: 0;
+    text-decoration: none;
+}
+
+.stepper-item-container .stepper-item:first-of-type{
+  padding-left: 0px;
+}
+
+
+.stepper-text {
+    /* text-decoration: underline; */
+    border-bottom: 1px solid #c7c7c7;
+}
+
+.stepper-selected .stepper-text {
+    text-decoration: none;
 }
