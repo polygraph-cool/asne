@@ -626,6 +626,8 @@ p {
     justify-content: center;
     position: relative;
     transform: translate(calc(-32px),0px);
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .stepper-arrow {.arrow-right {
