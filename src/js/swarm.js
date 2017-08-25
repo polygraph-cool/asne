@@ -392,7 +392,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
     var toggleText = ["View 2017 <span>Gender</span> and <span>Race</span> Data","How Leadership Compares","How Top Newsrooms Changed","Overall Change for All Newsrooms","Data For Newsrooms Near You"];
 
-    var stepNumToText = ["&lsquo;17 results","Leadership","&lsquo;01 vs. &lsquo;15: Top Newsrooms","Overall Change","Detailed Tables"];
+    var stepNumToText = ["&lsquo;17 results","Leadership","&lsquo;01 vs. &lsquo;17: Top Newsrooms","Overall Change","Detailed Tables"];
 
     var stepperContainerToggleContainerSteps = stepperContainerToggleContainer
       .selectAll("div")
@@ -447,7 +447,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         //   });
 
         var dataSelected = d;
-        d3.select(this.parentNode).selectAll("p").classed("stepper-item-selected",function(d,i){
+        d3.select(this.parentNode).selectAll(".stepper-item").classed("stepper-item-selected",function(d,i){
           if(i==num){
             return true;
           }
@@ -3112,6 +3112,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
          .text(function(d,i){
            if(i==0){
              if(cut == "race"){
+               return "More White vs. City Census"
                return Math.floor((Math.abs(d))*100)+" pts. over-represented white"
              }
              return Math.floor((1-d)*100)+"% Male"
@@ -3134,6 +3135,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
              return Math.floor(d*100)+"% Female";
            }
            if(d==1 && cut == "race"){
+             return "More People of Color vs. City Census"
              return Math.floor((d)*100)+" pts. over-represented people of color"
            }
            if(cut=="race"){
@@ -3643,6 +3645,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
          .text(function(d,i){
            if(i==0){
              if(cut == "race"){
+               return "More White vs. City Census"
                return Math.floor((Math.abs(d))*100)+" pts. over-represented white"
              }
              return Math.floor((1-d)*100)+"% Male"
@@ -3665,6 +3668,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
              return Math.floor(d*100)+"% Female";
            }
            if(d==1 && cut == "race"){
+             return "More People of Color vs. City Census"
              return Math.floor((d)*100)+" pts. over-represented people of color"
            }
            if(cut=="race"){

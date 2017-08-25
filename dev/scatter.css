@@ -166,7 +166,7 @@ body {
     margin: 0px;
     padding: 0px;
     height: 100vh;
-    /* overflow: hidden; */
+    background: #f1f1f1;
 }
 
 p {
@@ -646,7 +646,7 @@ p {
     pointer-events: none;
 }
 
-.stepper-item.stepper-item:hover {
+.stepper-item-selected .stepper-item:hover {
     color: #000000;
     opacity: 1;
     font-weight: 500;
@@ -1537,6 +1537,7 @@ main {
     height: 100%;
     display: flex;
     flex-direction: column;
+    background: white;
 }
 
 .swarm-chart-tool-tip-row{
@@ -1617,3 +1618,6 @@ main {
 .stepper-selected .stepper-text {
     text-decoration: none;
 }
+
+.stepper-item:hover {font-weight: 500;color: black;}
+.stepper-item-selected:hover {font-weight: 600;color: black;}
