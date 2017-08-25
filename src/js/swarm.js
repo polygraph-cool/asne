@@ -390,9 +390,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       .append("div")
       .attr("class","stepper-item-container")
 
-    var toggleText = ["View 2017 <span>Gender</span> and <span>Race</span> Data","How Leadership Compares","How Top Newsrooms Changed","Overall Change for All Newsrooms","Data For Newsrooms Near You"];
+    var toggleText = ["View 2017 <span>Gender</span> and <span>Race</span> Data","How Leadership Compares","How Top Newsrooms Changed","Overall Change for All Newsrooms","Individual Newsroom Demographics"];
 
-    var stepNumToText = ["&lsquo;17 results","Leadership","&lsquo;01 vs. &lsquo;17: Top Newsrooms","Overall Change","Detailed Tables"];
+    var stepNumToText = ["&lsquo;17 results","Leadership","&lsquo;01 vs. &lsquo;17: Top Newsrooms","Overall Change","My Newsroom"];
 
     var stepperContainerToggleContainerSteps = stepperContainerToggleContainer
       .selectAll("div")
@@ -1125,24 +1125,24 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     }
 
     function changeTitle(){
-      var title = "Newsrooms, Broken Down <span>by Gender</span>";
+      var title = "Newsroom <span>Gender</span> Breakdown";
       if(cut=="race"){
-        var title = " <span>White/Non-White</span> Breakdown of Newsrooms vs. City";
+        var title = "Newsroom <span>White/Non-White</span> Breakdown vs. Audience";
       }
       if(chartType == "swarm-scatter"){
-        title = "Gender Break-down of Staff vs. <span>Leaders</span>";
-        if(cut == "race"){
-          title = "Racial Break-down of Staff vs. <span>Leaders</span>";
-        }
+        title = "Newsroom <span>Leadership</span> vs. Staff";
+        // if(cut == "race"){
+        //   title = "Racial Break-down of Staff vs. <span>Leaders</span>";
+        // }
       }
-      else if(chartType == "mini-multiple"){
-        title = "<span>Change</span> in Gender Breakdown from 2002 - 2017"
-      }
+      // else if(chartType == "mini-multiple"){
+      //   title = "<span>Change</span> in Gender Breakdown from 2002 - 2017"
+      // }
       else if(chartType == "arrow-scatter"){
-        title = "<span>Change</span> in Gender Breakdown from 2002 - 2017"
+        title = "How Newsrooms <span>Changed, 2001 - 2017"
       }
       else if(chartType == "arrow-scatter-full"){
-        title = "<span>Change</span> in Gender Breakdown from 2002 - 2017"
+        title = "How Newsrooms <span>Changed, 2001 - 2017"
       }
       else if(chartType == "table"){
         title = ""
@@ -1248,15 +1248,23 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         cellText.style("transform",null);
         cellDash.style("opacity",0)
       }
-
       if(chartType == "swarm-scatter" || chartType == "arrow-scatter"){
         searchResultsContainer.classed("search-results-top-shift",true)
       }
       else{
         searchResultsContainer.classed("search-results-top-shift",false)
       }
+      if(chartType!="arrow-scatter"){
+        chartTitle.transition().duration(500)
+          .style("width",width+"px")
+          .style("left",margin.left+"px")
+      }
+      else{
+        chartTitle.transition().duration(500)
+          .style("width",width+"px")
+          .style("left",0+"px")
+      }
 
-      chartTitle.transition().duration(500).style("width",width+"px").style("left",margin.left+"px")
 
       chartDivContainer
         .transition()
@@ -4224,6 +4232,14 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
   footerContainer.append("div")
     .attr("class","news-lab-logo")
+    ;
+
+  var embedLink = footerContainer.append("div")
+    .attr("class","embed-link")
+    .append("p")
+    .append("span")
+    .attr("class","embed-link-text")
+    .text("Embed This Chart")
     ;
 
   footerContainer.append("div")

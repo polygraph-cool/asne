@@ -151,7 +151,7 @@
 
 
 .content-title {
-    font-size: 42px;
+    font-size: 46px;
     font-family: 'Roboto';
     text-align: center;
     font-weight: 300;
@@ -166,7 +166,7 @@ body {
     margin: 0px;
     padding: 0px;
     height: 100vh;
-    background: #f1f1f1;
+    background: #F7F7F7;
 }
 
 p {
@@ -174,21 +174,16 @@ p {
 }
 
 .chart-title {
-    font-size: 13px;
+    font-size: 12px;
     font-family: 'Roboto';
     text-align: center;
     font-weight: 400;
-    color: #8a8787;
-    /* position: absolute; */
-    /* left: 0px; */
-    /* right: 0px; */
-    /* margin: 0 auto; */
-    /* top: 47px; */
+    color: #000000;
     text-align: left;
     margin: 0 auto;
     position: absolute;
-    top: 0px;
-    display: none;
+    top: 4px;
+    =: none
 }
 
 .histogram-chart-toggle-wrapper {
@@ -199,7 +194,7 @@ p {
     left: 0px;
     right: 0px;
     top: 0px;
-    width: 380px;
+    width: 500px;
     margin: 0 auto;
 }
 
@@ -314,6 +309,9 @@ p {
 .swarm-chart-source {
     pointer-events: none;
     order: 2;
+    position: absolute;
+    right: 0px;
+    top: 35px;
 }
 
 .swarm-chart-tool-tip {
@@ -538,7 +536,7 @@ p {
     /* position: absolute; */
     /* transform: translate(0,100%); */
     /* bottom: -83px; */
-    background: #f1f1f1;
+    background: #F7F7F7;
     padding-top: 10px;
     flex-grow: 1;
     margin-top: 6px;
@@ -596,8 +594,9 @@ p {
 .stepper-toggle-row {
     width: 100%;
     display: flex;
-    margin-top: 15px;
+    margin-top: 8px;
     justify-content: center;
+    margin-bottom: 21px;
 }
 
 .stepper-item-container {
@@ -888,7 +887,7 @@ p {
 
 .stepper-item-hover {
     position: absolute;
-    width: 70px;
+    width: 80px;
     background: white;
     transform: translate(calc(0%),0px);
     border: 1px solid #d8d8d8;
@@ -1621,3 +1620,28 @@ main {
 
 .stepper-item:hover {font-weight: 500;color: black;}
 .stepper-item-selected:hover {font-weight: 600;color: black;}
+
+
+.embed-link-text {
+    font-family: 'Roboto';
+    font-size: 11.5px;
+    text-transform: uppercase;
+    /* text-decoration: underline; */
+    color: #222;
+    margin-left: 20px;
+    letter-spacing: .5px;
+    font-weight: 400;
+    border-bottom: 1px solid #525252;
+}
+
+.embed-link p {
+    width: 150px;
+    line-height: 26px;
+    text-align: right;
+}
+
+.embed-link {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
