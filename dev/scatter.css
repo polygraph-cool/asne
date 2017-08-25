@@ -138,15 +138,14 @@
 .map-arrow-path{fill: none;}
 .map-arrow-path-peak{fill: none;}
 .news-lab-logo{
-  background: url("assets/news_lab_logo.png");
-  height: 74px;
-  width: 220px;
+  background: url("https://newslab.withgoogle.com/assets/img/logo.png");
+  height: 41px;
+  width: 121px;
   background-size: contain;
   background-repeat: no-repeat;
   /* display: none; */
-  background-position-x: -30px;
   order: 2;
-  background-position-y: -9px;
+  background-position-y: 22px;
   padding-top: 1px;
 }
 
@@ -166,7 +165,7 @@
 body {
     margin: 0px;
     padding: 0px;
-    /* height: 1000px; */
+    height: 100vh;
     /* overflow: hidden; */
 }
 
@@ -324,16 +323,15 @@ p {
     text-transform: capitalize;
     background: white;
     border: 1px solid rgba(193, 193, 193, 0.8);
-    padding: 4px 9px;
     z-index: 1000;
-    border-radius: 2px;
+    border-radius: 4px;
     text-align: left;
     width: auto;
-    padding-right: 1.5rem;
     font-weight: 600;
     color: #353535;
     visibility: hidden;
     min-width: 120px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
 }
 
 .swarm-circle:hover {
@@ -363,10 +361,12 @@ p {
 
 
 .swarm {
-    max-width: 1000px;
     margin: 0 auto;
     position: relative;
-    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex-grow: 1;
 }
 
 .arrow-scatter-chart-wrapper {
@@ -494,7 +494,7 @@ p {
     font-size: 14px;
     font-weight: 500;
     display: flex;
-    width: 550px;
+    width: 590px;
     flex-wrap: wrap;
     justify-content: center;
     margin: 0 auto;
@@ -529,7 +529,10 @@ p {
     /* position: absolute; */
     /* transform: translate(0,100%); */
     /* bottom: -83px; */
-    margin-top: 14px;
+    background: #f9f9f9;
+    padding-top: 10px;
+    flex-grow: 1;
+    margin-top: 6px;
 }
 
 .table-rows .histogram-chart-toggle-wrapper {
@@ -563,18 +566,20 @@ p {
 
 .chart-top-section {
     position: relative;
-    margin-top: 13px;
     height: auto;
+    margin-top: 7px;
 }
 
 .stepper-container-text {
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 300;
     color: #222;
     display: block;
     /* line-height: 24px; */
-    margin-top: 14px;
     text-align: center;
+    color: #676767;
+    line-height: 21px;
+    margin-bottom: 3px;
 }
 
 .stepper-toggle-row {
@@ -589,6 +594,7 @@ p {
     margin-left: 10px;
     line-height: 23px;
     position: relative;
+    transform: translate(calc(-32px),0px);
 }
 
 .stepper-play-text {
@@ -610,6 +616,8 @@ p {
     padding-bottom: 4px;
     width: 93px;
     justify-content: center;
+    position: relative;
+    transform: translate(calc(-32px),0px);
 }
 
 .stepper-arrow {.arrow-right {
@@ -795,7 +803,7 @@ p {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
-    margin-top: 30px;
+    padding-top: 30px;
 }
 
 .asne-logo {
@@ -856,7 +864,7 @@ p {
     content: 'In Partnership';
     font-family: 'Roboto';
     font-size: 11px;
-    left: 5px;
+    left: 1px;
     top: 3px;
     position: absolute;
     color: rgb(136, 136, 136);
@@ -930,11 +938,13 @@ p {
 .swarm-annnotation-text {
     text-anchor: end;
     transform: translateX(-10px);
-    dominant-baseline: middle;
+    dominant-baseline: central;
     font-family: 'Roboto';
     font-weight: 500;
     font-size: 14px;
     fill: #b3b3b3;
+    /* text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff; */
+    letter-spacing: .2px;
 }
 
 .swarm-scatter-x-axis-lines .swarm-axis-line{
@@ -1046,7 +1056,10 @@ p {
 
 .swarm-chart-tool-tip-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    margin: 0 auto;
+    width: auto;
+    width: 150px;
 }
 
 .swarm-chart-tool-tip-label{
@@ -1061,6 +1074,10 @@ p {
 
 .swarm-chart-tool-tip-company {
     margin-bottom: 5px;
+    border-bottom: 1px solid #cdcdcd;
+    padding: 0px 25px;
+    text-align: center;
+    line-height: 26px;
 }
 
 .swarm-chart-tool-tip-gender {
@@ -1457,4 +1474,104 @@ p {
     text-anchor: start;
     -webkit-font-smoothing: antialiased;
     /* letter-spacing: .1px; */
+}
+
+.stepper-back {
+    width: 100px;
+    height: 16px;
+    border: 1px solid #e2e2e2;
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    cursor: hand;
+    transition: all 300ms;
+    padding-bottom: 4px;
+    width: auto;
+    top: -1px;
+    transform: translate(calc(-100% + -1px),0px);
+    left: 0px;
+    background: #f7f7f7;
+    /* display: none; */
+    margin-right: 6px;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.stepper-back svg {
+    width: 13px;
+}
+
+.stepper-back:hover {
+    font-weight: 500;
+    background-color: #F5F5F5;
+    color: black;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    border-color: #adadad;
+}
+
+
+.footer-wrapper {
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.swarm-chart-tool-tip-row{
+    margin-left: 69px;
+    margin-right: 20px;
+    margin-bottom: 4px;
+}
+
+.swarm-chart-tool-tip-row:first-of-type{
+  border-top:1px solid #cccccc;
+  padding-top: 2px;
+  margin-top: 30px;
+}
+
+.swarm-chart-tool-tip-row:last-of-type{
+  margin-bottom: 10px;
+}
+
+
+.swarm-chart-tool-tip-col {}
+
+.swarm-chart-tool-tip-text {
+    width: 37px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 13px;
+    text-align: center;
+    color: black;
+}
+
+.swarm-chart-tool-tip-col-label {
+    position: absolute;
+    top: 41px;
+    font-size: 11px;
+    color: #808080;
+    font-weight: 500;
+}
+
+
+.swarm-chart-tool-tip-row-label {
+    font-size: 12px;
+    color: #848484;
+    font-weight: 400;
+    position: absolute;
+    left: 2px;
+    text-align: right;
+    width: 60px;
+}
+
+.search-results-top-shift{
+  transform: translate(0,calc(-100% - -58px));
+  bottom: 0px;
 }

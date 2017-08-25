@@ -1,6 +1,6 @@
 # to do
 * add headlines
-
+* do what NY TImes did for pionts over represnted??
 * search commands
 * geo highlight on other charts
 * geo highlighted stroke color is darker than fill
@@ -19,6 +19,7 @@
 * fix color scales to match film dialgoeu project
 * incorporate caitlyn's data on census
 * have a default paper if not near a big one – set get location function as false until true
+* reset stepper to 1 if at 5;
 
 # queries
 
