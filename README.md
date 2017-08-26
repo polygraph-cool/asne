@@ -1,25 +1,28 @@
 # to do
-* add headlines
-* do what NY TImes did for pionts over represnted??
-* search commands
+
+* baselines for hispanics and blacks
+* incorporate caitlyn's data on census
+* have a default paper if not near a big one – set get location function as false until true
+* add in other racial data so not tbd
+
+* dash is off for some reason
 * geo highlight on other charts
 * geo highlighted stroke color is darker than fill
 * get other logos
-* 2x2 with racial statistics
-* add leadership toggle to swarm
 * iframes
+* set Heights for charts based on view port Height
 * hosting
-* mouseover events on all charts
 * comparisons to other industries
 * toggles need to match view of viz if use tour buttons
 * search pushes node to the top
 * down arrow on the saerch box
 * get white black asian numbers in tool tips
-* more impactful titles
 * fix color scales to match film dialgoeu project
-* incorporate caitlyn's data on census
-* have a default paper if not near a big one – set get location function as false until true
-* reset stepper to 1 if at 5;
+* search result removes rows so height changes
+* what happens when chart shifts after adding nodes from search?
+* bug when adding nodes from search and changing views
+
+
 
 # queries
 

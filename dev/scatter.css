@@ -151,7 +151,7 @@
 
 
 .content-title {
-    font-size: 46px;
+    font-size: 44px;
     font-family: 'Roboto';
     text-align: center;
     font-weight: 300;
@@ -578,7 +578,7 @@ p {
 }
 
 .stepper-container-text {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 300;
     color: #222;
     display: block;
@@ -587,14 +587,14 @@ p {
     /* color: black; */
     line-height: 21px;
     margin-bottom: 9px;
-    width: 590px;
-    margin-top: 6px;
+    width: 520px;
+    margin-top: 1px;
 }
 
 .stepper-toggle-row {
     width: 100%;
     display: flex;
-    margin-top: 8px;
+    margin-top: 18px;
     justify-content: center;
     margin-bottom: 21px;
 }
