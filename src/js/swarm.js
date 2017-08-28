@@ -127,7 +127,7 @@ var states = [
   ]
   ;
 
-function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusData,stateTopo) {
+function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusData,stateTopo,censusOverride) {
 
   var alphaSort = ""
   var searchMap;
@@ -140,6 +140,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
   var miniWidth = 70-miniMargin.left - miniMargin.right;
   var miniHeight = 90 - miniMargin.top - miniMargin.bottom;
   var multipleY = d3.scaleLinear().domain([.2,.5]).range([miniHeight,0]);
+
+  var censusOverrideMap = d3.map(censusOverride,function(d){
+    return +d.news_id;
+  });
 
 
   var mapBig = false;
@@ -248,6 +252,15 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       second = d.Company.split(" ")[1].charAt(0)
     }
     d.chars = [first,second];
+
+    var override = {};
+    var hasOverride = false;
+    if(censusOverrideMap.has(+d.NewsID)){
+      override = censusOverrideMap.get(+d.NewsID);
+      hasOverride = true;
+    }
+    d.override = override;
+    d.hasOverride = hasOverride;
   })
 
 	var latLongMap = d3.map(latLongData.filter(function(d){
@@ -258,7 +271,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 	var regionMap = d3.map(states,function(d){
 		return d[1];
 	});
-
 
   var newsIdSelected = 108;
 
@@ -338,9 +350,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
       }
       else{
-        console.log(previous);
         currentChart = stepperSequence[previous-1]
-        console.log(currentChart);
         stepperContainerToggleContainerSteps.classed("stepper-item-selected",function(d,i){
           if(d==currentChart && i == previous-1){
             return true;
@@ -351,7 +361,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
       }
 
-      console.log(currentChart);
       buildChart(currentChart);
 
     }
@@ -838,8 +847,15 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       var companyData = newsIDName.get(newsNest[item].key);
       var cityState = companyData.City+" "+companyData.State;
       newsNest[item].value.companyData = companyData;
-
-      if(censusMap.has(cityState)){
+      if(companyData.hasOverride){
+        whiteCensus = companyData.override.white/100;
+        if(whiteCensus > 1){
+          if(censusMap.has(cityState)){
+            whiteCensus = +censusMap.get(cityState).white_2015/100;
+          }
+        }
+      }
+      else if(censusMap.has(cityState)){
         whiteCensus = +censusMap.get(cityState).white_2015/100;
       }
       newsNest[item].value.whiteCensus = whiteCensus;
@@ -970,7 +986,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     }
 
     function mouseOverEvents(data,element){
-      console.log(data);
       chartToolTip.selectAll("div").remove();
 
       var chartToolTipContainer = chartToolTip.append("div");
@@ -988,9 +1003,19 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .append("div")
         .attr("class","swarm-chart-tool-tip-row")
 
-      rows.append("p")
+      var rowLabels = rows.append("p")
         .attr("class","swarm-chart-tool-tip-row-label")
-        .text(function(d){
+        .html(function(d){
+          if(d.cut == "census"){
+            var cityString = "";
+            if(data.value.companyData.hasOverride){
+              cityString = data.value.companyData.override.coverage_area;
+            }
+            else {
+              cityString = data.value.companyData.City + ", "+data.value.companyData.State;
+            }
+            return "census<span>"+cityString+"</span>"
+          }
           return d.cut;
         })
         ;
@@ -1041,7 +1066,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         ;
 
       if(chartType == "swarm" || chartType == "new"){
-        console.log(chartType);
 
         element.style("stroke",function(){
           return "black";
@@ -1086,7 +1110,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
       }
       else if(chartType == "arrow-scatter-full"){
-        console.log(chartType);
       }
     }
     function mouseOutEvents(data,element){
@@ -1212,7 +1235,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           xScale.domain([-1,1]).range([0,width]).clamp(true);
           newsNestAverageT0 = d3.mean(newsNest,function(d){ return getPercentType("race-old",d.value);});
           newsNestAverageT1 = d3.mean(newsNest,function(d){ return d.value.whiteDelta;});
-          console.log(newsNestAverageT1,newsNestAverageT0);
           genderColorScale.domain([-1,0,1]);
         }
 
@@ -1753,7 +1775,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
       function buildAxis(){
 
-          console.log("buildingAxis");
 
           var chartAxisContainer = chartAxis.append("g")
 
@@ -2033,7 +2054,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           .attr("y",height*.2-7)
           .text(function(){
             if(cut == "race"){
-              return Math.round((Math.abs(newsNestAverageT1))*100)+"pts. over-represented white"
+              return Math.round((Math.abs(newsNestAverageT1))*100)+" pts. over-represented white"
             }
             return Math.round((1-newsNestAverageT1)*100)+"% Male"
           })
@@ -2097,10 +2118,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
            return genderColorScale(d);
          })
          .attr("x1",function(d){
-           return xScale(d);
+           return Math.round(xScale(d))+.5;
          })
          .attr("x2",function(d){
-           return xScale(d);
+           return Math.round(xScale(d))+.5;
          })
          .attr("y1",function(d,i){
            if(d==.5){
@@ -2238,7 +2259,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
                }
              })
              ;
-             console.log(locations);
 
            if(locations.length > 4){
              locations = locations.sort(function(a,b){
@@ -2249,7 +2269,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
              tableData = locations;
              newsIdSelected = +locations[0].key;
              highlightedPosition = [locations[0].x,locations[0].y,locations[0].value.radius];
-             console.log(locations[0]);
 
              var highlightedAnnotationOffset = height - highlightedPosition[1];
 
@@ -3329,9 +3348,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           }
         })
         .each(function(d,i){
-          if(d.key == newsIDSearch){
-            console.log(d);
-          }
+
           if(cut=="race"){
             annotationDataDiff.push(d.value.raceDiff)
             annotationTextArray.push(getPercentType("race",d.value))
@@ -3537,7 +3554,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
       cellLine = cell.selectAll(".swarm-line")
 
-      console.log(newsIDSearchList,newsIDSearch);
 
       var keepNewsIDSearch = newsIDSearch;
 
@@ -4046,9 +4062,13 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       chartDivContainerTable.selectAll(".swarm-chart-table-company-container").remove();
 
       cellCircle
+        .on("mouseover",function(d){
+
+        })
         .transition()
         .duration(500)
-        .style("opacity",0);
+        .style("opacity",0)
+        ;
 
       cellImages
         .transition()
@@ -4136,7 +4156,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           .append("p")
           .attr("class","swarm-chart-table-company-percent")
           .text(function(d){
-            console.log(d);
             if(d.key == "census"){
               if(d.cat=="female"){
                 return null;
@@ -4177,6 +4196,12 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           .append("span")
           .attr("class","swarm-chart-table-company-row-top-label-census")
           .text(function(d){
+            if(d.value.value.companyData.hasOverride){
+              if(d.value.value.companyData.override.coverage_area.length > 20){
+                return d.value.value.companyData.override.coverage_area.slice(0,17)+"..."
+              }
+              return d.value.value.companyData.override.coverage_area;
+            }
             return d.value.value.companyData.City + ", "+d.value.value.companyData.State.toUpperCase();
           })
           ;
@@ -4398,7 +4423,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           mapMakeBig();
         }
         else{
-          console.log("small here");
           mapMakeSmall();
         }
       })
@@ -4407,7 +4431,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     var searchMapClose = searchMap.append("div")
       .attr("class","map-close")
       .on("click",function(d){
-        console.log("small there");
         mapMakeSmall();
       })
 
@@ -4447,6 +4470,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
     function getLocations(d){
 
+      var itemSelected = d;
+
       var location = d.value.location;
       var project = projection([+location.longitude,location.latitude]);
 
@@ -4468,11 +4493,18 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         }
       })
 
+      distanceArray = distanceArray.filter(function(d){
+        return +d.key != +itemSelected.key;
+      });
+
       if(distanceArray.length > 3){
         distanceArray = distanceArray.sort(function(a,b){
           return +b.value.maxTotal - +a.value.maxTotal;
         }).slice(0,3)
       }
+
+      console.log(distanceArray);
+
       tableData = distanceArray;
       tableData.unshift(d)
       buildChart("table");
