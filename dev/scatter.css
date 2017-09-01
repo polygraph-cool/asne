@@ -13,12 +13,12 @@
   color: black;
   cursor: pointer;
   /* border: solid 1px rgba(127, 125, 156, 0.75); */
-  padding: 0px 8px;
+  padding: 0px 7px;
   /* box-shadow: inset 0 1px 2px rgba(0,0,0,0.08); */
   margin-left: -13px;
   background: white;
   text-align: center;
-  line-height: 28px;
+  line-height: 23px;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -26,7 +26,7 @@
   margin-top: 0px;
   margin-bottom: 0px;
   background-color: #fff;
-  height: 28px;
+  /* height: 28px; */
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -174,28 +174,35 @@ p {
 }
 
 .chart-title {
-    font-size: 12px;
+    font-size: 13px;
     font-family: 'Roboto';
     text-align: center;
     font-weight: 400;
     color: #000000;
     text-align: left;
     margin: 0 auto;
-    position: absolute;
-    top: 4px;
-    =: none
+    /* position: absolute; */
+    /* top: 4px; */
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: -16px;
 }
 
 .histogram-chart-toggle-wrapper {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     font-family: 'Atlas Grotesk Web';
+    /* position: absolute; */
+    /* left: 0px; */
+    /* right: 0px; */
+    /* top: 0px; */
+    /* width: 500px; */
+    /* margin: 0 auto; */
+    order: 1;
     position: absolute;
     left: 0px;
     right: 0px;
-    top: 0px;
-    width: 500px;
-    margin: 0 auto;
+    justify-content: center;
 }
 
 .back-curve {
@@ -278,7 +285,7 @@ p {
 }
 
 .swarm-chart-search-div {
-    margin: 0 auto;
+    /* margin: 0 auto; */
     justify-content: center;
     height: 30px;
     margin-bottom: 20px;
@@ -594,9 +601,14 @@ p {
 .stepper-toggle-row {
     width: 100%;
     display: flex;
-    margin-top: 18px;
     justify-content: center;
     margin-bottom: 21px;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top: 18px;
+    margin-bottom: 21px;
+    position: relative;
+    pointer-events: all;
 }
 
 .stepper-item-container {
@@ -605,6 +617,7 @@ p {
     line-height: 23px;
     position: relative;
     transform: translate(calc(-32px),0px);
+    order: 3;
 }
 
 .stepper-play-text {
@@ -622,20 +635,16 @@ p {
     cursor: pointer;
     cursor: hand;
     transition: all 300ms;
-    width: 93px;
+    width: 70px;
     justify-content: center;
     position: relative;
     transform: translate(calc(-32px),0px);
     padding-left: 5px;
     padding-right: 5px;
+    order: 2;
 }
 
-.stepper-arrow {.arrow-right {
-    width: 0;
-    height: 0;
-    border-top: 60px solid transparent;
-    border-bottom: 60px solid transparent;
-    border-left: 60px solid green; }
+.stepper-arrow {
     width: 0;
     height: 0;
     border-top: 5px solid transparent;
@@ -777,16 +786,16 @@ p {
     position: absolute;
     text-transform: uppercase;
     font-weight: 500;
-    color: #989898;
+    color: #9a9a9d;
     letter-spacing: .5px;
-    top: 2px;
-    left: -59px;
+    top: -26px;
+    left: -6px;
 }
 
 
 .histogram-chart-toggle-first {
-    margin-right: 10px;
-    margin-left: 28px;
+    margin-right: 30px;
+    margin-left: 33px;
 }
 
 .histogram {
@@ -1344,7 +1353,7 @@ p {
 
 .swarm-chart-map {
     width: 610px;
-    position: absolute;
+    /* position: absolute; */
     transform: translate(0,-110px);
     /* background: rgba(255, 255, 255, 0.64); */
     z-index: 1000000;
@@ -1417,7 +1426,7 @@ p {
 
 .swarm-chart-min {
     width: 130px;
-    transform: translate(-140px,-22px);
+    transform: translate(0px,-22px);
     margin-right: 22px;
 }
 
@@ -1510,6 +1519,7 @@ p {
     margin-right: 6px;
     visibility: hidden;
     pointer-events: none;
+    order: 2;
 }
 
 .stepper-back svg {
@@ -1648,6 +1658,8 @@ main {
     top: 0px;
 }
 
+.top-row-chart-toggle-wrapper{left: 0px;position: absolute;}
+
 .swarm-chart-tool-tip-row-label span{
   position: absolute;
   top: -13px;
@@ -1659,3 +1671,4 @@ main {
   font-weight: 600;
   text-align: left;
   text-transform: uppercase;
+}

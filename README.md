@@ -1,10 +1,19 @@
 # to do
 
+gender/race move up
+no cover up of bubbles with avg
+women arrow too big
+2017 vs. '17 - hover events move to text.
+bigger title for chart on top left - potentially center
+
 * baselines for hispanics and blacks
 * incorporate caitlyn's data on census
 * have a default paper if not near a big one – set get location function as false until true
 * add in other racial data so not tbd
 
+* remove crispEdges and do half pixel offsets
+* make bigger bubbles and add more logos?
+* capitalize state in table version
 * dash is off for some reason
 * geo highlight on other charts
 * geo highlighted stroke color is darker than fill
@@ -22,6 +31,10 @@
 * what happens when chart shifts after adding nodes from search?
 * bug when adding nodes from search and changing views
 
+
+# data for override of census info
+
+https://docs.google.com/spreadsheets/d/1CvtgjS0kw3mpXumTjEwTTjg1Cx6GbtwttLKPj10sf1U/edit#gid=0
 
 
 # queries

@@ -27,7 +27,7 @@ function init() {
 			.defer(d3.json,'assets/usJson.json')
 			.defer(d3.csv,'assets/top_3.csv')
 			.defer(d3.csv,'assets/census.csv')
-			.defer(d3.csv,'assets/census_override.csv')
+			.defer(d3.csv,'assets/census_override_2.csv')
 			.awaitAll((err, result) => {
 				if (err){
 					reject(err)

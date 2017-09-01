@@ -131,6 +131,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
   var alphaSort = ""
   var searchMap;
+  var stepperContainerToggle;
   var stepperBack;
   var chartTableItem;
   var miniMultipleWrapper;
@@ -289,7 +290,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       .append("div")
       .attr("class","stepper-container")
 
-
     var stepperTextArray = [
       "The Newspaper Diversity Survey measures the percentage of women and minorities working in US newsrooms. The results from 2017&rsquo;s survey are in.",
       "Newsrooms are about 32 percetage points more white than the audience they report on.",
@@ -305,11 +305,14 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       })
       ;
 
-    var stepperContainerToggle = stepperContainer.append("div")
+    stepperContainerToggle = stepperContainer.append("div")
       .attr("class","stepper-toggle-row")
       ;
 
     function changeStepper(direction){
+
+      stepperPlayIcon
+        .style("display","none");
 
       stepperPlayText
         .transition()
@@ -318,11 +321,14 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .transition()
         .duration(250)
         .style("opacity",0)
+        .on("end",function(){
+          stepperPlayIcon
+            .style("display","block");
+        })
         .transition()
         .duration(250)
         .style("opacity",1)
-        .text("Resume Tour")
-        ;
+        .text("Resume")
 
       var previous;
 
@@ -393,7 +399,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
     var stepperPlayText = stepperPlay.append("p")
       .attr("class","stepper-play-text")
-      .text("Start Tour")
+      .text("Start")
       ;
 
     var stepperContainerToggleContainer = stepperContainerToggle
@@ -402,7 +408,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
     var toggleText = ["View 2017 <span>Gender</span> and <span>Race</span> Data","How Leadership Compares","How Top Newsrooms Changed","Overall Change for All Newsrooms","Individual Newsroom Demographics"];
 
-    var stepNumToText = ["&lsquo;17 results","Leadership","&lsquo;01 vs. &lsquo;17: Top Newsrooms","Overall Change","My Newsroom"];
+    var stepNumToText = ["2017 results","Leadership","2001 vs. 2017: Top Newsrooms","Overall Change","My Newsroom"];
 
     var stepperContainerToggleContainerSteps = stepperContainerToggleContainer
       .selectAll("div")
@@ -849,11 +855,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       newsNest[item].value.companyData = companyData;
       if(companyData.hasOverride){
         whiteCensus = companyData.override.white/100;
-        if(whiteCensus > 1){
-          if(censusMap.has(cityState)){
-            whiteCensus = +censusMap.get(cityState).white_2015/100;
-          }
-        }
+        // if(whiteCensus > 1){
+        //   if(censusMap.has(cityState)){
+        //     whiteCensus = +censusMap.get(cityState).white_2015/100;
+        //   }
+        // }
       }
       else if(censusMap.has(cityState)){
         whiteCensus = +censusMap.get(cityState).white_2015/100;
@@ -4305,6 +4311,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
 
   function buildToggles(){
+
+    var newToggleForRaceAndGender = stepperContainerToggle.append("div")
+      .attr("class","top-row-chart-toggle-wrapper");
+
     var toggles = footerContainer.append("div")
       .attr("class","histogram-chart-toggle-wrapper");
 
@@ -4344,7 +4354,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
     var raceGenderToggleData = ["gender","race"];//,"supWhite","supGender"]
 
-    toggleType = toggles
+    toggleType = newToggleForRaceAndGender
       .append("div")
       .attr("class","histogram-chart-toggle-type histogram-chart-toggle-first")
 
