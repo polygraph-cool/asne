@@ -1204,7 +1204,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         title = "How Newsrooms <span>Changed, 2001 - 2017"
       }
       else if(chartType == "table"){
-        title = ""
+        title = "Individual Newsroom Demographics"
       }
       chartTitle.html(title);
     }
@@ -1794,54 +1794,54 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         //   })
         //   ;
         //
-        //  chartAnnotation.append("line")
-        //    .attr("x1",20)
-        //    .attr("x2",20)
-        //    .attr("y1",function(){
-        //      if(cut=="race"){
-        //        return yScale(.7);
-        //      }
-        //      return yScale(.75);
-        //    })
-        //    .attr("y2",10)
-        //    .attr("class","swarm-annnotation-line")
-        //    .attr("marker-end", function(d){
-        //      return "url(#arrow-head)"
-        //    })
-        //    ;
-        //
-        //  chartAnnotation.append("text")
-        //    .style("transform",function(){
-        //      if(cut == "race"){
-        //        var transform = "translate("+20+"px,"+(yScale(.7)+10)+"px) rotate(270deg)";
-        //        return transform;
-        //      }
-        //      var transform = "translate("+20+"px,"+(yScale(.75)+10)+"px) rotate(270deg)";
-        //      return transform;
-        //    })
-        //    .attr("class","swarm-annnotation-text swarm-scatter-y-annnotation-text")
-        //    .text(function(d){
-        //      if(cut=="race"){
-        //        return "People of Color Leadership"
-        //      }
-        //      return "Women Leaders";
-        //    })
-        //    ;
-        //  chartAverage.append("circle")
-        //    .attr("class","swarm-circle swarm-circle-average")
-        //    .attr("cx",xScale(newsNestAverageT1))
-        //    .attr("cy",function(d){
-        //      return yScale(newsNestSupAverageT1);
-        //    })
-        //    .attr("r",6)
-        //    ;
-        //
-        //  chartAverage.append("text")
-        //    .attr("class","swarm-average-text swarm-average-text-label")
-        //    .attr("x",xScale(newsNestAverageT1))
-        //    .attr("y",yScale(newsNestSupAverageT1) - 12)
-        //    .style("fill","black")
-        //    .text("Average")
+         chartAnnotation.append("line")
+           .attr("x1",20)
+           .attr("x2",20)
+           .attr("y1",function(){
+             if(cut=="race"){
+               return yScale(.7);
+             }
+             return yScale(.75);
+           })
+           .attr("y2",15)
+           .attr("class","swarm-annnotation-line")
+           .attr("marker-end", function(d){
+             return "url(#arrow-head)"
+           })
+           ;
+
+         chartAnnotation.append("text")
+           .style("transform",function(){
+             if(cut == "race"){
+               var transform = "translate("+20+"px,"+(yScale(.7)+10)+"px) rotate(270deg)";
+               return transform;
+             }
+             var transform = "translate("+20+"px,"+(yScale(.75)+10)+"px) rotate(270deg)";
+             return transform;
+           })
+           .attr("class","swarm-annnotation-text swarm-scatter-y-annnotation-text")
+           .text(function(d){
+             if(cut=="race"){
+               return "People of Color Leadership"
+             }
+             return "Women Leaders";
+           })
+           ;
+         chartAverage.append("circle")
+           .attr("class","swarm-circle swarm-circle-average")
+           .attr("cx",xScale(newsNestAverageT1))
+           .attr("cy",function(d){
+             return yScale(newsNestSupAverageT1);
+           })
+           .attr("r",6)
+           ;
+
+         chartAverage.append("text")
+           .attr("class","swarm-average-text swarm-average-text-label")
+           .attr("x",xScale(newsNestAverageT1))
+           .attr("y",yScale(newsNestSupAverageT1) - 12)
+           .style("fill","black")
+           .text("Average")
 
       }
 

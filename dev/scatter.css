@@ -1,3 +1,5 @@
+
+
 .histogram-chart-toggle-size{
   display: flex;
   margin-right: 10px;
@@ -39,6 +41,8 @@
   display: flex;
   position: relative;
   /* display: none; */
+  position: absolute;
+  left: 0px;
 }
 
 .scatter-circle{
@@ -174,7 +178,7 @@ p {
 }
 
 .chart-title {
-    font-size: 14.5px;
+    font-size: 12.5px;
     font-family: 'Roboto';
     text-align: center;
     font-weight: 400;
@@ -186,7 +190,9 @@ p {
     text-align: center;
     font-weight: 500;
     margin-bottom: -16px;
-    line-height: 30px;
+    line-height: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .histogram-chart-toggle-wrapper {
@@ -624,7 +630,7 @@ p {
     max-width: 1000px;
     margin: 0 auto;
     margin-top: 18px;
-    margin-bottom: 30px;
+    margin-bottom: 18px;
     position: relative;
     pointer-events: all;
 }
@@ -981,7 +987,7 @@ p {
 .swarm-annnotation-text {
     text-anchor: end;
     transform: translateX(-10px);
-    dominant-baseline: central;
+    dominant-baseline: middle;
     font-family: 'Roboto';
     font-weight: 500;
     font-size: 14px;
@@ -1268,7 +1274,7 @@ p {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding-top: 30px;
+    padding-top: 50px;
     pointer-events: none;
 }
 
@@ -1701,3 +1707,4 @@ main {
 .stepper-item:last-of-type {
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+}
