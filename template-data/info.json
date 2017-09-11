@@ -1,12 +1,12 @@
 {
-  "title": "title tk",
-  "description": "description tk",
-  "url": "tk",
-  "keywords": "tk",
-  "img": "tk",
+  "title": "How Diverse Are US Newsrooms?",
+  "description": "The 2017 Newspaper Diversity Survey measures the percentage of women and minorities working in US newsrooms.",
+  "url": "https://googletrends.github.io/newsroom-diversity",
+  "keywords": "",
+  "img": "",
   "author": {
-    "name": "Author Name",
-    "url": "https://twitter.com/puddingviz",
-    "twitterHandle": "@puddingviz"
+    "name": "Google News Lab and the American Society of News Editors",
+    "url": "https://twitter.com/googletrends",
+    "twitterHandle": "@googletrends"
   }
 }
