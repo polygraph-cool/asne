@@ -151,7 +151,7 @@
 
 
 .content-title {
-    font-size: 44px;
+    font-size: 45px;
     font-family: 'Roboto';
     text-align: center;
     font-weight: 300;
@@ -174,7 +174,7 @@ p {
 }
 
 .chart-title {
-    font-size: 13px;
+    font-size: 14.5px;
     font-family: 'Roboto';
     text-align: center;
     font-weight: 400;
@@ -184,8 +184,9 @@ p {
     /* position: absolute; */
     /* top: 4px; */
     text-align: center;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: -16px;
+    line-height: 30px;
 }
 
 .histogram-chart-toggle-wrapper {
@@ -512,13 +513,25 @@ p {
     font-weight: 400;
     position: relative;
     line-height: 17px;
-    height: 17px;
-    margin-top: 3px;
+    /* margin-top: 3px; */
     color: #9a9a9a;
     padding-left: 4px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     /* text-decoration: underline; */
     position: relative;
+    border: 1px solid rgba(127, 125, 156, 0.54);
+    line-height: 23px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    font-size: 12px;
+    padding: 0 7px;
+    margin-left: -13px;
+    background: white;
+    margin-right: 10px;
+    color: black;
 }
 
 .stepper-item-selected {
@@ -526,6 +539,11 @@ p {
     opacity: 1;
     font-weight: 600;
     text-decoration: none;
+    font-weight: 500;
+    background-color: #F5F5F5;
+    color: black;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    border-color: #adadad;
 }
 
 .swarm-image {
@@ -585,17 +603,17 @@ p {
 }
 
 .stepper-container-text {
-    font-size: 14px;
+    font-size: 14.5px;
     font-weight: 300;
     color: #222;
     display: block;
     /* line-height: 24px; */
     text-align: center;
     /* color: black; */
-    line-height: 21px;
-    margin-bottom: 9px;
-    width: 520px;
-    margin-top: 1px;
+    line-height: 20px;
+    margin-bottom: 13px;
+    width: 550px;
+    margin-top: 6px;
 }
 
 .stepper-toggle-row {
@@ -606,17 +624,17 @@ p {
     max-width: 1000px;
     margin: 0 auto;
     margin-top: 18px;
-    margin-bottom: 21px;
+    margin-bottom: 30px;
     position: relative;
     pointer-events: all;
 }
 
 .stepper-item-container {
     display: flex;
-    margin-left: 10px;
+    margin-left: 15px;
     line-height: 23px;
     position: relative;
-    transform: translate(calc(-32px),0px);
+    /* transform: translate(calc(-32px),0px); */
     order: 3;
 }
 
@@ -642,6 +660,7 @@ p {
     padding-left: 5px;
     padding-right: 5px;
     order: 2;
+    display: none;
 }
 
 .stepper-arrow {
@@ -768,7 +787,7 @@ p {
     fill: #555;
     dominant-baseline: middle;
     /* transform: translate(0,3px); */
-    letter-spacing: .5px;
+    letter-spacing: .3px;
 }
 
 .swarm-axis-annotation-line {
@@ -794,7 +813,6 @@ p {
 
 
 .histogram-chart-toggle-first {
-    margin-right: 30px;
     margin-left: 33px;
 }
 
@@ -1297,7 +1315,7 @@ p {
     font-family: 'Roboto';
     font-size: 12px;
     position: relative;
-    width: 37px;
+    width: 76px;
     text-align: center;
     line-height: 18px;
 }
@@ -1312,7 +1330,7 @@ p {
     top: -19px;
     font-weight: 500;
     text-transform: capitalize;
-    width: 50px;
+    width: 53px;
     text-align: center;
     color: #828282;
 }
@@ -1520,6 +1538,7 @@ p {
     visibility: hidden;
     pointer-events: none;
     order: 2;
+    display: none;
 }
 
 .stepper-back svg {
@@ -1614,24 +1633,27 @@ main {
     color: #000000;
     opacity: 0;
     text-decoration: none;
+    display: none;
 }
 
 .stepper-item-container .stepper-item:first-of-type{
-  padding-left: 0px;
+  /* padding-left: 0px; */
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 
 
 .stepper-text {
     /* text-decoration: underline; */
-    border-bottom: 1px solid #c7c7c7;
+    /* border-bottom: 1px solid #c7c7c7; */
 }
 
 .stepper-selected .stepper-text {
     text-decoration: none;
 }
 
-.stepper-item:hover {font-weight: 500;color: black;}
-.stepper-item-selected:hover {font-weight: 600;color: black;}
+.stepper-item:hover {/* font-weight: 500; */color: black;}
+.stepper-item-selected:hover {/* font-weight: 600; */color: black;}
 
 
 .embed-link-text {
@@ -1672,3 +1694,8 @@ main {
   text-align: left;
   text-transform: uppercase;
 }
+
+
+.stepper-item:last-of-type {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;

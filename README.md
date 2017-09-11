@@ -1,9 +1,7 @@
 # to do
 
-gender/race move up
 no cover up of bubbles with avg
 women arrow too big
-2017 vs. '17 - hover events move to text.
 bigger title for chart on top left - potentially center
 
 * baselines for hispanics and blacks
@@ -32,10 +30,12 @@ bigger title for chart on top left - potentially center
 * bug when adding nodes from search and changing views
 
 
+# census_2.csv
+https://docs.google.com/spreadsheets/d/1L5WnGfwaHOpWf0PHvEN8kw_Xj3iVfshKfJSqtvzcSEU/edit#gid=245922531
+
 # data for override of census info
 
 https://docs.google.com/spreadsheets/d/1CvtgjS0kw3mpXumTjEwTTjg1Cx6GbtwttLKPj10sf1U/edit#gid=0
-
 
 # queries
 
