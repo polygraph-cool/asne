@@ -169,8 +169,8 @@
 body {
     margin: 0px;
     padding: 0px;
-    height: 100vh;
     background: #F7F7F7;
+    min-height: 110vh;
 }
 
 p {
@@ -571,6 +571,7 @@ p {
     padding-top: 10px;
     flex-grow: 1;
     margin-top: 6px;
+    height: 80px;
 }
 
 .table-rows .histogram-chart-toggle-wrapper {
@@ -1571,9 +1572,8 @@ p {
 }
 
 main {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     background: white;
 }
 
