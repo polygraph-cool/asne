@@ -788,12 +788,14 @@ p {
     dominant-baseline: middle;
     /* transform: translate(0,3px); */
     letter-spacing: .3px;
+    pointer-events: none;
 }
 
 .swarm-axis-annotation-line {
     stroke: #ccc;
     shape-rendering: crispEdges;
     stroke-dasharray: 3,2;
+    pointer-events: none;
 }
 
 .histogram-chart-toggle-first:before {

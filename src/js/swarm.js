@@ -1751,7 +1751,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
          .append("text")
          .text(newsIdMap.get(newsIdSelected).Company)
          .attr("class","swarm-axis-annotation-text")
-         .attr("x",highlightedAnnotationOffset+10)
+         .attr("x",highlightedPosition[2] + highlightedAnnotationOffset)
          .style("text-anchor","start")
          ;
 
