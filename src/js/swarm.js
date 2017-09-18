@@ -129,6 +129,7 @@ var states = [
 
 function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusData,stateTopo,censusOverride) {
 
+  var newToggleForRaceAndGender;
   var alphaSort = ""
   var searchMap;
   var stepperContainerToggle;
@@ -4435,10 +4436,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     })
     ;
 
-
   function buildToggles(){
 
-    var newToggleForRaceAndGender = stepperContainerToggle.append("div")
+    newToggleForRaceAndGender = stepperContainerToggle.append("div")
       .attr("class","top-row-chart-toggle-wrapper");
 
     var toggles = footerContainer.append("div")
@@ -4548,7 +4548,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
     }
 
-    searchMap = toggles.append("div")
+    searchMap = newToggleForRaceAndGender.append("div")
       .attr("class","swarm-chart-map swarm-chart-min")
       ;
 

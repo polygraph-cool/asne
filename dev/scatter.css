@@ -119,6 +119,7 @@
   cursor: hand;
   cursor: pointer;
   pointer-events: none;
+  overflow: visible;
 }
 
 
@@ -1379,18 +1380,28 @@ p {
 }
 
 .swarm-chart-map {
-    width: 610px;
-    /* position: absolute; */
-    transform: translate(0,-110px);
+    width: 430px;
+    position: absolute;
+    transform: translate(0,-6px);
     /* background: rgba(255, 255, 255, 0.64); */
     z-index: 1000000;
     cursor: hand;
     cursor: pointer;
-    transition: all 600ms;
+    transition: trans 600ms;
     display: none;
+    background: white;
+    left: 0px;
+    margin: 0 auto;
+    border: 1px solid #c5c5c5;
+    border-radius: 6px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 0px 30px;
 }
 
-.map-selector-text {text-anchor: middle;font-family: 'Roboto';text-shadow: 0 1px 0 #ffffff, 1px 0 0 #ffffff, 0 -1px 0 #ffffff, -1px 0 0 #ffffff;dominant-baseline: auto;fill: #ff0000;font-size: 23px;font-weight: 400;/* text-transform: uppercase; *//* letter-spacing: 2px; */}
+.map-selector-text {text-anchor: middle;font-family: 'Roboto';text-shadow: 0 1px 0 #ffffff, 1px 0 0 #ffffff, 0 -1px 0 #ffffff, -1px 0 0 #ffffff;dominant-baseline: auto;fill: #ff0000;font-size: 31px;font-weight: 500;/* text-transform: uppercase; *//* letter-spacing: 2px; */}
 
 .map-selector-circle {
     fill: none;
@@ -1425,8 +1436,8 @@ p {
 
 .map-close {
     background: #d2d2d2;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     position: absolute;
     left: 0px;
@@ -1453,15 +1464,19 @@ p {
 
 .swarm-chart-min {
     width: 130px;
-    transform: translate(0px,-22px);
-    margin-right: 22px;
+    transform: translate(0px,-20px);
+    left: 40px;
+    border: none;
+    position: absolute;
+    right: auto;
+    padding: 0px;
+    top: 0px;
 }
 
 .map-label {
     font-family: 'Roboto';
     position: absolute;
-    transform: translate(-100%,-50%);
-    top: 44%;
+    transform: translate(0%,calc(-50% + -10px));
     font-size: 12px;
     color: red;
     font-family: 'Roboto';
@@ -1470,9 +1485,11 @@ p {
     position: absolute;
     text-transform: uppercase;
     font-weight: 500;
-    color: #4c4c4c;
+    color: #9a9a9d;
     letter-spacing: .5px;
     z-index: 1000;
+    width: 100%;
+    text-align: center;
 }
 
 
@@ -1688,7 +1705,7 @@ main {
     top: 0px;
 }
 
-.top-row-chart-toggle-wrapper{left: 0px;position: absolute;}
+.top-row-chart-toggle-wrapper{left: 0px;position: absolute;width: 100%;}
 
 .swarm-chart-tool-tip-row-label span{
   position: absolute;
