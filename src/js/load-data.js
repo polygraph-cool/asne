@@ -40,7 +40,7 @@ function init() {
 					swarmLeader.init(result[0],result[1],result[2],result[3],result[5]);
 					graphic.init(result[0],result[1],result[2],result[3]);
 					histogram.init(result[0],result[1],result[2],result[3]);
-					table.init(result[0],result[1],result[2],result[3]);
+					// table.init(result[0],result[1],result[2],result[3]);
 					slope.init(result[0],result[1],result[2],result[3]);
 					// newsroom.init();
 				}

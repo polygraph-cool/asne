@@ -1,33 +1,32 @@
+<!--
+
+clarify census data
+-->
+
 # to do
 
-no cover up of bubbles with avg
-women arrow too big
-bigger title for chart on top left - potentially center
-
-* baselines for hispanics and blacks
-* incorporate caitlyn's data on census
-* have a default paper if not near a big one – set get location function as false until true
-* add in other racial data so not tbd
-
-* remove crispEdges and do half pixel offsets
-* make bigger bubbles and add more logos?
-* capitalize state in table version
-* dash is off for some reason
-* geo highlight on other charts
-* geo highlighted stroke color is darker than fill
-* get other logos
+* fix search box where goes blank in some areas.
+* solve unknown thing
+* add in census data for items in the list
+* check about removing...(which Ive already done)
+    -Louisville Design Studio
+    -Phoenix Design Studio
+    -Des Moines Design Studio
+* check news id match to 2001
+* choose matching year
+* fix dallas morning news
+* change 50 newsrooms thing
+* bug on find a newsroom...
 * iframes
-* set Heights for charts based on view port Height
 * hosting
-* comparisons to other industries
-* toggles need to match view of viz if use tour buttons
 * search pushes node to the top
 * down arrow on the saerch box
-* get white black asian numbers in tool tips
-* fix color scales to match film dialgoeu project
-* search result removes rows so height changes
 * what happens when chart shifts after adding nodes from search?
 * bug when adding nodes from search and changing views
+* search result removes rows so height changes
+
+#nice to have
+* comparisons to other industries
 
 
 # census_2.csv
