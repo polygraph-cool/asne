@@ -144,8 +144,8 @@
 .map-arrow-path-peak{fill: none;}
 .news-lab-logo{
   background: url("https://newslab.withgoogle.com/assets/img/logo.png");
-  height: 41px;
-  width: 120px;
+  height: auto;
+  width: 127px;
   background-size: contain;
   background-repeat: no-repeat;
   /* display: none; */
@@ -770,6 +770,10 @@ p {
     overflow: scroll;
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-self: flex-start;
+    flex-direction: column;
 }
 
 .swarm-chart-search-results-result-text {
@@ -787,6 +791,7 @@ p {
     cursor: hand;
     cursor: pointer;
     width: 50%;
+    align-self: flex-start;
 }
 
 .swarm-chart-search-results-result:hover {
@@ -920,10 +925,10 @@ p {
     font-family: 'Roboto';
     font-size: 11px;
     left: 1px;
-    top: 3px;
+    top: 0px;
     position: absolute;
     color: rgb(136, 136, 136);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 400;
 }
 
@@ -1178,7 +1183,7 @@ p {
 .swarm-text {
     font-family: 'Roboto';
     font-size: 11px;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     font-weight: 400;
     fill: rgba(0, 0, 0, 0.8);
     transform: translate(-7px,1px);
@@ -1316,7 +1321,6 @@ p {
     font-family: 'Roboto';
     font-size: 15px;
     font-weight: 400;
-    text-transform: capitalize;
     text-align: center;
     padding-bottom: 25px;
     color: #909090;
@@ -1713,6 +1717,10 @@ main {
     position: absolute;
     right: 0px;
     top: 0px;
+    pointer-events: all;
+    cursor: hand;
+    cursor: pointer;
+    z-index: 10000;
 }
 
 .top-row-chart-toggle-wrapper{left: 0px;position: absolute;width: 100%;}
@@ -1792,12 +1800,18 @@ main {
     font-weight: 500;
     font-size: 11px;
   }
-  .maps-chart-svg{
+  .swarm-chart-min .maps-chart-svg{
     opacity: .4;
   }
 
 }
 @media only screen and (max-width: 700px){
+
+  .histogram-chart-toggle-first:before{
+    text-align: right;
+    left: auto;
+    right: 34px;
+  }
   .content-title{
     font-size: 41px;
   }
@@ -1815,13 +1829,71 @@ main {
   }
   .top-row-chart-toggle-wrapper{
     position: absolute;
-    top: 340px;
-    left: 10px;
+    top: 165px;
+    left: auto;
     height: 26px;
     z-index: 10000;
+    right: 30px;
+  }
+  .swarm-scatter-selected{top: 131px;left: 70px;/* transform: translate(-50%,0px); */}
+  .swarm-scatter-selected .histogram-chart-toggle-first:before{/* left: -58px; *//* top: -1px; */}
+  .swarm-scatter-regression-annotation{
+    display: none;
+  }
+  .scatter-axis-chart-text-y{
+    font-size: 12px;
+  }
+  .swarm-scatter-y-annnotation-text{
+    font-weight: 400;
+  }
+  .swarm-scatter-rect-gender-line{
+    stroke-width: 11px;
+    stroke: rgba(0, 0, 0, 0.15);
+  }
+  .chart-title{
+    font-weight: 500;
+    font-size: 13px;
+  }
+  .scatter-axis-chart-side{transform: translateY(31px);}
+  .scatter-axis-chart-text{
+    transform: translateY(31px);
+  }
+  .arrow-scatter-selected{top: 80px;}
+  .table-selected{top: 100px;left: 0px;margin: 0 auto;right: 0px;width: 86px;}
+  .table-selected .map-label{
+    text-align: center;
+    top: 36px;
+  }
+  .table-selected .swarm-chart-min{
+  width: 96px;
+  }
+  .table-selected .histogram-chart-toggle-first{
+    margin: 0px;
+  }
+  .swarm-chart-container-table{
+    padding-top: 108px;
+  }
+  .arrow-scatter-full-selected{top: 85px;left: 274px;right: auto;margin: 0 auto;height: 20px;}
+  .arrow-scatter-full-selected .histogram-chart-toggle-first:before{
+    left: -85px;
+    top: -3px;
+    content: 'Change Data:';
+    right: auto;
+  }
+  .arrow-scatter-full-selected .histogram-chart-toggle-item{line-height: 20px;background: none;border: none;}
+  .arrow-scatter-full-selected .toggle-selected{box-shadow: none;text-decoration: underline;}
+  .swarm-arrow-full-annotation-diff tspan:first-of-type{
+    font-size: 18px;
+  }
+  .arrow-scatter-annoation-average-text{
+    font-size: 12px;
+  }
+  .swarm-arrow-full-annotation-diff tspan{
+    font-size: 12px;
   }
 }
 @media only screen and (max-width: 600px){
+
   .content-title{
     font-size: 36px;
   }
@@ -1842,6 +1914,7 @@ main {
     font-weight: 300;
     line-height: 1.5;
     max-width: 500px;
+    margin-bottom: 0px;
   }
   .footer-container{
     height: 130px;
@@ -1856,16 +1929,69 @@ main {
   .content-title{
     font-size: 32px;
   }
+  .arrow-scatter-selected{
+    top: 93px;
+  }
+  .chart-title{
+  }
+  .swarm-arrow-tick-text{
+    transform: translate(0,-15px);
+  }
+  .swarm-arrow-annotation-top-line{
+    stroke-width: 1px;
+  }
+  .swarm-arrow-annotation-top-text{
+    font-size: 11px;
+    transform: translate(0,-5px);
+  }
 }
 
 @media only screen and (max-width: 450px){
+  .table-selected{
+    left: 0px;
+    right: 0px;
+    width: 90%;
+    margin: 0 auto;
+    display: none;
+  }
+  .swarm-chart-container-table{
+    /* justify-content: flex-start; */
+    padding-top: 34px;
+  }
+  .swarm-chart-container-table .swarm-chart-table-company-container:first-of-type{
+  }
+  .arrow-scatter-full-selected{
+    left: 0px;
+    right: 0px;
+    width: 90%;
+    top: 62px;
+    margin: 0 auto;
+    margin-left: 79px;
+  }
+  .stepper-item-container{
+
+  }
+  .histogram-chart-toggle-first{
+    margin-left: 40px;
+    margin-top: 3px;
+  }
   .swarm-chart-search-results{
     bottom: 170px;
   }
   .chart-title{
     text-transform: capitalize;
-    font-size: 17px;
+    font-size: 13px;
     letter-spacing: 0px;
+    font-weight: 500;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    line-height: 18px;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    max-width: 90%;
+    pointer-events: none;
   }
   .stepper-item{
     font-size: 11px;
@@ -1875,19 +2001,45 @@ main {
     max-width: 370px;
     margin-top: 20px;
   }
+  .histogram-chart-toggle-item{
+    border: none;
+    color: #888;
+    font-size: 13px;
+    padding: 0px;
+    height: 18px;
+    margin: 0px 4px;
+    font-weight: 600;
+  }
+  .histogram-chart-toggle-first:before{
+    left: auto;
+    left: -86px;
+    top: -2px;
+    content: 'change data:';
+    position: absolute;
+    text-align: left;
+  }
+  .top-row-chart-toggle-wrapper{
+    left: 67px;
+    right: auto;
+    top: 92px;
+    margin: 0 auto;
+    width: 60px;
+  }
+  .toggle-selected{
+    background: none;
+    box-shadow: none;
+    color: black;
+    border-bottom: 1px solid black;
+  }
 }
 
 @media only screen and (max-width: 400px){
-  .histogram-chart-toggle-first:before{
-    left: auto;
-    right: 39px;
-  }
-  .top-row-chart-toggle-wrapper{
-    left: auto;
-    right: 0px;
-  }
+
+
+
   .stepper-container-text{
     margin-bottom: 0px;
+    text-align: left;
   }
   .stepper-item{
     text-align: center;
@@ -1897,4 +2049,14 @@ main {
     justify-content: center;
     height: 33px;
   }
+
+
+  .chart-title{
+    /* margin: 0 auto; */
+  }
+  .swarm-chart-container{
+    margin-top: 24px;
+  }
+
+
 }

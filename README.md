@@ -5,18 +5,18 @@ clarify census data
 
 # to do
 
-* fix search box where goes blank in some areas.
-* solve unknown thing
-* add in census data for items in the list
-* check about removing...(which Ive already done)
-    -Louisville Design Studio
-    -Phoenix Design Studio
-    -Des Moines Design Studio
+
+* remove transitions if view!=0
+* link to specific table selection.
+* change from staff to all in tooltip and my newsrooms
+* fix race for leadership chart
 * check news id match to 2001
 * choose matching year
 * fix dallas morning news
 * change 50 newsrooms thing
 * bug on find a newsroom...
+* vonoroi on the swarm chart
+* add in more logos
 * iframes
 * hosting
 * search pushes node to the top
