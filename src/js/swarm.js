@@ -2901,10 +2901,24 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
       var embedLink = footerContainer.append("div")
         .attr("class","embed-link")
+
+      embedLink
         .append("p")
         .append("span")
         .attr("class","embed-link-text")
         .text("Embed This Chart")
+        .on("click",function(d){
+          d3.select(this).text("Paste code into your site")
+          embedLinkInput.style("display","block")
+            .attr("readonly",true)
+            .attr("value",function(d){
+                return "<iframe src='https://polygraph-cool.github.io/asne/dev/index.html?view="+stepperSequence.indexOf(currentChart)+"&filter="+cut+"' frameborder='0'></iframe>"
+            })
+            ;
+        })
+        ;
+
+      var embedLinkInput = embedLink.append("input")
         ;
 
       footerContainer.append("div")

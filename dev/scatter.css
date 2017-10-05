@@ -1708,7 +1708,7 @@ main {
 }
 
 .embed-link p {
-    width: 150px;
+    width: 190px;
     line-height: 26px;
     text-align: right;
 }
@@ -1721,6 +1721,12 @@ main {
     cursor: hand;
     cursor: pointer;
     z-index: 10000;
+}
+
+.embed-link input{
+  width: 100%;
+  display: none;
+  color: black;
 }
 
 .top-row-chart-toggle-wrapper{left: 0px;position: absolute;width: 100%;}
