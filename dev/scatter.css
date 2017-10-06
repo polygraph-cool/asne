@@ -1993,7 +1993,7 @@ main {
 
   }
   .histogram-chart-toggle-first{
-    margin-left: 40px;
+    margin-left: 0px;
     margin-top: 3px;
   }
   .swarm-chart-search-results{
@@ -2030,6 +2030,7 @@ main {
     height: 18px;
     margin: 0px 4px;
     font-weight: 600;
+    margin-left: 0px;
   }
   .histogram-chart-toggle-first:before{
     left: auto;
@@ -2046,11 +2047,12 @@ main {
     font-size: 10px;
   }
   .top-row-chart-toggle-wrapper{
-    left: 57px;
-    right: auto;
-    top: 60px;
+    right: 0px;
+    top: 70px;
     margin: 0 auto;
-    width: 60px;
+    width: 90%;
+    left: 0px;
+    transform: translate(76px,0px);
   }
   .toggle-selected{
     background: none;
@@ -2062,17 +2064,6 @@ main {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
   }
-}
-
-@media only screen and (max-width: 400px){
-  .top-row-chart-toggle-wrapper{
-    top: 92px;
-    left: 55px;
-  }
-  .histogram-chart-toggle-first{
-
-  }
-
   .stepper-container-text{
     margin-bottom: 0px;
     text-align: left;
@@ -2087,13 +2078,25 @@ main {
     padding: 0 7px;
     letter-spacing: -.3px;
   }
+}
+
+@media only screen and (max-width: 400px){
+  .top-row-chart-toggle-wrapper{
+    /* top: 92px; */
+    /* left: 55px; */
+  }
+  .histogram-chart-toggle-first{
+
+  }
+
+
 
 
   .chart-title{
     /* margin: 0 auto; */
   }
   .swarm-chart-container{
-    margin-top: 24px;
+    /* margin-top: 24px; */
   }
 
 

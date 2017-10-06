@@ -584,7 +584,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
     var stepNumToText = ["2017 results","Leadership",yearOld+" vs. 2017: Top Newsrooms","Overall Change","My Newsroom"];
 
     if(viewportWidth < 550){
-      stepNumToText = ["2017 Results","Leadership","Top Newsrooms","Change","My Newsroom"];
+      stepNumToText = ["2017 Results","Newsroom Leaders","Top Newsrooms","Change","My Newsroom"];
     }
 
     var stepperContainerToggleContainerSteps = stepperContainerToggleContainer
