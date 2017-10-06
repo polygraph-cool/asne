@@ -23,9 +23,9 @@ function init() {
 			.defer(d3.csv,'assets/map_data_3.csv')
 			.defer(d3.csv,'assets/lats.csv')
 			.defer(d3.csv,'assets/newsidsunique_2.csv')
-			.defer(d3.csv,'assets/news_ids.csv')
+			// .defer(d3.csv,'assets/news_ids.csv')
 			.defer(d3.json,'assets/usJson.json')
-			.defer(d3.csv,'assets/top_3.csv')
+			// .defer(d3.csv,'assets/top_3.csv')
 			.defer(d3.csv,'assets/census_2.csv')
 			.defer(d3.csv,'assets/census_override_2.csv')
 			.awaitAll((err, result) => {
@@ -33,15 +33,15 @@ function init() {
 					reject(err)
 				}
 				else {
-					maps.init(result[0],result[1],result[2],result[3],result[4]);
-					arrowScatter.init(result[0],result[1],result[2],result[3]);
-					scatter.init(result[0],result[1],result[2],result[3]);
-					swarm.init(result[0],result[1],result[2],result[3],result[5],result[6],result[4],result[7]);
-					swarmLeader.init(result[0],result[1],result[2],result[3],result[5]);
-					graphic.init(result[0],result[1],result[2],result[3]);
-					histogram.init(result[0],result[1],result[2],result[3]);
+					// // maps.init(result[0],result[1],result[2],result[3],result[4]);
+					// arrowScatter.init(result[0],result[1],result[2],result[3]);
+					// scatter.init(result[0],result[1],result[2],result[3]);
+					swarm.init(result[0],result[1],result[2],result[3],result[4],result[5]);
+					// swarmLeader.init(result[0],result[1],result[2],result[3],result[5]);
+					// graphic.init(result[0],result[1],result[2],result[3]);
+					// histogram.init(result[0],result[1],result[2],result[3]);
 					// table.init(result[0],result[1],result[2],result[3]);
-					slope.init(result[0],result[1],result[2],result[3]);
+					// slope.init(result[0],result[1],result[2],result[3]);
 					// newsroom.init();
 				}
 			})

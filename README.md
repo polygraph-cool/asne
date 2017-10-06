@@ -5,7 +5,7 @@ clarify census data
 
 # to do
 
-
+* rebuild embed on click
 * remove transitions if view!=0
 * link to specific table selection.
 * change from staff to all in tooltip and my newsrooms

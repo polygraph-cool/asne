@@ -180,7 +180,7 @@ p {
 }
 
 .chart-title {
-    font-size: 12px;
+    font-size: 13px;
     font-family: 'Roboto';
     text-align: center;
     font-weight: 400;
@@ -190,7 +190,7 @@ p {
     /* position: absolute; */
     /* top: 4px; */
     text-align: center;
-    font-weight: 400;
+    font-weight: 500;
     margin-bottom: -16px;
     line-height: 50px;
     text-transform: uppercase;
@@ -341,7 +341,7 @@ p {
     text-transform: capitalize;
     background: white;
     border: 1px solid rgba(193, 193, 193, 0.8);
-    z-index: 1000;
+    z-index: 1000000000;
     border-radius: 4px;
     text-align: left;
     width: auto;
@@ -781,7 +781,7 @@ p {
     font-family: 'Roboto';
     color: rgba(0, 0, 0, 0.74);
     font-weight: 500;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     width: 90%;
     margin: 0 auto;
     line-height: 20px;
@@ -1881,10 +1881,11 @@ main {
   }
   .arrow-scatter-full-selected{top: 85px;left: 274px;right: auto;margin: 0 auto;height: 20px;}
   .arrow-scatter-full-selected .histogram-chart-toggle-first:before{
-    left: -85px;
-    top: -3px;
+    left: -76px;
+    top: -2px;
     content: 'Change Data:';
     right: auto;
+    font-size: 10px;
   }
   .arrow-scatter-full-selected .histogram-chart-toggle-item{line-height: 20px;background: none;border: none;}
   .arrow-scatter-full-selected .toggle-selected{box-shadow: none;text-decoration: underline;}
@@ -1953,6 +1954,20 @@ main {
 }
 
 @media only screen and (max-width: 450px){
+  .swarm-chart-tool-tip{
+    position: fixed;
+    width: auto;
+    margin: 0 auto;
+  }
+  .swarm-text{
+    letter-spacing: -.4px;
+    text-shadow: none;
+    font-size: 11px;
+    transform: translate(-3px,1px);
+  }
+  .swarm-arrow-annotation-left{
+    transform: translate(6px,-4px);
+  }
   .table-selected{
     left: 0px;
     right: 0px;
@@ -2000,7 +2015,7 @@ main {
     pointer-events: none;
   }
   .stepper-item{
-    font-size: 11px;
+    font-size: 12px;
   }
   .content-title{line-height: 35px;}
   .stepper-container-text{
@@ -2023,11 +2038,17 @@ main {
     content: 'change data:';
     position: absolute;
     text-align: left;
+    pointer-events: none;
+    left: -76px;
+    top: -2px;
+    content: 'Change Data:';
+    right: auto;
+    font-size: 10px;
   }
   .top-row-chart-toggle-wrapper{
-    left: 67px;
+    left: 57px;
     right: auto;
-    top: 92px;
+    top: 60px;
     margin: 0 auto;
     width: 60px;
   }
@@ -2036,12 +2057,21 @@ main {
     box-shadow: none;
     color: black;
     border-bottom: 1px solid black;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
   }
 }
 
 @media only screen and (max-width: 400px){
+  .top-row-chart-toggle-wrapper{
+    top: 92px;
+    left: 55px;
+  }
+  .histogram-chart-toggle-first{
 
-
+  }
 
   .stepper-container-text{
     margin-bottom: 0px;
@@ -2054,6 +2084,8 @@ main {
     flex-direction: column;
     justify-content: center;
     height: 33px;
+    padding: 0 7px;
+    letter-spacing: -.3px;
   }
 
 

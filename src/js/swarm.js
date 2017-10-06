@@ -154,7 +154,7 @@ var states = [
   ]
   ;
 
-function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusData,stateTopo,censusOverride) {
+function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride) {
 
   var newToggleForRaceAndGender;
   var alphaSort = ""
@@ -170,7 +170,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
   var miniWidth = 70-miniMargin.left - miniMargin.right;
   var miniHeight = 90 - miniMargin.top - miniMargin.bottom;
   var multipleY = d3.scaleLinear().domain([.2,.5]).range([miniHeight,0]);
-
+  var embedLinkText;
+  var embedLinkInput;
   var censusOverrideMap = d3.map(censusOverride,function(d){
     return +d.news_id;
   });
@@ -181,6 +182,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
   var searchInput;
   var newsIDSearch = "";
   var searchResults;
+  var searchResultText;
   var newsIDSearchColor = "#7354ab"
   var searchAlphaSortLetters;
   var searchResultsContainer;
@@ -239,70 +241,118 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     if(kind == "gender-old"){
       kind = "gender"
       data = dataSet.values.filter(function(d){
-        return +d.Year > 2000
-      })[0]
+        return +d.Year == yearOld;
+      });
+      if(data.length>0){
+        data = data[0];
+      }
+      else{
+        return "n/a"
+      }
       // data = dataSet.yearMap.get(yearOld)
-    }
-    if(kind == "genderStaff"){
-      return +(data.total_num-data.male_num-(+data.total_sup_num - +data.male_sup_num))/(data.total_num-data.total_sup_num)
-    }
-    if(kind == "raceStaff"){
-      return (+data.total_num - +data.white_num - (+data.total_sup_num - +data.white_sup_num))/(data.total_num - data.total_sup_num)
     }
     if(kind == "race-old"){
       kind = "race"
       data = dataSet.values.filter(function(d){
-        return +d.Year > 2000
-      })[0]
+        return +d.Year == yearOld;
+      });
+      if(data.length>0){
+        data = data[0];
+      }
+      else{
+        return "n/a"
+      }
       // data = dataSet.yearMap.get(yearOld)
     }
     if(kind == "white-old"){
       kind = "white"
       data = dataSet.values.filter(function(d){
-        return +d.Year > 2000
-      })[0]
+        return +d.Year == yearOld;
+      });
+      if(data.length>0){
+        data = data[0];
+      }
+      else{
+        return "n/a"
+      }
       // data = dataSet.yearMap.get(yearOld)
     }
     if(kind == "black-old"){
       kind = "black"
       data = dataSet.values.filter(function(d){
-        return +d.Year > 2000
-      })[0]
+        return +d.Year == yearOld;
+      });
+      if(data.length>0){
+        data = data[0];
+      }
+      else{
+        return "n/a"
+      }
       // data = dataSet.yearMap.get(yearOld)
     }
     if(kind == "hisp-old"){
       kind = "hisp"
       data = dataSet.values.filter(function(d){
-        return +d.Year > 2000
-      })[0]
+        return +d.Year == yearOld;
+      });
+      if(data.length>0){
+        data = data[0];
+      }
+      else{
+        return "n/a"
+      }
       // data = dataSet.yearMap.get(yearOld)
     }
     if(kind == "sup-white-old"){
       kind = "supWhiteRaw"
       data = dataSet.values.filter(function(d){
-        return +d.Year > 2000
-      })[0]
+        return +d.Year == yearOld;
+      });
+      if(data.length>0){
+        data = data[0];
+      }
+      else{
+        return "n/a"
+      }
       // data = dataSet.yearMap.get(yearOld)
     }
     if(kind == "sup-gender-old"){
       kind = "supGender"
       data = dataSet.values.filter(function(d){
-        return +d.Year > 2000
-      })[0]
+        return +d.Year == yearOld;
+      });
+      if(data.length>0){
+        data = data[0];
+      }
+      else{
+        return "n/a"
+      }
       // data = dataSet.yearMap.get(yearOld)
     }
     if(kind == "sup-black-old"){
       kind = "supBlack"
       data = dataSet.values.filter(function(d){
-        return +d.Year > 2000
-      })[0]
+        return +d.Year == yearOld;
+      });
+      if(data.length>0){
+        data = data[0];
+      }
+      else{
+        return "n/a"
+      }
       // data = dataSet.yearMap.get(yearOld)
     }
     if(kind == "sup-hisp-old"){
       kind = "supHisp"
       data = dataSet.values.filter(function(d){
-        return +d.Year > 2000
-      })[0]
+        return +d.Year == yearOld;
+      });
+      if(data.length>0){
+        data = data[0];
+      }
+      else{
+        return "n/a"
+      }
       // data = dataSet.yearMap.get(yearOld)
     }
     if(kind == "gender"){
@@ -339,6 +389,24 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     if(kind == "supWhiteRaw"){
       return (+data.white_sup_num)/data.total_sup_num;
     }
+    if(kind == "genderStaff"){
+
+      return +(data.total_num-data.male_num-(+data.total_sup_num - +data.male_sup_num))/(data.total_num-data.total_sup_num)
+    }
+    if(kind == "raceStaff"){
+      return (+data.total_num - +data.white_num - (+data.total_sup_num - +data.white_sup_num))/(data.total_num - data.total_sup_num)
+    }
+    if(kind == "whiteStaff"){
+      console.log(data);
+      return (+data.white_num - +data.white_sup_num)/(data.total_num - data.total_sup_num)
+    }
+    if(kind == "blackStaff"){
+      return (+data.black_num - +data.black_sup_num)/(data.total_num - data.total_sup_num)
+    }
+    if(kind == "hispStaff"){
+      return (+data.hisp_num - +data.hisp_sup_num)/(data.total_num - data.total_sup_num)
+    }
+
     var racePoint = ((+data.total_num - +data.white_num)/data.total_num) - (1-dataSet.whiteCensus);
     return racePoint;
   }
@@ -565,6 +633,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       })
       .on("click",function(d,i){
 
+        embedLinkText.text("Embed this chart");
+        embedLinkInput.style("display",null);
+
         urlParameter.set('view', i);
 
         var num = i;
@@ -769,9 +840,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     .style("left",margin.left+"px")
     ;
 
-  var miniMultiple = chartDivContainer.append("div")
-    .attr("class","slope-mini-multiple-div")
-    ;
+  // var miniMultiple = chartDivContainer.append("div")
+  //   .attr("class","slope-mini-multiple-div")
+  //   ;
 
   var chartToolTip = chartDivContainer
     .append("div")
@@ -942,10 +1013,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     var searchDataSet = []
 
     newsNest = newsNest.filter(function(d){
-      if(d.key == 50){
-        console.log(d);
-      }
-      if(d.value.yearMap.has(yearSelected) && d.value.values.length > 1){
+      if(d.value.yearMap.has(yearSelected)){
         return d;
       }
       return null;
@@ -962,19 +1030,20 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     for (var item in newsNest){
 
       var currentSup = getPercentType("supGender",newsNest[item].value)
-      var currentYear = getPercent(newsNest[item].value.yearMap.get(yearSelected));
+      var currentYear = getPercentType("gender",newsNest[item].value);
       var previousYear = getPercentType("gender-old",newsNest[item].value)
-      // var previousYear = getPercent(newsNest[item].value.values.filter(function(d){
-      //   if(cut=="gender"){
-      //     return +d.Year > 2000;
-      //   }
-      //   return d;
-      // })[0]);
-      var diff = currentYear-previousYear;
 
-      var whiteCensus = .9;
-      var blackCensus = .08;
-      var hispanicCensus = .02;
+      var diff = 0
+      if(previousYear == "n/a"){
+        diff = null;
+      }
+      else{
+        diff = currentYear-previousYear;
+      }
+
+      var whiteCensus = 9999;
+      var blackCensus = 9999;
+      var hispanicCensus = 9999;
 
       var companyData = newsIDName.get(newsNest[item].key);
       var cityState = companyData.City+" "+companyData.State;
@@ -994,7 +1063,14 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       newsNest[item].value.blackCensus = blackCensus;
       newsNest[item].value.hispanicCensus = hispanicCensus;
 
-      var raceDiff = getPercentType("race",newsNest[item].value)-getPercentType("race-old",newsNest[item].value);
+      var raceDiff = 0;
+
+      if(getPercentType("race-old",newsNest[item].value) == "n/a"){
+        raceDiff = null;
+      }
+      else{
+        raceDiff = getPercentType("race",newsNest[item].value)-getPercentType("race-old",newsNest[item].value);
+      }
 
       diffArray.push(diff);
       raceDiffArray.push(raceDiff);
@@ -1056,7 +1132,12 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     }
   };
 
-  var newsNestAverageT0 = d3.mean(newsNest,function(d){ return d.value.previousYear;});
+  var newsNestAverageT0 = d3.mean(newsNest,function(d){
+    if(d.value.previousYear == "n/a"){
+      return null;
+    }
+    return d.value.previousYear;
+  });
   var newsNestAverageT1 = d3.mean(newsNest,function(d){ return d.value.currentYear;});
   var newsNestSupAverageT1 = d3.mean(newsNest,function(d){ return getPercentType("supGender",d.value)});
 
@@ -1138,7 +1219,10 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           if(data.value.companyName == "usa today"){
             return "USA Today";
           }
-          return data.value.companyName;
+          if(data.value.companyName.length > 30){
+            return data.value.companyName.replace(/\b\w/g, l => l.toUpperCase()).slice(0,30)+"..."
+          }
+          return data.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
         });
 
       var colData = ["white","black","hisp.","female"];
@@ -1162,6 +1246,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
               cityString = data.value.companyData.City + ", "+data.value.companyData.State;
             }
             return "census<span>"+cityString+"</span>"
+          }
+          if(d.cut == "staff" && chartType != "swarm-scatter"){
+            return "all"
           }
           return d.cut;
         })
@@ -1204,6 +1291,20 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             }
           }
           if(cutData == "staff"){
+            if(chartType == "swarm-scatter"){
+              if(d=="white"){
+                return Math.round((getPercentType("whiteStaff",data.value))*100)+"%";
+              }
+              if(d=="black"){
+                return Math.round((getPercentType("blackStaff",(data.value)))*100)+"%";
+              }
+              if(d=="hisp."){
+                return Math.round((getPercentType("hispStaff",(data.value)))*100)+"%";
+              }
+              if(d=="female"){
+                return Math.round((getPercentType("genderStaff",(data.value)))*100)+"%";
+              }
+            }
             if(d=="white"){
               return Math.round((getPercentType("white",data.value))*100)+"%";
             }
@@ -1245,8 +1346,18 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
         chartToolTip
           .style("visibility","visible")
-          .style("top",data.y + mouseoverOffsetY +"px")
-          .style("left",data.x + data.value.radius + mouseoverOffsetX +"px")
+          .style("top",function(d){
+            if(viewportWidth < 450 || mobile){
+              return "0px";
+            }
+            return data.y + mouseoverOffsetY +"px"
+          })
+          .style("left",function(d){
+            if(viewportWidth < 450 || mobile){
+              return "0px";
+            }
+            return data.x + data.value.radius + mouseoverOffsetX +"px";
+          })
       }
       else if(chartType == "swarm-scatter"){
 
@@ -1257,30 +1368,23 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         chartToolTip
           .style("visibility","visible")
           .style("top", function(){
+            if(viewportWidth < 450 || mobile){
+              return "0px";
+            }
             if(cut=="race"){
               return yScale(getPercentType("supWhite",data.value)) + mouseoverOffsetY +"px"
             }
             return yScale(getPercentType("supGender",data.value)) + mouseoverOffsetY +"px"
           })
           .style("left",function(){
+            if(viewportWidth < 450 || mobile){
+              return "0px";
+            }
             if(cut=="race"){
               return xScale(getPercentType("raceStaff",data.value)) + data.value.radius + mouseoverOffsetX +"px"
             }
             return xScale(getPercentType("genderStaff",data.value)) + data.value.radius + mouseoverOffsetX +"px"
           })
-      }
-      else if(chartType == "arrow-scatter"){
-        // console.log(data.value);
-        // if(data.value.miniChart > -1){
-        //   chartToolTip
-        //     .style("visibility","visible")
-        //     .style("top",data.y + 45 + mouseoverOffsetY +"px")
-        //     .style("left",data.x + 200 + mouseoverOffsetX +"px")
-        // }
-
-
-      }
-      else if(chartType == "arrow-scatter-full"){
       }
     }
     function mouseOutEvents(data,element){
@@ -1329,7 +1433,13 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
     function changeTitle(){
       var title = "Newsroom <span>Gender</span> Breakdown";
       if(cut=="race"){
-        var title = "Newsroom <span>White/Non-White</span> Breakdown vs. Audience";
+        if(viewportWidth > 450){
+          title = "Newsroom <span>White/Non-White</span> Breakdown vs. Audience";
+        }
+        else{
+          title = "Newsroom <span>Racial</span> Breakdown vs. Audience";
+        }
+
       }
       if(chartType == "swarm-scatter"){
         title = "Newsroom <span>Leadership</span> vs. Staff";
@@ -1377,16 +1487,20 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       else if(chartType == "swarm-scatter"){
         newToggleForRaceAndGender.classed("swarm-scatter-selected",true);
         margin = {top: 0, right: 20, bottom: 60, left: 20};
-        width = 800 - margin.left - margin.right;
-        if(viewportWidth < 800){
+        width = 680 - margin.left - margin.right;
+        if(viewportWidth < 680){
+          margin = {top: 30, right: 20, bottom: 60, left: 20};
           width = viewportWidth - margin.left - margin.right;
         }
-        height = 475 - margin.top - margin.bottom;
+        height = 575 - margin.top - margin.bottom;
+        if(viewportWidth < 680){
+          height = 475 - margin.top - margin.bottom;
+        }
         xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]).clamp(true);
         yScale = d3.scaleLinear().domain([.2,.8]).range([height,0]).clamp(true);
         if(cut == "race"){
-          xScale.domain([0,.6]).range([0,width]).clamp(true);
-          yScale.domain([0,.8]).range([height,0]).clamp(true);
+          xScale.domain([0,.85]).range([0,width]).clamp(true);
+          yScale.domain([0,.85]).range([height,0]).clamp(true);
           newsNestAverageT1 = d3.mean(newsNest,function(d){ return getPercentType("raceStaff",d.value)});
           newsNestSupAverageT1 = d3.mean(newsNest,function(d){ return getPercentType("supWhite",d.value)});
         }
@@ -1394,11 +1508,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           newsNestAverageT1 = d3.mean(newsNest,function(d){ return getPercentType("genderStaff",d.value)});
           newsNestSupAverageT1 = d3.mean(newsNest,function(d){ return getPercentType("supGender",d.value)});
         }
-      }
-      else if(chartType == "mini-multiple"){
-        margin = {top: 0, right: 0, bottom: 20, left: 0};
-        width = 1000 - margin.left - margin.right;
-        height = 2*(miniTextHeight+miniHeight+miniMargin.top+miniMargin.bottom) - margin.top - margin.bottom;
       }
       else if(chartType=="arrow-scatter"){
         newToggleForRaceAndGender.classed("arrow-scatter-selected",true);
@@ -1409,7 +1518,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           width = viewportWidth - margin.left - margin.right;
         }
         if(viewportWidth < 450){
-          margin = {top: 50, right: 20, bottom: 40, left: 150};
+          margin = {top: 65, right: 20, bottom: 40, left: 150};
           width = viewportWidth - margin.left - margin.right;
         }
         height = 450 - margin.top - margin.bottom;
@@ -1452,7 +1561,12 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]).clamp(true);
         yScale = d3.scaleLinear().domain([.2,.8]).range([height,0]).clamp(true);
 
-        newsNestAverageT0 = d3.mean(newsNest,function(d){ return d.value.previousYear;});
+        newsNestAverageT0 = d3.mean(newsNest,function(d){
+          if(d.value.previousYear == "n/a"){
+            return null;
+          }
+          return d.value.previousYear;
+        });
         newsNestAverageT1 = d3.mean(newsNest,function(d){ return d.value.currentYear;});
         if(cut == "race"){
           xScale.domain([-1,1]).range([0,width]).clamp(true);
@@ -1462,11 +1576,16 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           if(viewportWidth < 450){
             xScale.domain([-.75,.35]).range([0,width]).clamp(true);
           }
-          newsNestAverageT0 = d3.mean(newsNest,function(d){ return getPercentType("race-old",d.value);});
+          newsNestAverageT0 = d3.mean(newsNest,function(d){
+            var result = getPercentType("race-old",d.value);
+            if(result == "n/a"){
+              return null;
+            }
+            return result;
+          });
           newsNestAverageT1 = d3.mean(newsNest,function(d){ return d.value.whiteDelta;});
           genderColorScale.domain([-1,0,1]);
         }
-
       }
       else if(chartType=="table"){
         if(viewportWidth < 700){
@@ -1559,6 +1678,35 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       }
       if(chartType!="table" && chartType != "new"){
         newToggleForRaceAndGender.classed("table-selected",false);
+      }
+
+      if(chartType == "new"){
+
+      }
+      else if(chartType=="arrow-scatter-full" || chartType == "arrow-scatter"){
+        searchResultText.style("pointer-events",function(d){
+            var result = getPercentType("gender-old",d.value);
+            if(result=="n/a"){
+              return "none";
+            }
+            return null;
+          })
+          .text(function(d){
+            var result = getPercentType("gender-old",d.value);
+            if(result == "n/a"){
+              return "(Unavail: No 2001 Data) "+d.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
+            }
+            return d.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
+          })
+          ;
+      }
+      else{
+        searchResultText
+          .style("pointer-events",null)
+          .text(function(d){
+            return d.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
+          })
+          ;
       }
 
       chartDivContainer
@@ -1755,7 +1903,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
          .selectAll("line")
          .data(function(){
            if(cut=="race"){
-             return [.1,.2,.3,.4,.5]
+             return [.1,.3,.5,.7]
            }
            return [.25,.35,.45,.55,.65,.75];
          })
@@ -1814,22 +1962,13 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           .enter()
           .append("text")
           .attr("x",function(d,i){
-            if(viewportWidth < 600){
-              if(i==0){
-                return 0;
-              }
-              if(i==1){
-                return width/2;
-              }
-              return width;
+            if(i==0){
+              return 0;
             }
             if(i==1){
               return width/2;
             }
-            if(i==0){
-              return width/2 - 200;
-            }
-            return width/2 + 200;
+            return width;
           })
           .attr("y",function(d,i){
             return height
@@ -1844,22 +1983,13 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             return d;
           })
           .style("text-anchor",function(d,i){
-            if(viewportWidth < 600){
-              if(i==0){
-                return "start"
-              }
-              if(i!=1){
-                return "end";
-              }
-              return "middle"
-            }
             if(i==0){
-              return "end"
+              return "start"
             }
-            if(i==1){
-              return "middle"
+            if(i!=1){
+              return "end";
             }
-            return "start"
+            return "middle"
           })
           ;
 
@@ -1949,15 +2079,15 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           .attr("y1", yScale(linear.intercept))
           .attr("x2", function(d){
             if(cut=="race"){
-              return xScale(.6)
+              return xScale(.85)
             }
-            return xScale(.8)
+            return xScale(.85)
           })
           .attr("y2", function(){
             if(cut=="race"){
-              return yScale( (.8 * linear.slope) + linear.intercept )
+              return yScale( (.85 * linear.slope) + linear.intercept )
             }
-            return yScale( (.8 * linear.slope) + linear.intercept )
+            return yScale( (.85 * linear.slope) + linear.intercept )
           })
           ;
 
@@ -1965,7 +2095,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           .attr("class","swarm-scatter-regression-annotation")
           .attr("transform",function(){
             if(cut=="race"){
-              return "translate("+xScale(.6*.8)+","+yScale( (.8*.8 * linear.slope) + linear.intercept )+")"
+              return "translate("+xScale(.8*.8)+","+yScale( (.8*.8 * linear.slope) + linear.intercept )+")"
             }
             return "translate("+xScale(.8*.8)+","+yScale( (.8*.8 * linear.slope) + linear.intercept )+")"
           })
@@ -2754,12 +2884,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
          })
 
-
-
-          // currentChart = "swarm-scatter";
-          // buildChart(currentChart);
-
-
       }
 
       for (var i = 0; i < 250; ++i) simulation.tick();
@@ -2836,6 +2960,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .append("image")
         .attr("class","swarm-image")
         .attr("xlink:href",function(d){
+          if(d.value.companyName == "Newsday (Long Island)"){
+            return "assets/newsday-logo.svg"
+          }
           if(d.value.companyName == "the new york times"){
             return "assets/ny-times-logo.svg"
           }
@@ -2845,7 +2972,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           if(d.value.companyName == "the wall street journal"){
             return "assets/wsj-logo.svg"
           }
-          if(d.value.companyName == "los angeles times"){
+          if(d.value.companyName == "Los Angeles Times"){
             return "assets/la-times.svg"
           }
           if(d.value.companyName == "usa today"){
@@ -2879,7 +3006,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .style("opacity",0)
         .attr("class","swarm-text")
         .text(function(d){
-          return d.value.companyName;
+          return d.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
         })
         ;
 
@@ -2902,7 +3029,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       var embedLink = footerContainer.append("div")
         .attr("class","embed-link")
 
-      embedLink
+      embedLinkText = embedLink
         .append("p")
         .append("span")
         .attr("class","embed-link-text")
@@ -2918,13 +3045,12 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         })
         ;
 
-      var embedLinkInput = embedLink.append("input")
-        ;
+      embedLinkInput = embedLink.append("input");
 
       footerContainer.append("div")
         .attr("class","swarm-chart-source")
         .selectAll("p")
-        .data(["Source: ASNE Survey, 2017","At least 50 staff"])
+        .data(["Source: ASNE Survey, 2017","At least 25 staff"])
         .enter()
         .append("p")
         .attr("class","swarm-chart-source-text")
@@ -2947,307 +3073,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       buildAxis();
       buildAverage();
 
-
-    }
-    else if(chartType == "mini-multiple"){
-
-        if(rebuildAxis){
-          chartDiv.select(".swarm-average").remove();
-          chartDiv.select(".swarm-annnotation").remove();
-
-          chartAxis
-            .select("g")
-            .transition()
-            .duration(250)
-            .style("opacity",0)
-            .on("end",function(d){
-              d3.select(this).remove();
-            })
-            ;
-        }
-
-        var miniMulitpleCount = Math.floor(width/(miniWidth+miniMargin.left+miniMargin.right));
-
-        var dataMini = newsNest.filter(function(d){
-          return d.value.miniChart > -1;
-        });
-
-        function getMiniX(data,count){
-          return (count%miniMulitpleCount*(miniWidth+miniMargin.left+miniMargin.right))
-        }
-        function getMiniY(data,count){
-          return Math.floor(count/miniMulitpleCount)*(miniTextHeight+miniHeight+miniMargin.top+miniMargin.bottom)
-        }
-
-        miniMultipleWrapper = miniMultiple
-          .append("div")
-          .attr("class","mini-multiple-div-container")
-          .selectAll("div")
-          .data(dataMini)
-          .enter()
-          .append("div")
-          .attr("class","mini-multiple-div")
-          .style("transform",function(d,i){
-            return "translate("+getMiniX(d,d.value.miniChart)+"px,"+ getMiniY(d,d.value.miniChart) +"px)"
-          })
-          ;
-        //
-        //
-        //
-        miniMultipleWrapper
-          .append("div")
-          .attr("class","mini-multiple-text-container")
-          .append("p")
-          .attr("class","mini-multiple-text")
-          .style("margin-top",20)
-          .text(function(d){
-            var company = newsIDName.get(d.value.values[0].NewsID).Company.replace("the","");
-            if(company.length > 20){
-              return company.slice(0,17)+"..."
-            }
-            return company;
-          })
-          ;
-
-        var miniMultipleWrapperSvg = miniMultipleWrapper
-          .append("svg")
-          .attr("class","slope-mini-svg")
-          .attr("width",miniWidth+miniMargin.left+miniMargin.right)
-          .attr("height",miniHeight+miniMargin.top + miniMargin.bottom)
-
-        var miniMultipleWrapperG = miniMultipleWrapperSvg
-          .append("g")
-          .style("transform", "translate(" + miniMargin.left+"px" + "," + miniMargin.top+"px" + ")")
-          ;
-
-        var miniMultipleWrapperAxis = miniMultipleWrapperG
-          .append("g")
-          .attr("class","slope-line-axis-container")
-
-        miniMultipleWrapperG
-          .append("circle")
-          .attr("cx",function(d){
-            return 0;
-          })
-          .attr("cy",function(d){
-            return multipleY(getPercentType("gender-old",d.value));
-          })
-          .attr("r",3)
-          .attr("class","slope-small-dot")
-          .style("fill",function(d){
-            if(d.value.diff > 0){
-              return "blue"
-            }
-            return "red"
-          })
-          ;
-
-        miniMultipleWrapperG
-          .append("text")
-          .attr("x",function(d){
-            return 0;
-          })
-          .attr("y",function(d,i){
-            if(i==0){
-              return multipleY(getPercentType("gender-old",d.value))+27;
-            }
-            return multipleY(getPercentType("gender-old",d.value))+15;
-          })
-          .attr("class","slope-small-text")
-          .text(function(d,i){
-            if(i==0){
-              return Math.floor(100*getPercentType("gender-old",d.value))+"%";
-            }
-            return Math.floor(100*getPercentType("gender-old",d.value));
-          })
-          ;
-        //
-        miniMultipleWrapperG
-          .append("text")
-          .attr("x",function(d){
-            return 0;
-          })
-          .attr("y",function(d,i){
-            if(i==0){
-              return multipleY(getPercentType("gender-old",d.value))+15;
-            }
-            return null;
-          })
-          .attr("class","slope-small-text slope-small-text-bold")
-          .text(function(d,i){
-            if(i==0){
-              return yearOld;
-            }
-            return null;
-          })
-          ;
-        //
-        miniMultipleWrapperG
-          .append("text")
-          .attr("x",function(d){
-            return miniWidth;
-          })
-          .attr("y",function(d,i){
-            if(i==0){
-              return multipleY(getPercentType("gender",d.value))+15;
-            }
-            return null
-          })
-          .attr("class","slope-small-text slope-small-text-bold")
-          .text(function(d,i){
-            if(i==0){
-              return "2016";
-            }
-            return null;
-          })
-          .style("text-anchor",function(d,i){
-            if(i==0){
-              return "start";
-            }
-            return null;
-          })
-          ;
-        //
-        miniMultipleWrapperG
-          .append("text")
-          .attr("x",function(d){
-            return miniWidth;
-          })
-          .attr("y",function(d,i){
-            if(i==0){
-              return multipleY(getPercentType("gender",d.value))+27;
-            }
-            return multipleY(getPercentType("gender",d.value))+15;
-          })
-          .attr("class","slope-small-text")
-          .text(function(d,i){
-            if(i==0){
-              return Math.floor(100*getPercentType("gender",d.value))+"%";
-            }
-            return Math.floor(100*getPercentType("gender",d.value));
-          })
-          .style("text-anchor",function(d,i){
-            if(i==0){
-              return "start";
-            }
-            return null;
-          })
-          ;
-
-        miniMultipleWrapperG
-          .append("circle")
-          .attr("cx",function(d){
-            return miniWidth;
-          })
-          .attr("cy",function(d){
-            return multipleY(getPercentType("gender",d.value));
-          })
-          .attr("r",3)
-          .attr("class","slope-small-dot")
-          .style("fill",function(d){
-            if(d.value.diff > 0){
-              return "blue"
-            }
-            return "red"
-            // return genderColorScale(getPercentType("gender",d.value.values[0]))
-          })
-          ;
-
-        cellCircle
-          .each(function(d){
-            d.value.currentCx = d3.select(this).attr("cx");
-          })
-          .style("opacity", function(d) {
-            if(d.value.miniChart > -1){
-              return null
-            }
-            return 0;
-          })
-          .transition()
-          .duration(duration)
-          .delay(function(d,i){
-            return i*10;
-          })
-          .attr("cx", function(d) {
-            if(d.value.miniChart > -1){
-              return getMiniX(d,d.value.miniChart) + miniMargin.left + miniWidth;
-            }
-            return d.value.currentCx;
-          })
-          .style("fill",function(d){
-            if(d.value.diff > 0){
-              return "blue"
-            }
-            return "red"
-            // return genderColorScale(getPercentType("gender",d.value.values[0]))
-          })
-          .style("stroke",function(d){
-            if(d.value.diff > 0){
-              return "blue"
-            }
-            return "red"
-          })
-          .attr("r",3)
-          .attr("cy", function(d) {
-            return multipleY(getPercentType("gender",d.value))+miniTextHeight+miniMargin.top + getMiniY(d,d.value.miniChart);
-          })
-            // if(cut == "race"){
-            //   return yScale(getPercentType("supWhite",d.value));
-            // }
-            // return yScale(getPercentType("supGender",d.value));
-        cellImages.style("opacity",0)
-
-        miniMultipleWrapperG
-          .append("line")
-          .attr("class","slope-line")
-          .attr("y1", function(d) {
-            return multipleY(getPercentType("gender-old",d.value));
-          })
-          .attr("x1", function(d) {
-            return 0;
-          })
-          .attr("y2", function(d) {
-            return multipleY(getPercentType("gender",d.value));
-          })
-          .attr("x2", function(d) {
-            return miniWidth;
-          })
-          .attr("stroke-linecap","round")
-          .attr("stroke-linejoin","round")
-          .attr("stroke-width",1.8)
-          .style("stroke",function(d){
-            if(d.value.diff > 0){
-              return "blue"
-            }
-            return "red"
-            // return genderColorScale(getPercentType("gender",d.value.values[0]))
-          })
-          ;
-        //
-        miniMultipleWrapperAxis
-          .selectAll("line")
-          .data([.2,.3,.4,.5])
-          .enter()
-          .append("line")
-          .attr("class","slope-line-axis")
-          .attr("y1", function(d,i) {
-            return multipleY(d)
-            // return i*20+"%";
-          })
-          .attr("x1", function(d) {
-            return 0;
-          })
-          .attr("y2", function(d,i) {
-            return multipleY(d)
-          })
-          .attr("x2", function(d) {
-            return miniWidth;
-          })
-          .style("stroke",function(d){
-            if(d==.5){
-              return "black";
-            }
-          })
 
     }
     else if(chartType == "arrow-scatter"){
@@ -3392,9 +3217,17 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .attr("r", 4)
         .attr("cx", function(d) {
           if(cut == "race"){
-            return xScale(getPercentType("race-old",d.value));
+            var result = getPercentType("race-old",d.value);
+            if(result == "n/a"){
+              return null;
+            }
+            return xScale(result);
           }
-          return xScale(getPercentType("gender-old",d.value));
+          var result = getPercentType("gender-old",d.value);
+          if(result == "n/a"){
+            return null;
+          }
+          return xScale(result);
         })
         .attr("cy", function(d,i,j) {
           return d.value.arrowSort*rowSpacing + rowSpacing/2
@@ -3884,6 +3717,8 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       var annotationDataDiff = [];
       var annotationTextArray = [];
 
+      console.log(newsIDSearchList);
+
       var cellFiltered = cell
         .filter(function(d,i){
           return newsIDSearchList.indexOf(+d.key) == -1;
@@ -3907,7 +3742,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             annotationTextArray.push(getPercentType("gender",d.value))
           }
           d.value.arrowSort = i;
-        })
+        });
 
       var annotationDataExtent = d3.extent(annotationTextArray);
 
@@ -3939,6 +3774,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .transition()
         .duration(0)
         .attr("x", function(d) {
+          if(getPercentType("gender-old",d.value)=="n/a"){
+            return 0;
+          }
           if(cut=="race"){
             if(Math.abs(d.value.raceDiff) < .03){
               return xScale(getPercentType("race",d.value))+7;
@@ -3959,6 +3797,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           }
         })
         .style("opacity",function(d,i,j){
+          if(getPercentType("gender-old",d.value)=="n/a"){
+            return 0;
+          }
           if(viewportWidth < 600){
             return 0;
           }
@@ -3968,11 +3809,15 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             }
           }
           if(getPercentType("gender",d.value) == annotationDataExtent[0] || getPercentType("gender",d.value) == annotationDataExtent[1]){
+            console.log(d.value.companyData,getPercentType("gender",d.value));
             return 1
           }
           return 0;
         })
         .style("fill",function(d){
+          if(getPercentType("gender-old",d.value)=="n/a"){
+            return null;
+          }
           if(cut =="race"){
             if(Math.abs(d.value.raceDiff) < .03){
               return "#888"
@@ -3994,9 +3839,15 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           }
         })
         .attr("y", function(d,i) {
+          if(getPercentType("gender-old",d.value)=="n/a"){
+            return 0;
+          }
           return d.value.arrowSort*rowSpacing
         })
         .style("text-anchor",function(d,i){
+          if(getPercentType("gender-old",d.value)=="n/a"){
+            return null;
+          }
           if(cut == "race"){
             if(Math.abs(d.value.raceDiff) < .03){
               return "start"
@@ -4017,11 +3868,14 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         })
         .style("transform","none")
         ;
-
+      //
       cellDash = cell.selectAll(".swarm-text-dash");
 
       cellDash
         .style("opacity",function(d,i,j){
+          if(getPercentType("gender-old",d.value)=="n/a"){
+            return 0;
+          }
           if(cut=="race"){
             if(getPercentType("race",d.value) == annotationDataExtent[0] || getPercentType("race",d.value) == annotationDataExtent[1]){
               return 1
@@ -4036,12 +3890,15 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           }
         })
         .attr("y1", function(d,i) {
+          return null;
           return d.value.arrowSort*rowSpacing
         })
         .attr("y2", function(d,i) {
+          return null;
           return d.value.arrowSort*rowSpacing
         })
         .attr("x1", function(d) {
+          return null;
           if(cut=="race"){
             if(Math.abs(d.value.raceDiff) < .03){
               return xScale(getPercentType("race",d.value))+5;
@@ -4060,9 +3917,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             }
             return xScale(getPercentType("gender",d.value))-4;
           }
-
         })
         .attr("x2", function(d) {
+          return null;
           if(cut=="race"){
             if(Math.abs(d.value.raceDiff) < .02){
               return xScale(getPercentType("race",d.value))-2;
@@ -4081,7 +3938,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             }
             return xScale(getPercentType("gender",d.value))+4;
           }
-
         })
 
       function drawArrow (t0,t1,topOffset) {
@@ -4105,7 +3961,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       }
 
       cellLine = cell.selectAll(".swarm-line")
-
 
       var keepNewsIDSearch = newsIDSearch;
 
@@ -4136,7 +3991,14 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .transition()
         .duration(0)
         .attr("d",function(d){
+          if(getPercentType("gender-old",d.value)=="n/a"){
+            return null;
+          }
           if(cut=="race"){
+            var resultOld = getPercentType("race-old",d.value)
+            if(resultOld == "n/a"){
+              return null;
+            }
             var t0 = xScale(getPercentType("race-old",d.value))
             var t1 = xScale(getPercentType("race",d.value))
 
@@ -4146,7 +4008,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             return drawArrow(t0,t1,(d.value.arrowSort*rowSpacing))
           }
           else{
-            var t0 = xScale(getPercentType("gender-old",d.value))
+            var resultOld = getPercentType("gender-old",d.value)
+            if(resultOld == "n/a"){
+              return null;
+            }
+            var t0 = xScale(resultOld)
             var t1 = xScale(getPercentType("gender",d.value))
 
             if(Math.abs(d.value.diff) < .02){
@@ -4154,7 +4020,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             }
             return drawArrow(t0,t1,(d.value.arrowSort*rowSpacing))
           }
-
         })
         .attr("fill",function(d){
           return getLineFill(d);
@@ -4375,6 +4240,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
           cellText
             .style("opacity",function(d,i,j){
+              if(getPercentType("gender-old",d.value)=="n/a"){
+                return 0;
+              }
               if(d.key == item){
                 return 1
               }
@@ -4440,6 +4308,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
           cellDash
             .style("opacity",function(d,i,j){
+              if(getPercentType("gender-old",d.value)=="n/a"){
+                return 0;
+              }
               if(cut=="race"){
                 if(getPercentType("race",d.value) == annotationDataExtent[0] || getPercentType("race",d.value) == annotationDataExtent[1]){
                   return 1
@@ -4456,6 +4327,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
           cellText
             .style("opacity",function(d,i,j){
+              if(getPercentType("gender-old",d.value)=="n/a"){
+                return 0;
+              }
               if(cut=="race"){
                 if(viewportWidth < 700){
                   return 0;
@@ -4505,21 +4379,17 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         ;
 
        chartAverage.append("g")
-        // .attr("transform",function(d,i){
-        //   return "translate("+arrowXScale((newsNest.length-1)/2)+",0)"
-        // })
         .append("path")
         .attr("class","arrow-scatter-line arrow-scatter-line-average")
         .attr("d",function(d){
           var t0 = xScale(newsNestAverageT0)
           var t1 = xScale(newsNestAverageT1)
 
+          console.log(newsNestAverageT1,newsNestAverageT0);
+
           if(Math.abs(newsNestAverageT1-newsNestAverageT0) < .02){
             return drawDiamond(t0,t1,height/2+20)
           }
-          // if(d.value.arrowSort==0){
-          //   return drawArrow(0,width,(d.value.arrowSort*rowSpacing + rowSpacing/2))
-          // }
           return drawArrow(t0,t1,height/2+20)
         })
         .attr("fill",function(d){
@@ -4580,9 +4450,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             return "translate("+xScale(.3)+","+height*(1-(annotationDataDiffData[1]/items/2))+")"
           }else{
             if(i==0){
-              return "translate("+xScale(.55)+","+(height*annotationDataDiffData[0]/items/2)+")"
+              return "translate("+xScale(.51)+","+(height*annotationDataDiffData[0]/items/2)+")"
             }
-            return "translate("+xScale(.55)+","+height*(1-(annotationDataDiffData[1]/items/2))+")"
+            return "translate("+xScale(.51)+","+height*(1-(annotationDataDiffData[1]/items/2))+")"
           }
 
         })
@@ -4629,7 +4499,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         })
         ;
 
-      var chartAnnotationAverage = chartAverage
+       var chartAnnotationAverage = chartAverage
          .append("g")
          .attr("class","arrow-scatter-annoation-average")
          .attr("transform",function(d,i){
@@ -4642,15 +4512,15 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
              }
              return "translate("+xScale(.3)+","+(height/2+20)+")"
            }
-           return "translate("+xScale(.55)+","+(height/2+20)+")"
+           return "translate("+xScale(.51)+","+(height/2+20)+")"
          })
          .append("text")
          .attr("class","arrow-scatter-annoation-average-text")
          .text(function(d){
-           return "Average change was a "+(Math.round((newsNestAverageT1-newsNestAverageT0)*1000)/10)+"% gain";
+           return "Avg. change: "+(Math.round((newsNestAverageT1-newsNestAverageT0)*1000)/10)+"pt. gain vs. census";
          })
          ;
-
+      //
       }
 
       // if(rebuildAxis){
@@ -4710,7 +4580,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         chartTableItem.append("p")
           .attr("class","swarm-chart-table-company-name")
           .text(function(d){
-            return d.value.companyName;
+            var companyName = d.value.companyName
+            if(companyName.length > 30){
+              return companyName.replace(/\b\w/g, l => l.toUpperCase()).slice(0,27)+"..."
+            }
+            return companyName.replace(/\b\w/g, l => l.toUpperCase())
           })
           ;
 
@@ -4718,7 +4592,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           .data(function(d,i){
             var itemCount = i
             var value = d;
-            return ["leaders","staff","census"].map(function(d){
+            return ["staff","leaders","census"].map(function(d){
               return {key:d,value:value,companyCount:itemCount}
             })
           })
@@ -4781,7 +4655,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
                   return Math.round((getPercentType("white",(d.value.value)))*100)+"%";
                 }
                 else{
-                  return Math.round((getPercentType("white-old",(d.value.value)))*100)+"%";
+                  var result = getPercentType("white-old",(d.value.value));
+                  if(result == "n/a"){
+                    return result;
+                  }
+                  return Math.round((result)*100)+"%";
                 }
               }
               if(d.cat=="black"){
@@ -4789,7 +4667,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
                   return Math.round((getPercentType("black",(d.value.value)))*100)+"%";
                 }
                 else{
-                  return Math.round((getPercentType("black-old",(d.value.value)))*100)+"%";
+                  var result = getPercentType("black-old",(d.value.value));
+                  if(result == "n/a"){
+                    return result;
+                  }
+                  return Math.round((result)*100)+"%";
                 }
               }
               if(d.cat=="hisp."){
@@ -4797,7 +4679,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
                   return Math.round((getPercentType("hisp",(d.value.value)))*100)+"%";
                 }
                 else{
-                  return Math.round((getPercentType("hisp-old",(d.value.value)))*100)+"%";
+                  var result = getPercentType("hisp-old",(d.value.value));
+                  if(result == "n/a"){
+                    return result;
+                  }
+                  return Math.round((result)*100)+"%";
                 }
               }
               if(d.cat=="female"){
@@ -4805,7 +4691,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
                   return Math.round((getPercentType("gender",(d.value.value)))*100)+"%";
                 }
                 else{
-                  return Math.round((getPercentType("gender-old",(d.value.value)))*100)+"%";
+                  var result = getPercentType("gender-old",(d.value.value));
+                  if(result == "n/a"){
+                    return result;
+                  }
+                  return Math.round((result)*100)+"%";
                 }
               }
 
@@ -4817,7 +4707,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
                   return Math.round((getPercentType("supWhiteRaw",(d.value.value)))*100)+"%";
                 }
                 else{
-                  return Math.round((getPercentType("sup-white-old",(d.value.value)))*100)+"%";
+                  var result = getPercentType("sup-white-old",(d.value.value));
+                  if(result == "n/a"){
+                    return result;
+                  }
+                  return Math.round((result)*100)+"%";
                 }
               }
               if(d.cat=="black"){
@@ -4825,7 +4719,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
                   return Math.round((getPercentType("supBlack",(d.value.value)))*100)+"%";
                 }
                 else{
-                  return Math.round((getPercentType("sup-black-old",(d.value.value)))*100)+"%";
+                  var result = getPercentType("sup-black-old",(d.value.value));
+                  if(result == "n/a"){
+                    return result;
+                  }
+                  return Math.round((result)*100)+"%";
                 }
               }
               if(d.cat=="hisp."){
@@ -4833,7 +4731,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
                   return Math.round((getPercentType("supHisp",(d.value.value)))*100)+"%";
                 }
                 else{
-                  return Math.round((getPercentType("sup-hisp-old",(d.value.value)))*100)+"%";
+                  var result = getPercentType("sup-hisp-old",(d.value.value));
+                  if(result == "n/a"){
+                    return result;
+                  }
+                  return Math.round((result)*100)+"%";
                 }
               }
               if(d.cat=="female"){
@@ -4841,7 +4743,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
                   return Math.round((getPercentType("supGender",(d.value.value)))*100)+"%";
                 }
                 else{
-                  return Math.round((getPercentType("sup-gender-old",(d.value.value)))*100)+"%";
+                  var result = getPercentType("sup-gender-old",(d.value.value));
+                  if(result == "n/a"){
+                    return result;
+                  }
+                  return Math.round((result)*100)+"%";
                 }
               }
 
@@ -4869,7 +4775,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
 
         chartTableRow
           .filter(function(d,i){
-            return d.key=="leaders" && d.year == 2017;
+            return d.key=="staff" && d.year == 2017;
           })
           .each(function(d,i,j){
             console.log(d,j);
@@ -4877,9 +4783,6 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           .selectAll("p")
           .append("span")
           .attr("class","swarm-chart-table-company-row-top-label")
-          // .each(function(d,i){
-          //   console.log(d);
-          // })
           .text(function(d){
             return d.cat;
           })
@@ -4914,6 +4817,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
             if(d.key == "census"){
               return "audience"
             }
+            if(d.key == "staff"){
+              return "all"
+            }
             return d.key;
           })
           .filter(function(d){
@@ -4921,7 +4827,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
           })
           .append("span")
           .attr("class","swarm-chart-table-company-row-year-census-span")
-          .text("2010 Census")
+          .text("Latest Census Est.")
           ;
 
       }
@@ -5048,6 +4954,9 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         return "Gender";
       })
       .on("click",function(d){
+        embedLinkText.text("Embed this chart");
+        embedLinkInput.style("display",null);
+
         var dataSelected = d;
         d3.select(this.parentNode).selectAll("p").classed("toggle-selected",function(d){
           if(d==dataSelected){
@@ -5434,7 +5343,7 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
         .style("opacity",0)
         .attr("class","swarm-text")
         .text(function(d){
-          return d.value.companyName;
+          return d.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
         })
         ;
 
@@ -5475,11 +5384,11 @@ function init(mapData,latLongData,newsIDLocation,newsIDInfo,top_3_data,censusDat
       .append("div")
       .attr("class","swarm-chart-search-results-result")
 
-    searchResults
+    searchResultText = searchResults
       .append("p")
       .attr("class","swarm-chart-search-results-result-text")
       .text(function(d){
-        return d.value.companyName;
+        return d.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
       })
       .on("click",function(d){
         var node = d;
