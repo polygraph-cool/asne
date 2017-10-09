@@ -823,7 +823,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
     };
   }
 
-  var xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]);
+  var xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]).clamp(true);
   var yScale = d3.scaleLinear().domain([0,.1]).range([height,0]);
 
   var chartDivContainer = container
@@ -1479,6 +1479,8 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           genderColorScale.domain([-1,0,1]);
         }
         else if(cut == "gender"){
+          var extent = d3.extent(newsNest,function(d){ return getPercentType("gender",d.value)});
+          console.log(extent);
           newsNestAverageT1 = d3.mean(newsNest,function(d){ return getPercentType("gender",d.value)});
           xScale.domain([.2,.8]).range([0,width]).clamp(true);
           genderColorScale.domain([.2,.5,.8]);
@@ -2988,6 +2990,12 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         })
         .attr("height",function(d){
           return d.value.radius*2*.7;
+        })
+        // .style("transform",function(d){
+        //   return "translate("+(-1*d.value.radius*2*.7)/2+"px,"+(-1*d.value.radius*2*.7)/2+"px)"
+        // })
+        .attr("style",function(d){
+          return "-webkit-transform: translate("+(-1*d.value.radius*2*.7)/2+"px,"+(-1*d.value.radius*2*.7)/2+"px); transform:translate("+(-1*d.value.radius*2*.7)/2+"px,"+(-1*d.value.radius*2*.7)/2+"px);";
         })
         ;
       function capitalizeFirstLetter(string) {
@@ -4517,7 +4525,13 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
          .append("text")
          .attr("class","arrow-scatter-annoation-average-text")
          .text(function(d){
-           return "Avg. change: "+(Math.round((newsNestAverageT1-newsNestAverageT0)*1000)/10)+"pt. gain vs. census";
+           if(cut == "race"){
+             return "Average: "+(Math.round((newsNestAverageT1-newsNestAverageT0)*1000)/10)+"pt. gain vs. census";
+           }
+           if(newsNestAverageT1-newsNestAverageT0 > 0){
+             return "Average: "+(Math.round((newsNestAverageT1-newsNestAverageT0)*1000)/10)+"% increase in women";
+           }
+           return "Average: "+(Math.round((newsNestAverageT1-newsNestAverageT0)*1000)/10)+"% increase in men";
          })
          ;
       //
