@@ -278,6 +278,7 @@ p {
     text-shadow: 0 1px 0 #ffffff, 1px 0 0 #ffffff, 0 -1px 0 #ffffff, -1px 0 0 #ffffff;
     text-transform: uppercase;
     font-weight: 600;
+    pointer-events: none;
 }
 
 .swarm-chart-wrapper {
@@ -1168,6 +1169,7 @@ p {
     stroke-width: 3px;
     stroke-linecap: round;
     stroke-linejoin: round;
+    pointer-events: none;
 }
 
 .swarm-scatter-regression-annotation-text {
@@ -1175,6 +1177,7 @@ p {
     text-anchor: end;
     font-size: 12px;
     text-shadow: 0 2px 0 #ffffff, 2px 0 0 #ffffff, 0 -2px 0 #ffffff, -2px 0 0 #ffffff;
+    pointer-events: none;
 }
 
 .swarm-scatter-regression-annotation-line{
@@ -1766,8 +1769,8 @@ main {
 }
 
 .search-results-top-shift{
-  -webkit-transform: translate(0,calc(-100% - -58px));
-  transform: translate(0,calc(-100% - -58px));
+  /* -webkit-transform: translate(0,calc(-100% - -58px)); */
+  /* transform: translate(0,calc(-100% - -58px)); */
   bottom: 0px;
 }
 

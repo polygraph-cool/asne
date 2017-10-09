@@ -175,6 +175,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
   var censusOverrideMap = d3.map(censusOverride,function(d){
     return +d.news_id;
   });
+  var extentOverride;
 
 
   var mapBig = false;
@@ -1462,6 +1463,21 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       chartTitle.html(title);
     }
     function setWidths(chartType){
+      if(cut=="gender"){
+        if(chartType == "swarm-scatter"){
+          extentOverride = d3.extent(newsNest,function(d){
+            return getPercentType("genderStaff",d.value)
+          });
+        }
+        else{
+          extentOverride = d3.extent(newsNest,function(d){ return getPercentType("gender",d.value)});
+        }
+      }
+      else{
+        extentOverride = d3.extent(newsNest,function(d){ return getPercentType("race",d.value)});
+      }
+      console.log(extentOverride);
+
       if(chartType == "swarm" || chartType == "new"){
         margin = {top: 40, right: 20, bottom: 50, left: 20};
         width = 1000 - margin.left - margin.right;
@@ -1479,10 +1495,17 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           genderColorScale.domain([-1,0,1]);
         }
         else if(cut == "gender"){
-          var extent = d3.extent(newsNest,function(d){ return getPercentType("gender",d.value)});
-          console.log(extent);
           newsNestAverageT1 = d3.mean(newsNest,function(d){ return getPercentType("gender",d.value)});
           xScale.domain([.2,.8]).range([0,width]).clamp(true);
+          if(extentOverride[0] < .2){
+            xScale.domain([extentOverride[0],.8]);
+          }
+          if(extentOverride[1] > .8){
+            xScale.domain([.2,extentOverride[1]]);
+          }
+          if(extentOverride[0] < .2 && extentOverride[1] > .8){
+            xScale.domain([extentOverride[0],extentOverride[1]]);
+          }
           genderColorScale.domain([.2,.5,.8]);
         }
       }
@@ -1507,6 +1530,11 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           newsNestSupAverageT1 = d3.mean(newsNest,function(d){ return getPercentType("supWhite",d.value)});
         }
         else{
+          xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]).clamp(true);
+          yScale = d3.scaleLinear().domain([.2,.8]).range([height,0]).clamp(true);
+          if(extentOverride[0] <.2){
+            xScale.domain([extentOverride[0],.8])
+          }
           newsNestAverageT1 = d3.mean(newsNest,function(d){ return getPercentType("genderStaff",d.value)});
           newsNestSupAverageT1 = d3.mean(newsNest,function(d){ return getPercentType("supGender",d.value)});
         }
@@ -1529,6 +1557,17 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         if(viewportWidth < 550){
           xScale = d3.scaleLinear().domain([.25,.75]).range([0,width]).clamp(true);
           yScale = d3.scaleLinear().domain([.25,.75]).range([height,0]).clamp(true);
+        }
+        if(cut=="gender"){
+          if(extentOverride[0] <.2){
+            xScale.domain([extentOverride[0],.8])
+          }
+          else if(extentOverride[1] > .8){
+            xScale.domain([.2,extentOverride[1]])
+          }
+          else if(extentOverride[1] > .8 && extentOverride[0] <.2){
+            xScale.domain([extentOverride[0],extentOverride[1]])
+          }
         }
         if(cut == "race"){
           xScale.domain([-1,1]).range([0,width]).clamp(true);
@@ -1562,6 +1601,18 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         height = 450 - margin.top - margin.bottom;
         xScale = d3.scaleLinear().domain([.2,.8]).range([0,width]).clamp(true);
         yScale = d3.scaleLinear().domain([.2,.8]).range([height,0]).clamp(true);
+
+        if(cut=="gender"){
+          if(extentOverride[0] <.2){
+            xScale.domain([extentOverride[0],.8])
+          }
+          else if(extentOverride[1] > .8){
+            xScale.domain([.2,extentOverride[1]])
+          }
+          else if(extentOverride[1] > .8 && extentOverride[0] <.2){
+            xScale.domain([extentOverride[0],extentOverride[1]])
+          }
+        }
 
         newsNestAverageT0 = d3.mean(newsNest,function(d){
           if(d.value.previousYear == "n/a"){
@@ -1645,7 +1696,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       else if (chartType != "new"){
         searchResultsContainer.classed("search-results-top-shift",false)
       }
-
 
       if(viewportWidth > 450){
         chartTitle.transition().duration(500)
@@ -2267,6 +2317,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           var chartAxisContainer = chartAxis.append("g")
 
           var tickData = [.2,.3,.5,.7,.8];
+          if(extentOverride[0] < .2 || extentOverride[1] > .8){
+            var tickData = [.2,.5,.8];
+          }
           var midPoint = .5
           if(cut == "race"){
             tickData = [-1,-.5,-.25,0,.25,1];
@@ -3058,7 +3111,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       footerContainer.append("div")
         .attr("class","swarm-chart-source")
         .selectAll("p")
-        .data(["Source: ASNE Survey, 2017","At least 25 staff"])
+        .data(["Source: ASNE Survey, 2017","Newsrooms shown are those","with 25 total staff or more"])
         .enter()
         .append("p")
         .attr("class","swarm-chart-source-text")
@@ -3418,7 +3471,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         })
         ;
 
-     if(rebuildAxis){
        chartAxis
          .select("g")
          .transition()
@@ -3429,7 +3481,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
            buildAxis();
          })
          ;
-      }
 
 
       function buildAxis(){
@@ -4060,7 +4111,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         })
         ;
 
-      if(rebuildAxis){
+      // if(rebuildAxis){
         chartAxis
           .select("g")
           .transition()
@@ -4071,7 +4122,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
             buildAxis();
           })
           ;
-      }
+      // }
       function buildAxis(){
         var chartAxisContainer = chartAxis.append("g")
         var chartAxisLines = chartAxisContainer.append("g")
