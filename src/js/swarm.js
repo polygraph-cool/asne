@@ -1028,6 +1028,8 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
     var radiusScale = d3.scaleLinear().domain([countMin,totalExtent[1]]).range([4,24]).clamp(true);
 
+    console.log(censusMap);
+
     for (var item in newsNest){
 
       var currentSup = getPercentType("supGender",newsNest[item].value)
@@ -1045,24 +1047,41 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       var whiteCensus = 9999;
       var blackCensus = 9999;
       var hispanicCensus = 9999;
+      var femaleCensus = 50;
 
       var companyData = newsIDName.get(newsNest[item].key);
       var cityState = companyData.City+" "+companyData.State;
       newsNest[item].value.companyData = companyData;
+      // if(+newsNest[item].key == 417){
+      //   console.log(cityState);
+      //   console.log(censusMap.has(cityState));
+      // }
+
       if(companyData.hasOverride){
         whiteCensus = +companyData.override.white/100;
         blackCensus = +companyData.override.black/100;
         hispanicCensus = +companyData.override.hispanic/100;
+        femaleCensus = companyData.override.female;
+        if(+newsNest[item].key == 494){
+          console.log(+companyData.override.female);
+        }
+        if(femaleCensus != "n/a"){
+          femaleCensus = +femaleCensus/100;
+        }
       }
       else if(censusMap.has(cityState)){
+
         whiteCensus = +censusMap.get(cityState).white_2015/100;
         blackCensus = +censusMap.get(cityState).black_2015/100;
         hispanicCensus = +censusMap.get(cityState).hispanic_2015/100;
+        femaleCensus = censusMap.get(cityState).female_2015/100;
 
       }
       newsNest[item].value.whiteCensus = whiteCensus;
       newsNest[item].value.blackCensus = blackCensus;
       newsNest[item].value.hispanicCensus = hispanicCensus;
+      newsNest[item].value.femaleCensus = femaleCensus;
+
 
       var raceDiff = 0;
 
@@ -1279,7 +1298,13 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           var cutData = d3.select(this.parentNode.parentNode).datum().cut;
           if(cutData == "census"){
             if(d=="female"){
-              return null;
+              var femaleData = data.value.femaleCensus;
+              console.log(femaleData);
+              if(femaleData == "n/a"){
+                return femaleData;
+              }
+              return Math.round(data.value.femaleCensus*100)+"%";
+
             }
             if(d=="white"){
               return Math.round(data.value.whiteCensus*100)+"%";
@@ -3685,10 +3710,15 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           })
           .style("opacity",1)
 
+        var chartAnnotationText = ["Gender Diversity Improved","Gender Diversity Dropped"];
+        if(cut == "race"){
+          chartAnnotationText = ["Race Diversity Improved","Race Diversity Dropped"];
+        }
+
         var chartAnnotationLeft = chartAnnotation
           .append("g")
           .selectAll("text")
-          .data(["Gender Diversity Improved","Gender Diversity Dropped"])
+          .data(chartAnnotationText)
           .enter()
           .append("text")
           .attr("class","swarm-arrow-annotation-left")
@@ -4697,7 +4727,12 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           .text(function(d){
             if(d.key == "census"){
               if(d.cat=="female"){
-                return null;
+                var femaleData = d.value.value.femaleCensus;
+                console.log(femaleData);
+                if(femaleData == "n/a"){
+                  return femaleData;
+                }
+                return Math.round(d.value.value.femaleCensus*100)+"%";
               }
               if(d.cat=="white"){
                 return Math.round(d.value.value.whiteCensus*100)+"%";
