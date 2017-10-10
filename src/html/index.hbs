@@ -18,7 +18,7 @@
 	{{> base/analytics }}
 
 </head>
-<body class='tk-publico'>
+<body>
 
 	{{> base/header }}
 
@@ -26,40 +26,17 @@
 		<div class="logos">
 			<p class="asne-logo-text">American Society <span>of</span> News Editors
 			</p>
-			<!-- <div class="news-lab-logo">
-			</div>
-			<div class="asne-logo">
-			</div> -->
 		</div>
 
 		<p class="content-title">How Diverse Are US Newsrooms?
 		</p>
 		{{> story/swarm }}
-		{{> story/scatter }}
-		{{> story/swarm-leader }}
-		{{> story/arrow-scatter }}
 
-		{{> story/maps }}
-		{{> story/histogram }}
-		{{> story/slope }}
-		{{> story/newsroom }}
-		{{> story/line-scatter }}
-		{{> story/table }}
-
-		<!-- PUT ALL YOUR HTML HERE-->
-		<!-- <h1 class='tk-atlas'>Heading 1</h1>
-		<h2 class='tk-atlas'>Heading 2</h2>
-		<h3 class='tk-atlas'>Heading 3</h3>
-		<h4 class='tk-atlas'>Heading 4</h4>
-		<h5 class='tk-atlas'>Heading 5</h5>
-		<h6 class='tk-atlas'>Heading 6</h6> -->
 	</main>
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
 	<script src='{{path}}assets/scripts/d3.v4.9.1.min.js'></script>
 	<script src='bundle.js?version={{timestamp}}'></script>
-	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:100,300,400,500,700,900|Roboto+Slab:100,300,400,500,700,900" rel="stylesheet">
-
-	<!-- <script src='https://pudding.cool/assets/scripts/pudding-footer.js' async></script> -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 </body>
 </html>

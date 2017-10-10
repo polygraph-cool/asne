@@ -1,33 +1,3 @@
-<!--
-
-clarify census data
--->
-
-# to do
-
-* rebuild embed on click
-* remove transitions if view!=0
-* link to specific table selection.
-* change from staff to all in tooltip and my newsrooms
-* fix race for leadership chart
-* check news id match to 2001
-* choose matching year
-* fix dallas morning news
-* change 50 newsrooms thing
-* bug on find a newsroom...
-* vonoroi on the swarm chart
-* add in more logos
-* iframes
-* hosting
-* search pushes node to the top
-* down arrow on the saerch box
-* what happens when chart shifts after adding nodes from search?
-* bug when adding nodes from search and changing views
-* search result removes rows so height changes
-
-#nice to have
-* comparisons to other industries
-
 
 # census_2.csv
 https://docs.google.com/spreadsheets/d/1L5WnGfwaHOpWf0PHvEN8kw_Xj3iVfshKfJSqtvzcSEU/edit#gid=245922531

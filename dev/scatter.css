@@ -2075,6 +2075,9 @@ main {
 }
 
 @media only screen and (max-width: 450px){
+  .swarm-chart-search{
+    font-size: 16px;
+  }
   .swarm-chart-map{
     display: none;
   }
@@ -2235,4 +2238,19 @@ main {
   }
 
 
+}
+@media only screen and (max-width: 325px){
+  .stepper-item{
+    font-size:10px;
+  }
+  .swarm-arrow-tick-text{
+    font-size: 9px;
+  }
+  .chart-title{
+    letter-spacing: 0px;
+    font-size: 12px;
+  }
+  .swarm-axis-tick-text{
+    font-size: 11px;
+  }
 }

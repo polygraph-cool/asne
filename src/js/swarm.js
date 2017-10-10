@@ -1296,7 +1296,11 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           if(d.cut == "census"){
             var cityString = "";
             if(data.value.companyData.hasOverride){
+
               cityString = data.value.companyData.override.coverage_area;
+              if(cityString > 30){
+                cityString = cityString.slice(0,27)+"..."
+              }
             }
             else {
               cityString = data.value.companyData.City + ", "+data.value.companyData.State;
@@ -1460,7 +1464,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       }
     }
     function mouseOutEvents(data,element){
-
+      //
       chartToolTip
         .style("visibility",null)
         ;
@@ -3206,11 +3210,10 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         if (document.getElementById('search-results-box').contains(e.target)){
           // Clicked in box
         } else{
-          chartToolTip.style("visibility",null); 
+          chartToolTip.style("visibility",null);
           searchResultsContainer.style("display",null);
         }
-      })
-      ;
+      });
 
       buildToggles()
       searchSpectrum();
@@ -5285,6 +5288,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
       tableData = distanceArray;
       tableData.unshift(d)
+      if(mobile || viewportWidth < 450){
+        tableData = [d];
+      }
       buildChart("table");
     }
 
