@@ -3186,11 +3186,11 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       footerContainer.append("div")
         .attr("class","swarm-chart-source")
         .selectAll("p")
-        .data(["Source: ASNE Survey, 2017","Newsrooms shown are those","with 25 total staff or more"])
+        .data(["Source: ASNE, Census: &lsquo;11-&lsquo;15","American Community Survey.","Newsrooms shown are those","with 25 total staff or more"])
         .enter()
         .append("p")
         .attr("class","swarm-chart-source-text")
-        .text(function(d){
+        .html(function(d){
           return d;
         })
         ;
