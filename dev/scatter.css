@@ -366,6 +366,7 @@ p {
     visibility: hidden;
     min-width: 120px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+    pointer-events: all;
 }
 
 .swarm-circle:hover {
@@ -1996,16 +1997,16 @@ main {
   .swarm-chart-container-table{
     padding-top: 108px;
   }
-  .arrow-scatter-full-selected{top: 85px;left: 274px;right: auto;margin: 0 auto;height: 20px;}
+  .arrow-scatter-full-selected{/* top: 85px; *//* left: 274px; *//* right: auto; *//* margin: 0 auto; *//* height: 20px; */}
   .arrow-scatter-full-selected .histogram-chart-toggle-first:before{
-    left: -76px;
-    top: -2px;
-    content: 'Change Data:';
-    right: auto;
-    font-size: 10px;
+    /* left: -76px; */
+    /* top: -2px; */
+    /* content: 'Change Data:'; */
+    /* right: auto; */
+    /* font-size: 10px; */
   }
-  .arrow-scatter-full-selected .histogram-chart-toggle-item{line-height: 20px;background: none;border: none;}
-  .arrow-scatter-full-selected .toggle-selected{box-shadow: none;text-decoration: underline;}
+  .arrow-scatter-full-selected .histogram-chart-toggle-item{/* line-height: 20px; *//* background: none; *//* border: none; */}
+  .arrow-scatter-full-selected .toggle-selected{/* box-shadow: none; *//* text-decoration: underline; */}
   .swarm-arrow-full-annotation-diff tspan:first-of-type{
     font-size: 18px;
   }
@@ -2082,7 +2083,6 @@ main {
   }
   .swarm-chart-tool-tip{
     position: fixed;
-    width: auto;
     margin: 0 auto;
   }
   .swarm-text{
@@ -2110,12 +2110,12 @@ main {
   .swarm-chart-container-table .swarm-chart-table-company-container:first-of-type{
   }
   .arrow-scatter-full-selected{
-    left: 0px;
-    right: 0px;
-    width: 90%;
-    top: 62px;
-    margin: 0 auto;
-    margin-left: 79px;
+    /* left: 0px; */
+    /* right: 0px; */
+    /* width: 90%; */
+    /* top: 62px; */
+    /* margin: 0 auto; */
+    /* margin-left: 79px; */
   }
   .stepper-item-container{margin-left: 22px;}
   .histogram-chart-toggle-first{
@@ -2167,7 +2167,7 @@ main {
     text-align: left;
     pointer-events: none;
     left: -84px;
-    top: -2px;
+    top: -1px;
     content: 'Change Data:';
     right: auto;
     font-size: 10px;
@@ -2210,6 +2210,8 @@ main {
     height: 33px;
     padding: 0 7px;
     letter-spacing: -.3px;
+    max-width: 78px;
+    min-width: 40px;
   }
 }
 

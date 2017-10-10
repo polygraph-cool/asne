@@ -882,6 +882,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
     .append("div")
     .attr("class","swarm-chart-tool-tip")
     .style("transform", "translate(" + margin.left+"px" + "," + margin.top+"px" + ")")
+    .on("click",function(){
+      chartToolTip.style("visibility",null);
+    })
     ;
 
   var chartDiv = chartDivContainer
@@ -3188,13 +3191,26 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         })
         ;
 
+
+
       window.addEventListener('click', function(e){
         if (document.getElementById('search-results-box').contains(e.target)){
           // Clicked in box
         } else{
+          chartToolTip.style("visibility",null);
           searchResultsContainer.style("display",null);
         }
       });
+
+      window.addEventListener('touchstart', function(e){
+        if (document.getElementById('search-results-box').contains(e.target)){
+          // Clicked in box
+        } else{
+          chartToolTip.style("visibility",null); 
+          searchResultsContainer.style("display",null);
+        }
+      })
+      ;
 
       buildToggles()
       searchSpectrum();
@@ -5376,7 +5392,8 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
     searchResultsContainer = searchDiv
       .append("div")
-      .attr("class","swarm-chart-search-results");
+      .attr("class","swarm-chart-search-results")
+      ;
 
     var searchAlphaSort = searchResultsContainer
       .append("div")
