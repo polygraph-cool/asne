@@ -2463,7 +2463,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                   if(viewportWidth < 450){
                     return "+"+Math.floor(Math.abs(d)*100)+" pts. White";
                   }
-                  return "More White vs. City Census"
+                  return "More White vs. City* Census"
                 }
                 return Math.floor((1-d)*100)+"% Male Staff"
               }
@@ -2472,13 +2472,13 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                   if(viewportWidth < 450){
                     return "+"+Math.floor(Math.abs(d)*100)+" pts. Non-white";
                   }
-                  return "More People of Color vs. City Census"
+                  return "More People of Color vs. City* Census"
                 }
                 return Math.floor(d*100)+"% Female Staff"
               }
               if(d==midPoint){
                 if(cut == "race"){
-                  return "Parity with City"
+                  return "Parity with City*"
                 }
                 return "50/50  Split";
               }
@@ -2793,7 +2793,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 if(viewportWidth < 450){
                   return "+"+Math.floor(Math.abs(d)*100)+" pts. White";
                 }
-                return "More White vs. City Census"
+                return "More White vs. City* Census"
               }
               return Math.floor((1-d)*100)+"% Male Staff"
             }
@@ -2802,13 +2802,13 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 if(viewportWidth < 450){
                   return "+"+Math.floor(Math.abs(d)*100)+" pts. Non-white";
                 }
-                return "More People of Color vs. City Census"
+                return "More People of Color vs. City* Census"
               }
               return Math.floor(d*100)+"% Female Staff"
             }
             if(d==midPoint){
               if(cut == "race"){
-                return "Parity with City"
+                return "Parity with City*"
               }
               return "50/50  Split";
             }
@@ -3138,6 +3138,8 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
       footerContainer.append("div")
         .attr("class","news-lab-logo")
+        .append("p")
+        .html("*60 of 670 newsrooms served an audience larger than a city. USA Today: USA. Boston Globe: Massachusetts. Geographies were approximated using public data.")
         ;
 
       var embedLink = footerContainer.append("div")
@@ -3660,7 +3662,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                if(viewportWidth < 550){
                  return "+"+Math.floor((Math.abs(d))*100)+" pts. white"
                }
-               return "More White vs. City Census"
+               return "More White vs. City* Census"
                return Math.floor((Math.abs(d))*100)+" pts. over-represented white"
              }
              return Math.floor((1-d)*100)+"% Male"
@@ -3691,7 +3693,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
              if(viewportWidth < 550){
                return "+"+Math.floor((Math.abs(d))*100)+" pts. more non-white vs. census"
              }
-             return "More People of Color vs. City Census"
+             return "More People of Color vs. City* Census"
              return Math.floor((d)*100)+" pts. over-represented people of color"
            }
            if(cut=="race"){
@@ -4280,7 +4282,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                if(viewportWidth < 700){
                  return "+"+Math.floor((Math.abs(d))*100)+" pts White"
                }
-               return "More White vs. City Census"
+               return "More White vs. City* Census"
                return Math.floor((Math.abs(d))*100)+" pts. over-represented white"
              }
              return Math.floor((1-d)*100)+"% Male"
@@ -4309,7 +4311,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
              if(viewportWidth < 700){
                return "+"+Math.floor((d)*100)+" pts Non-white"
              }
-             return "More People of Color vs. City Census"
+             return "More People of Color vs. City* Census"
              return Math.floor((d)*100)+" pts. over-represented people of color"
            }
            if(cut=="race"){

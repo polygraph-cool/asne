@@ -150,7 +150,7 @@
 .map-arrow-path-peak{fill: none;}
 .news-lab-logo{
   background: url("https://newslab.withgoogle.com/assets/img/logo.png");
-  height: auto;
+  height: 42px;
   width: 127px;
   background-size: contain;
   background-repeat: no-repeat;
@@ -1902,6 +1902,8 @@ main {
     text-transform: capitalize;
 }
 
+.news-lab-logo p{font-family: 'Roboto';position: absolute;top: 100%;font-size: 11px;padding-top: 10px;color: rgb(136, 136, 136);font-weight: 400;margin-bottom: 10px;}
+
 @media only screen and (max-width: 1000px) {
   .swarm-chart-container{
 
@@ -2075,6 +2077,9 @@ main {
 }
 
 @media only screen and (max-width: 450px){
+  .news-lab-logo{
+    width: 110px;
+  }
   .swarm-chart-search{
     font-size: 16px;
   }
