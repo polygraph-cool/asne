@@ -304,6 +304,18 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       }
       // data = dataSet.yearMap.get(yearOld)
     }
+    if(kind == "asian-old"){
+      kind = "asian"
+      data = dataSet.values.filter(function(d){
+        return +d.Year == yearOld;
+      });
+      if(data.length>0){
+        data = data[0];
+      }
+      else{
+        return "n/a"
+      }
+    }
     if(kind == "sup-white-old"){
       kind = "supWhiteRaw"
       data = dataSet.values.filter(function(d){
@@ -356,6 +368,19 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       }
       // data = dataSet.yearMap.get(yearOld)
     }
+    if(kind == "sup-asian-old"){
+      kind = "supAsian"
+      data = dataSet.values.filter(function(d){
+        return +d.Year == yearOld;
+      });
+      if(data.length>0){
+        data = data[0];
+      }
+      else{
+        return "n/a"
+      }
+      // data = dataSet.yearMap.get(yearOld)
+    }
     if(kind == "gender"){
       return +(data.total_num-data.male_num)/data.total_num
     }
@@ -367,6 +392,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
     }
     if(kind == "supHisp"){
       return (+data.hisp_sup_num)/data.total_sup_num;
+    }
+    if(kind == "supAsian"){
+      return (+data.asian_sup_num)/data.total_sup_num;
     }
     if(kind == "supWhiteAdjusted"){
       var racePoint = ((+data.total_sup_num - +data.white_sup_num)/data.total_sup_num) - (1-dataSet.whiteCensus);
@@ -386,6 +414,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
     }
     if(kind == "hisp"){
       return +(data.hisp_num)/data.total_num;
+    }
+    if(kind == "asian"){
+      return +(data.asian_num)/data.total_num;
     }
     if(kind == "supWhiteRaw"){
       return (+data.white_sup_num)/data.total_sup_num;
@@ -407,7 +438,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
     if(kind == "hispStaff"){
       return (+data.hisp_num - +data.hisp_sup_num)/(data.total_num - data.total_sup_num)
     }
-
+    if(kind == "asianStaff"){
+      return (+data.asian_num - +data.asian_sup_num)/(data.total_num - data.total_sup_num)
+    }
     var racePoint = ((+data.total_num - +data.white_num)/data.total_num) - (1-dataSet.whiteCensus);
     return racePoint;
   }
@@ -1047,6 +1080,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       var whiteCensus = 9999;
       var blackCensus = 9999;
       var hispanicCensus = 9999;
+      var asianCensus = 9999;
       var femaleCensus = 50;
 
       var companyData = newsIDName.get(newsNest[item].key);
@@ -1062,9 +1096,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         blackCensus = +companyData.override.black/100;
         hispanicCensus = +companyData.override.hispanic/100;
         femaleCensus = companyData.override.female;
-        if(+newsNest[item].key == 494){
-          console.log(+companyData.override.female);
-        }
+        asianCensus = companyData.override.asian/100;
         if(femaleCensus != "n/a"){
           femaleCensus = +femaleCensus/100;
         }
@@ -1075,13 +1107,14 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         blackCensus = +censusMap.get(cityState).black_2015/100;
         hispanicCensus = +censusMap.get(cityState).hispanic_2015/100;
         femaleCensus = censusMap.get(cityState).female_2015/100;
+        asianCensus = censusMap.get(cityState).asian_2015/100;
 
       }
       newsNest[item].value.whiteCensus = whiteCensus;
       newsNest[item].value.blackCensus = blackCensus;
       newsNest[item].value.hispanicCensus = hispanicCensus;
       newsNest[item].value.femaleCensus = femaleCensus;
-
+      newsNest[item].value.asianCensus = asianCensus;
 
       var raceDiff = 0;
 
@@ -1245,7 +1278,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           return data.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
         });
 
-      var colData = ["white","black","hisp.","female"];
+      var colData = ["white","black","hisp.","asian","female"];
       var dataForToolTip = [{cut:"leaders",cols:colData},{cut:"staff",cols:colData},{cut:"census",cols:colData}];
 
       var rows = chartToolTipContainer.selectAll("div")
@@ -1299,12 +1332,10 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           if(cutData == "census"){
             if(d=="female"){
               var femaleData = data.value.femaleCensus;
-              console.log(femaleData);
               if(femaleData == "n/a"){
                 return femaleData;
               }
               return Math.round(data.value.femaleCensus*100)+"%";
-
             }
             if(d=="white"){
               return Math.round(data.value.whiteCensus*100)+"%";
@@ -1314,6 +1345,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
             }
             if(d=="black"){
               return Math.round(data.value.blackCensus*100)+"%";
+            }
+            if(d=="asian"){
+              return Math.round(data.value.asianCensus*100)+"%";
             }
           }
           if(cutData == "staff"){
@@ -1326,6 +1360,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
               }
               if(d=="hisp."){
                 return Math.round((getPercentType("hispStaff",(data.value)))*100)+"%";
+              }
+              if(d=="asian"){
+                return Math.round((getPercentType("asianStaff",(data.value)))*100)+"%";
               }
               if(d=="female"){
                 return Math.round((getPercentType("genderStaff",(data.value)))*100)+"%";
@@ -1340,6 +1377,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
             if(d=="hisp."){
               return Math.round((getPercentType("hisp",(data.value)))*100)+"%";
             }
+            if(d=="asian"){
+              return Math.round((getPercentType("asian",(data.value)))*100)+"%";
+            }
             if(d=="female"){
               return Math.round((getPercentType("gender",(data.value)))*100)+"%";
             }
@@ -1353,6 +1393,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
             }
             if(d=="hisp."){
               return Math.round((getPercentType("supHisp",(data.value)))*100)+"%";
+            }
+            if(d=="asian"){
+              return Math.round((getPercentType("supAsian",(data.value)))*100)+"%";
             }
             if(d=="female"){
               return Math.round((getPercentType("supGender",(data.value)))*100)+"%";
@@ -4716,7 +4759,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         var chartTablePercent = chartTableRow.selectAll(".swarm-chart-table-company-percent")
           .data(function(d,i){
             var item = d;
-            var newThing = ["white","black","hisp.","female"].map(function(d){
+            var newThing = ["white","black","hisp.","asian","female"].map(function(d){
               return {year:item.year,key:item.key,value:item.value,cat:d,companyCount:item.companyCount}
             })
             return newThing
@@ -4745,6 +4788,11 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
               if(d.cat == "black"){
                 if(d.year == "2017"){
                   return Math.round(d.value.value.blackCensus*100)+"%";
+                }
+              }
+              if(d.cat == "asian"){
+                if(d.year == "2017"){
+                  return Math.round(d.value.value.asianCensus*100)+"%";
                 }
               }
             }
@@ -4780,6 +4828,18 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 }
                 else{
                   var result = getPercentType("hisp-old",(d.value.value));
+                  if(result == "n/a"){
+                    return result;
+                  }
+                  return Math.round((result)*100)+"%";
+                }
+              }
+              if(d.cat=="asian"){
+                if(d.year == "2017"){
+                  return Math.round((getPercentType("asian",(d.value.value)))*100)+"%";
+                }
+                else{
+                  var result = getPercentType("asian-old",(d.value.value));
                   if(result == "n/a"){
                     return result;
                   }
@@ -4832,6 +4892,18 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 }
                 else{
                   var result = getPercentType("sup-hisp-old",(d.value.value));
+                  if(result == "n/a"){
+                    return result;
+                  }
+                  return Math.round((result)*100)+"%";
+                }
+              }
+              if(d.cat=="asian"){
+                if(d.year == "2017"){
+                  return Math.round((getPercentType("supAsian",(d.value.value)))*100)+"%";
+                }
+                else{
+                  var result = getPercentType("sup-asian-old",(d.value.value));
                   if(result == "n/a"){
                     return result;
                   }

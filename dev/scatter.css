@@ -1204,10 +1204,10 @@ p {
   display: -webkit-flex;
   display: flex;
   -webkit-justify-content:center;
-    justify-content: center;
-    margin: 0 auto;
-    width: auto;
-    width: 150px;
+  justify-content: center;
+  margin: 0 auto;
+  width: auto;
+  width: 190px;
 }
 
 .swarm-chart-tool-tip-label{
@@ -1444,18 +1444,18 @@ p {
     line-height: 18px;
 }
 
-.swarm-chart-table-company-section {padding: 0px 13px;width: 153px;margin: 0 auto;padding-top: 14px;}
+.swarm-chart-table-company-section {padding: 0px 13px;width: 165px;margin: 0 auto;padding-top: 14px;padding-right: 7px;}
 
 .swarm-chart-table-company-row-top-label {
     position: absolute;
     font-family: 'Roboto';
     font-size: 11px;
-    left: -7px;
+    left: 3px;
     top: -19px;
     font-weight: 400;
     text-transform: capitalize;
-    width: 53px;
-    text-align: center;
+    width: 31px;
+    text-align: left;
     color: #000000;
 }
 
