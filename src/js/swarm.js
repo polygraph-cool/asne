@@ -199,8 +199,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
     cut = urlParamCut;
   }
 
-  console.log(cut);
-
   var group = "all";
   var newsIDSearchList =  [];
   var countMin =  25;
@@ -429,7 +427,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       return (+data.total_num - +data.white_num - (+data.total_sup_num - +data.white_sup_num))/(data.total_num - data.total_sup_num)
     }
     if(kind == "whiteStaff"){
-      console.log(data);
       return (+data.white_num - +data.white_sup_num)/(data.total_num - data.total_sup_num)
     }
     if(kind == "blackStaff"){
@@ -1064,8 +1061,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
     var radiusScale = d3.scaleLinear().domain([countMin,totalExtent[1]]).range([4,24]).clamp(true);
 
-    console.log(censusMap);
-
     for (var item in newsNest){
 
       var currentSup = getPercentType("supGender",newsNest[item].value)
@@ -1089,10 +1084,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       var companyData = newsIDName.get(newsNest[item].key);
       var cityState = companyData.City+" "+companyData.State;
       newsNest[item].value.companyData = companyData;
-      // if(+newsNest[item].key == 417){
-      //   console.log(cityState);
-      //   console.log(censusMap.has(cityState));
-      // }
 
       if(companyData.hasOverride){
         whiteCensus = +companyData.override.white/100;
@@ -1228,7 +1219,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
   function buildChart(chartType){
     var rebuildAxis = false;
-    console.log(chartType);
 
     if(chartType != "new" && chartType != "swarm"){
       stepperBack.style("visibility","visible").style("pointer-events","all");
@@ -1551,14 +1541,12 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       else{
         extentOverride = d3.extent(newsNest,function(d){ return getPercentType("race",d.value)});
       }
-      console.log(extentOverride);
 
       if(chartType == "swarm" || chartType == "new"){
         margin = {top: 40, right: 20, bottom: 50, left: 20};
         width = 1000 - margin.left - margin.right;
         height = 325 - margin.top - margin.bottom;
         if(viewportWidth < 1000){
-          console.log(viewportWidth);
           width = viewportWidth - margin.left - margin.right;
         }
         if(viewportWidth < 400 || mobile){
@@ -2503,7 +2491,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
               if(cut == "race"){
                 return "+"+Math.floor(Math.abs(d)*100)+" pts.";
               }
-              console.log(d);
               return Math.floor(d*100)+"%";
             })
             ;
@@ -2673,8 +2660,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           .attr("y",highlightedAnnotationOffset+10)
           ;
 
-          console.log(newsNestAverageT1);
-
          chartAverage.append("text")
            .attr("class","swarm-average-text swarm-average-text-label")
            .attr("x",xScale(newsNestAverageT1))
@@ -2708,8 +2693,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
     }
     else if(chartType == "new"){
-
-      console.log(xScale.domain(),xScale.range());
 
       var forceCollide = d3.forceCollide()
           .radius(function(d) { return d.value.radius + 1; })
@@ -2838,7 +2821,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
             if(cut == "race"){
               return "+"+Math.floor(Math.abs(d)*100)+" pts.";
             }
-            console.log(d);
             return Math.floor(d*100)+"%";
           })
           ;
@@ -2864,8 +2846,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
              ;
 
           if(!mobile && viewportWidth > 550){
-
-            console.log(viewportWidth);
 
             chartAnnotation.append("line")
               .attr("x1",width-147)
@@ -2963,7 +2943,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                if( ["nj","ny","ct"].indexOf(result.region_code.toLowerCase()) > -1){
                  return d;
                }
-              //  console.log(d.value.companyData,result.region_code.toLowerCase());
                return d.value.companyData.State == result.region_code.toLowerCase();
              })
              locations = locations.slice(0,cutAmount)
@@ -3052,7 +3031,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         .attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; })
         .on("mouseover",function(d){
-          console.log(d);
           var data = d;
           mouseOverEvents(data,d3.select(this));
         })
@@ -3283,7 +3261,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
       cellCircle = cell.selectAll(".swarm-circle")
         .on("mouseover",function(d){
-          console.log(d);
         })
         .on("mouseout",function(d){
         })
@@ -3868,8 +3845,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       var annotationDataDiff = [];
       var annotationTextArray = [];
 
-      console.log(newsIDSearchList);
-
       var cellFiltered = cell
         .filter(function(d,i){
           return newsIDSearchList.indexOf(+d.key) == -1;
@@ -3960,7 +3935,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
             }
           }
           if(getPercentType("gender",d.value) == annotationDataExtent[0] || getPercentType("gender",d.value) == annotationDataExtent[1]){
-            console.log(d.value.companyData,getPercentType("gender",d.value));
             return 1
           }
           return 0;
@@ -4536,8 +4510,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           var t0 = xScale(newsNestAverageT0)
           var t1 = xScale(newsNestAverageT1)
 
-          console.log(newsNestAverageT1,newsNestAverageT0);
-
           if(Math.abs(newsNestAverageT1-newsNestAverageT0) < .02){
             return drawDiamond(t0,t1,height/2+20)
           }
@@ -4790,7 +4762,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
             if(d.key == "census"){
               if(d.cat=="female"){
                 var femaleData = d.value.value.femaleCensus;
-                console.log(femaleData);
                 if(femaleData == "n/a"){
                   return femaleData;
                 }
@@ -4967,9 +4938,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         chartTableRow
           .filter(function(d,i){
             return d.key=="staff" && d.year == 2017;
-          })
-          .each(function(d,i,j){
-            console.log(d,j);
           })
           .selectAll("p")
           .append("span")
@@ -5283,8 +5251,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           return +b.value.maxTotal - +a.value.maxTotal;
         }).slice(0,3)
       }
-
-      console.log(distanceArray);
 
       tableData = distanceArray;
       tableData.unshift(d)
