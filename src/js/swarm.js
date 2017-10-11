@@ -3172,7 +3172,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           embedLinkInput.style("display","block")
             .attr("readonly",true)
             .attr("value",function(d){
-                return "<iframe src='https://polygraph-cool.github.io/asne/dev/index.html?view="+stepperSequence.indexOf(currentChart)+"&filter="+cut+"' frameborder='0'></iframe>"
+                return "<iframe src='https://googletrends.github.io/asne/index.html?view="+stepperSequence.indexOf(currentChart)+"&filter="+cut+"' frameborder='0'></iframe>"
             })
             ;
         })
