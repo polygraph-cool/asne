@@ -18,15 +18,22 @@ var cutAmount = 4;
 if(viewportWidth<800){
  cutAmount = 3;
 }
-if(viewportWidth<600){
+if(viewportWidth<700){
  cutAmount = 2;
 }
-if(viewportWidth<450){
+if(viewportWidth<500){
  cutAmount = 1;
 }
 
 const urlParam = urlParameter.get('view');
 const urlParamCut = urlParameter.get('filter');
+const urlParamEmbed = urlParameter.get('embed');
+
+console.log(urlParamEmbed);
+
+if(urlParamEmbed){
+  d3.select("#content").classed("embedded",true);
+}
 
 function wrapTwo(text, width) {
   text.each(function() {
@@ -614,7 +621,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
     var stepNumToText = ["2017 results","Leadership",yearOld+" vs. 2017: Top Newsrooms","Overall Change","My Newsroom"];
 
-    if(viewportWidth < 600){
+    if(viewportWidth < 620){
       stepNumToText = ["2017 Results","Newsroom Leaders","Top Newsrooms","Change","My Newsroom"];
     }
 
@@ -1636,7 +1643,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           xScale.domain([-1,1]).range([0,width]).clamp(true);
           newsNestAverageT1 = d3.mean(newsNest,function(d){ return d.value.whiteDelta;});
           genderColorScale.domain([-1,0,1]);
-          if(viewportWidth < 600){
+          if(viewportWidth < 820){
             xScale.domain([-1,0]).range([0,width]).clamp(true);
           }
         }
@@ -2720,6 +2727,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
        var midPoint = .5
        if(cut == "race"){
          tickData = [-1,-.5,-.25,0,.25,1];
+         if(viewportWidth < 750){
+           tickData = [-1,-.25,0,.25,1];
+         }
          midPoint = 0
        }
        if(viewportWidth < 700){
@@ -2794,7 +2804,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           .text(function(d,i){
             if(i==0){
               if(cut == "race"){
-                if(viewportWidth < 450){
+                if(viewportWidth < 750){
                   return "+"+Math.floor(Math.abs(d)*100)+" pts. White";
                 }
                 return "More White vs. City* Census"
@@ -2803,7 +2813,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
             }
             if(i==tickData.length-1){
               if(cut == "race"){
-                if(viewportWidth < 450){
+                if(viewportWidth < 750){
                   return "+"+Math.floor(Math.abs(d)*100)+" pts. Non-white";
                 }
                 return "More People of Color vs. City* Census"
@@ -3565,7 +3575,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           linesData = [-1,-.25,0,.25,1];
         }
 
-        if(viewportWidth < 600){
+        if(viewportWidth < 820){
           var linesData = [.25,.5,.75];
           if(cut == "race"){
             linesData = [-1,0];
@@ -3649,14 +3659,14 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
              return "end";
            }
            if(d==.75){
-             if(viewportWidth < 600){
+             if(viewportWidth < 651){
                return "end";
              }
            }
            if(d==.8){
              return "end";
            }
-           if(viewportWidth < 600){
+           if(viewportWidth < 820){
              if(cut == "race"){
                return "end"
              }
@@ -3666,7 +3676,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
          .text(function(d,i){
            if(i==0){
              if(cut == "race"){
-               if(viewportWidth < 600){
+               if(viewportWidth < 820){
                  return "+"+Math.floor((Math.abs(d))*100)+" pts. white"
                }
                return "More White vs. City* Census"
@@ -3676,6 +3686,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
            }
            if(d==0){
              if(cut=="race"){
+               if(viewportWidth < 820){
+                 return "Parity w/Census"
+               }
                return "Parity with Census"
              }
            }
@@ -3689,7 +3702,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
              return "50/50 Split"
            }
            if(d==.75){
-             if(viewportWidth < 600){
+             if(viewportWidth < 651){
                return Math.floor(d*100)+"% Female";
              }
            }
@@ -3697,7 +3710,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
              return Math.floor(d*100)+"% Female";
            }
            if(d==1 && cut == "race"){
-             if(viewportWidth < 600){
+             if(viewportWidth < 820){
                return "+"+Math.floor((Math.abs(d))*100)+" pts. more non-white vs. census"
              }
              return "More People of Color vs. City* Census"
@@ -3804,7 +3817,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
             return null;
           })
           .text(function(d){
-            if(viewportWidth < 600){
+            if(viewportWidth < 651){
               if(d=="gender" || d=="race"){
                 return "In 2017"
               }
@@ -3830,7 +3843,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           .attr("x2",0)
           .attr("class","swarm-arrow-annotation-top-line")
           .style("stroke",function(d){
-            if(viewportWidth < 600){
+            if(viewportWidth < 651){
               return "black";
             }
             if(d=="gender"){
@@ -4296,7 +4309,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
            }
            if(d==0){
              if(cut=="race"){
-               if(viewportWidth < 700){
+               if(viewportWidth < 750){
                  return "Parity w/census"
                }
                return "Parity with Census"

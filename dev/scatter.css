@@ -1904,6 +1904,30 @@ main {
 
 .news-lab-logo p{font-family: 'Roboto';position: absolute;top: 100%;font-size: 11px;padding-top: 10px;color: rgb(136, 136, 136);font-weight: 400;margin-bottom: 10px;}
 
+.embedded .content-title{
+  display: none;
+}
+
+.embedded .logos{
+  display: none;
+}
+
+.embedded .chart-top-section{
+  display: none;
+}
+
+.embedded .news-lab-logo p{
+  display: none;
+}
+
+.embedded .swarm-chart-source{
+  display: none;
+}
+
+.embedded .chart-title{
+  display: none;
+}
+
 @media only screen and (max-width: 1000px) {
   .swarm-chart-container{
 
@@ -1926,6 +1950,11 @@ main {
     opacity: .4;
   }
 
+}
+@media only screen and (max-width: 800px){
+  .swarm-chart-search-div{
+    width: 330px;
+  }
 }
 @media only screen and (max-width: 700px){
 
@@ -1984,7 +2013,7 @@ main {
     -webkit-transform: translateY(31px);
     transform: translateY(31px);
   }
-  .arrow-scatter-selected{top: 80px;}
+  .arrow-scatter-selected{top: 78px;left: 9px;right: auto;}
   .table-selected{top: 100px;left: 0px;margin: 0 auto;right: 0px;width: 86px;}
   .table-selected .map-label{
     text-align: center;
@@ -1999,7 +2028,7 @@ main {
   .swarm-chart-container-table{
     padding-top: 108px;
   }
-  .arrow-scatter-full-selected{/* top: 85px; *//* left: 274px; *//* right: auto; *//* margin: 0 auto; *//* height: 20px; */}
+  .arrow-scatter-full-selected{top: 60px;/* left: 274px; *//* right: auto; *//* margin: 0 auto; *//* height: 20px; */}
   .arrow-scatter-full-selected .histogram-chart-toggle-first:before{
     /* left: -76px; */
     /* top: -2px; */
@@ -2019,7 +2048,18 @@ main {
     font-size: 12px;
   }
 }
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 650px){
+  .swarm-arrow-annotation-left {
+    -webkit-transform: translate(6px,-4px);
+    transform: translate(6px,-4px);
+  }
+  .swarm-text {
+    letter-spacing: -.4px;
+    text-shadow: none;
+    font-size: 11px;
+    -webkit-transform: translate(-3px,1px);
+    transform: translate(-3px,1px);
+  }
   .swarm-annnotation-text{
     font-size: 11px;
   }
@@ -2133,7 +2173,7 @@ main {
   .stepper-item-container{margin-left: 22px;}
   .histogram-chart-toggle-first{
     margin-left: 0px;
-    margin-top: 3px;
+    /* margin-top: 18px; */
   }
   .swarm-chart-search-results{
     bottom: 170px;
@@ -2153,6 +2193,7 @@ main {
     max-width: 90%;
     pointer-events: none;
     text-align: center;
+    letter-spacing: 0px;
   }
   .stepper-item{
     font-size: 12px;
