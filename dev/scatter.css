@@ -1904,6 +1904,8 @@ main {
 
 .news-lab-logo p{font-family: 'Roboto';position: absolute;top: 100%;font-size: 11px;padding-top: 10px;color: rgb(136, 136, 136);font-weight: 400;margin-bottom: 10px;}
 
+.embedded .swarm-chart-container-table{padding-top: 0px;}
+
 .embedded .swarm-chart-search-results{
   bottom: 170px;
 }
@@ -2126,6 +2128,9 @@ main {
 }
 
 @media only screen and (max-width: 600px){
+  .embedded .swarm-chart-container-table{
+    padding-top:0px;
+  }
   .news-lab-logo{
     width: 110px;
   }

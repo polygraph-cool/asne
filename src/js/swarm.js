@@ -1720,6 +1720,10 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         margin = {top: 40, right: 20, bottom: 20, left: 20};
         width = 1000 - margin.left - margin.right;
         height = 250 - margin.top - margin.bottom;
+        if(urlParamEmbed!=""){
+          console.log("here");
+          height = 210 - margin.top - margin.bottom;
+        }
         if(viewportWidth < 1000){
           margin = {top: 40, right: 20, bottom: 20, left: 20};
           width = viewportWidth - margin.left - margin.right;
@@ -1728,6 +1732,11 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           margin = {top: 160, right: 20, bottom: 20, left: 20};
           width = viewportWidth - margin.left - margin.right;
           height = 280 - margin.top - margin.bottom;
+          console.log(urlParamEmbed);
+          if(urlParamEmbed!=""){
+            console.log("here");
+            height = 210 - margin.top - margin.bottom;
+          }
         }
         if(viewportWidth < 450){
           margin = {top: 160, right: 20, bottom: 20, left: 20};
