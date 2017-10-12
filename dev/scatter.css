@@ -1904,6 +1904,10 @@ main {
 
 .news-lab-logo p{font-family: 'Roboto';position: absolute;top: 100%;font-size: 11px;padding-top: 10px;color: rgb(136, 136, 136);font-weight: 400;margin-bottom: 10px;}
 
+.embedded .swarm-chart-search-results{
+  bottom: 170px;
+}
+
 .embedded .content-title{
   display: none;
 }
