@@ -3156,7 +3156,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       footerContainer.append("div")
         .attr("class","news-lab-logo")
         .append("p")
-        .html("*60 of 670 newsrooms served an audience larger than a city. USA Today: USA. Boston Globe: Massachusetts. Geographies were approximated using public data.")
+        .html("*60 of 670 newsrooms are compared to a geography larger than a city, (e.g., USA Today: USA. Boston Globe: Massachusetts). Geographies were approximated using public data.")
         ;
 
       var embedLink = footerContainer.append("div")
