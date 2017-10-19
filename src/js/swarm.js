@@ -1092,6 +1092,11 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       var cityState = companyData.City+" "+companyData.State;
       newsNest[item].value.companyData = companyData;
 
+      if(+newsNest[item].key == 489){
+        console.log(cityState);
+        console.log(censusMap.has(cityState));
+      }
+
       if(companyData.hasOverride){
         whiteCensus = +companyData.override.white/100;
         blackCensus = +companyData.override.black/100;
@@ -1461,7 +1466,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       }
     }
     function mouseOutEvents(data,element){
-      //
+
       chartToolTip
         .style("visibility",null)
         ;
@@ -1721,7 +1726,6 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         width = 1000 - margin.left - margin.right;
         height = 250 - margin.top - margin.bottom;
         if(urlParamEmbed!=""){
-          console.log("here");
           height = 210 - margin.top - margin.bottom;
         }
         if(viewportWidth < 1000){
@@ -5584,6 +5588,10 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       })
       .on("click",function(d){
         var node = d;
+
+        if(urlParamEmbed!=""){
+          searchResultsContainer.style("display",null);
+        }
 
         if(currentChart == "table"){
           getLocations(d);
