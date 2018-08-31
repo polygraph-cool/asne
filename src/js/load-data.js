@@ -36,6 +36,7 @@ function init() {
 					// // maps.init(result[0],result[1],result[2],result[3],result[4]);
 					// arrowScatter.init(result[0],result[1],result[2],result[3]);
 					// scatter.init(result[0],result[1],result[2],result[3]);
+					console.log(result[5]);
 					swarm.init(result[0],result[1],result[2],result[3],result[4],result[5]);
 					// swarmLeader.init(result[0],result[1],result[2],result[3],result[5]);
 					// graphic.init(result[0],result[1],result[2],result[3]);
