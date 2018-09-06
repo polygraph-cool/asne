@@ -161,7 +161,30 @@ var states = [
   ]
   ;
 
-function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride) {
+function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride,new_2018) {
+
+  // mapData = mapData.concat(new_2018)
+
+
+  var mergedData = [];
+  var newDataIDs = new_2018.map(function(d){return d.NewsID});
+  var oldIDs = rawMapData.filter(function(d){
+    return +d.Year == 2017
+  });
+
+  for (var newsRoom in oldIDs){
+    if (newDataIDs.indexOf(oldIDs[newsRoom]["NewsID"]) == -1){
+      oldIDs[newsRoom]["Year"] = 2018;
+      mergedData.push(oldIDs[newsRoom])
+    }
+  }
+
+  mergedData = mergedData.concat(new_2018);
+
+  var mapData = rawMapData.concat(mergedData)
+
+
+
 
   var newToggleForRaceAndGender;
   var alphaSort = ""
@@ -194,7 +217,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
   var newsIDSearchColor = "#7354ab"
   var searchAlphaSortLetters;
   var searchResultsContainer;
-  var yearSelected = 2017;
+  var yearSelected = 2018;
   var yearOld = 2001;
   var currentChart = "swarm";
   var previousChart = "swarm";
@@ -499,7 +522,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       .attr("class","stepper-container")
 
     var stepperTextArray = [
-      "The Newspaper Diversity Survey measures the percentage of women and minorities working in US newsrooms. The results from 2017&rsquo;s survey are in.",
+      "The Newspaper Diversity Survey measures the percentage of women and minorities working in US newsrooms. The results from "+yearSelected+"&rsquo;s survey are in.",
       "Newsrooms are about 32 percetage points more white than the audience they report on.",
       "When measuring leadership, newsrooms with more diversity tended to also have diverse staffs.",
       "change over time",
@@ -617,12 +640,12 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       .append("div")
       .attr("class","stepper-item-container")
 
-    var toggleText = ["View 2017 <span>Gender</span> and <span>Race</span> Data","How Leadership Compares","How Top Newsrooms Changed","Overall Change for All Newsrooms","Individual Newsroom Demographics"];
+    var toggleText = ["View "+yearSelected+" <span>Gender</span> and <span>Race</span> Data","How Leadership Compares","How Top Newsrooms Changed","Overall Change for All Newsrooms","Individual Newsroom Demographics"];
 
-    var stepNumToText = ["2017 results","Leadership",yearOld+" vs. 2017: Top Newsrooms","Overall Change","My Newsroom"];
+    var stepNumToText = [yearSelected+" results","Leadership",yearOld+" vs. "+yearSelected+": Top Newsrooms","Overall Change","My Newsroom"];
 
     if(viewportWidth < 620){
-      stepNumToText = ["2017 Results","Newsroom Leaders","Top Newsrooms","Change","My Newsroom"];
+      stepNumToText = [yearSelected+" Results","Newsroom Leaders","Top Newsrooms","Change","My Newsroom"];
     }
 
     var stepperContainerToggleContainerSteps = stepperContainerToggleContainer
@@ -1529,10 +1552,10 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       //   title = "<span>Change</span> in Gender Breakdown from 2002 - 2017"
       // }
       else if(chartType == "arrow-scatter"){
-        title = "How Newsrooms <span>Changed, "+yearOld+" - 2017"
+        title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected
       }
       else if(chartType == "arrow-scatter-full"){
-        title = "How Newsrooms <span>Changed, "+yearOld+" - 2017"
+        title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected
       }
       else if(chartType == "table"){
         title = "Individual Newsroom Demographics"
@@ -2937,19 +2960,19 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
            var locations = [];
 
-          //  result = {
-          //  	ip: '24.194.26.74',
-          //  	country_code: 'US',
-          //  	country_name: 'United States',
-          //  	region_code: 'CA',
-          //  	region_name: 'Massachusetts',
-          //  	city: 'Boston',
-          //  	zip_code: '01230',
-          //  	time_zone: 'America/New_York',
-          //   latitude: 37.7749,
-          //  	longitude: -122.4194,
-          //  	metro_code: 532,
-          //  };
+           result = {
+           	ip: '24.194.26.74',
+           	country_code: 'US',
+           	country_name: 'United States',
+           	region_code: 'CA',
+           	region_name: 'Massachusetts',
+           	city: 'Boston',
+           	zip_code: '01230',
+           	time_zone: 'America/New_York',
+            latitude: 37.7749,
+           	longitude: -122.4194,
+           	metro_code: 532,
+           };
 
 
            cell
@@ -3832,18 +3855,18 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           .text(function(d){
             if(viewportWidth < 651){
               if(d=="gender" || d=="race"){
-                return "In 2017"
+                return "In "+yearSelected
               }
               return "In "+yearOld
             }
             if(cut=="race"){
               if(d=="race"){
-                return "Race in 2017"
+                return "Race in "+yearSelected
               }
               return "Race in "+yearOld
             }
             if(d=="gender"){
-              return "Gender in 2017"
+              return "Gender in "+yearSelected
             }
             return "Gender in "+yearOld
           })
@@ -4627,15 +4650,15 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
         .data(function(d,i){
           if(cut == "race"){
             if(i==0){
-              return [Math.round(d/items*100)+"%"," of newsrooms ","gained","racial diversity, "+yearOld+" - 2017"];
+              return [Math.round(d/items*100)+"%"," of newsrooms ","gained","racial diversity, "+yearOld+" - "+yearSelected];
             }
-            return [Math.round(d/items*100)+"%"," of newsrooms ","lost","racial diversity, "+yearOld+" - 2017"];
+            return [Math.round(d/items*100)+"%"," of newsrooms ","lost","racial diversity, "+yearOld+" - "+yearSelected];
           }
           else{
             if(i==0){
-              return [Math.round(d/items*100)+"%"," of newsrooms ","gained","gender diversity, "+yearOld+" - 2017"];
+              return [Math.round(d/items*100)+"%"," of newsrooms ","gained","gender diversity, "+yearOld+" - "+yearSelected];
             }
-            return [Math.round(d/items*100)+"%"," of newsrooms ","lost","gender diversity, "+yearOld+" - 2017"];
+            return [Math.round(d/items*100)+"%"," of newsrooms ","lost","gender diversity, "+yearOld+" - "+yearSelected];
           }
         })
         .enter()
@@ -4769,9 +4792,9 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
           .selectAll("div")
           .data(function(d,i){
             var cat = d;
-            var years = [2017,+yearOld];
+            var years = [yearSelected,+yearOld];
             if(cat.key == "census"){
-              years = [2017];
+              years = [yearSelected];
             }
             return years.map(function(d){
               return {year:d,key:cat.key,value:cat.value,companyCount:cat.companyCount}
@@ -4806,17 +4829,17 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 return Math.round(d.value.value.whiteCensus*100)+"%";
               }
               if(d.cat == "hisp."){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round(d.value.value.hispanicCensus*100)+"%";
                 }
               }
               if(d.cat == "black"){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round(d.value.value.blackCensus*100)+"%";
                 }
               }
               if(d.cat == "asian"){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round(d.value.value.asianCensus*100)+"%";
                 }
               }
@@ -4824,7 +4847,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
             if(d.key == "staff"){
 
               if(d.cat=="white"){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round((getPercentType("white",(d.value.value)))*100)+"%";
                 }
                 else{
@@ -4836,7 +4859,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 }
               }
               if(d.cat=="black"){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round((getPercentType("black",(d.value.value)))*100)+"%";
                 }
                 else{
@@ -4848,7 +4871,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 }
               }
               if(d.cat=="hisp."){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round((getPercentType("hisp",(d.value.value)))*100)+"%";
                 }
                 else{
@@ -4860,7 +4883,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 }
               }
               if(d.cat=="asian"){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round((getPercentType("asian",(d.value.value)))*100)+"%";
                 }
                 else{
@@ -4872,7 +4895,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 }
               }
               if(d.cat=="female"){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round((getPercentType("gender",(d.value.value)))*100)+"%";
                 }
                 else{
@@ -4888,7 +4911,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
             if(d.key = "leaders"){
 
               if(d.cat=="white"){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round((getPercentType("supWhiteRaw",(d.value.value)))*100)+"%";
                 }
                 else{
@@ -4900,7 +4923,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 }
               }
               if(d.cat=="black"){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round((getPercentType("supBlack",(d.value.value)))*100)+"%";
                 }
                 else{
@@ -4912,7 +4935,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 }
               }
               if(d.cat=="hisp."){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round((getPercentType("supHisp",(d.value.value)))*100)+"%";
                 }
                 else{
@@ -4924,7 +4947,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 }
               }
               if(d.cat=="asian"){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round((getPercentType("supAsian",(d.value.value)))*100)+"%";
                 }
                 else{
@@ -4936,7 +4959,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
                 }
               }
               if(d.cat=="female"){
-                if(d.year == "2017"){
+                if(d.year == yearSelected){
                   return Math.round((getPercentType("supGender",(d.value.value)))*100)+"%";
                 }
                 else{
@@ -4955,7 +4978,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
         chartTablePercent
           .filter(function(d,i){
-            return d.key=="census" && d.year == 2017 && i==0;
+            return d.key=="census" && d.year == yearSelected && i==0;
           })
           .append("span")
           .attr("class","swarm-chart-table-company-row-top-label-census")
@@ -4972,7 +4995,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
         chartTableRow
           .filter(function(d,i){
-            return d.key=="staff" && d.year == 2017;
+            return d.key=="staff" && d.year == yearSelected;
           })
           .selectAll("p")
           .append("span")
@@ -4998,7 +5021,7 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
 
         chartTablePercent
           .filter(function(d,i){
-            return i==0 && d.companyCount == 0 && d.year == 2017;
+            return i==0 && d.companyCount == 0 && d.year == yearSelected;
           })
           .append("span")
           .attr("class",function(d,i){
@@ -5253,6 +5276,8 @@ function init(mapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride
       ;
 
     function getLocations(d){
+
+      console.log(d);
 
       var itemSelected = d;
 
