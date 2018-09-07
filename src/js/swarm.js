@@ -166,14 +166,15 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
   // mapData = mapData.concat(new_2018)
 
 
+
   var mergedData = [];
-  var newDataIDs = new_2018.map(function(d){return d.NewsID});
+  var newDataIDs = new_2018.map(function(d){return +d.NewsID});
   var oldIDs = rawMapData.filter(function(d){
     return +d.Year == 2017
   });
 
   for (var newsRoom in oldIDs){
-    if (newDataIDs.indexOf(oldIDs[newsRoom]["NewsID"]) == -1){
+    if (newDataIDs.indexOf(+oldIDs[newsRoom]["NewsID"]) == -1){
       oldIDs[newsRoom]["Year"] = 2018;
       mergedData.push(oldIDs[newsRoom])
     }
@@ -182,9 +183,6 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
   mergedData = mergedData.concat(new_2018);
 
   var mapData = rawMapData.concat(mergedData)
-
-
-
 
   var newToggleForRaceAndGender;
   var alphaSort = ""
@@ -522,7 +520,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
       .attr("class","stepper-container")
 
     var stepperTextArray = [
-      "The Newspaper Diversity Survey measures the percentage of women and minorities working in US newsrooms. The results from "+yearSelected+"&rsquo;s survey are in.",
+      "The Newspaper Diversity Survey measures the percentage of women and minorities working in US newsrooms. The results<span class='note-new-data'>*</span> from "+yearSelected+"&rsquo;s survey are in.",
       "Newsrooms are about 32 percetage points more white than the audience they report on.",
       "When measuring leadership, newsrooms with more diversity tended to also have diverse staffs.",
       "change over time",
@@ -1296,14 +1294,23 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
           }
           return null;
         })
-        .text(function(d){
+        .html(function(d){
+          var oldData = newDataIDs.indexOf(+data.key);
+          var textValue = "";
           if(data.value.companyName == "usa today"){
-            return "USA Today";
+            textValue = "USA Today";
           }
-          if(data.value.companyName.length > 30){
-            return data.value.companyName.replace(/\b\w/g, l => l.toUpperCase()).slice(0,30)+"..."
+          else if(data.value.companyName.length > 30){
+            textValue = data.value.companyName.replace(/\b\w/g, l => l.toUpperCase()).slice(0,30)+"..."
           }
-          return data.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
+          else {
+            textValue = data.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
+          }
+          if(oldData == -1){
+            textValue = textValue + "<span>2017 data</span>"
+          }
+          return textValue;
+
         });
 
       var colData = ["white","black","hisp.","asian","female"];
@@ -1552,13 +1559,13 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
       //   title = "<span>Change</span> in Gender Breakdown from 2002 - 2017"
       // }
       else if(chartType == "arrow-scatter"){
-        title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected
+        title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected+"</span><span class='chart-title-note'><span class='red'>*</span>Newsroom Uses 2017 Data</span>"
       }
       else if(chartType == "arrow-scatter-full"){
-        title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected
+        title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected+"</span><span class='chart-title-note'><span class='red'>*</span>Newsroom Uses 2017 Data</span>"
       }
       else if(chartType == "table"){
-        title = "Individual Newsroom Demographics"
+        title = "Individual Newsroom Demographics<span class='chart-title-note'><span class='red'>*</span>Newsroom Uses 2017 Data</span>"
       }
       chartTitle.html(title);
     }
@@ -3173,9 +3180,20 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
         .style("opacity",0)
         .attr("class","swarm-text")
         .text(function(d){
-          return d.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
+          var text = d.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
+          return text;
         })
         ;
+
+      cellText.filter(function(d){
+        return newDataIDs.indexOf(+d.key) == -1
+      })
+      .append("tspan")
+      .attr("dx",2)
+      .text(function(d){
+        return "*"
+      })
+      ;
 
       cellDash = cell
         .append("line")
@@ -3216,13 +3234,31 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
 
       embedLinkInput = embedLink.append("input");
 
+      d3.select(".note-new-data").on("click",function(d){
+        d3.select(".footer-highlight").classed("footer-highlighted",true);
+        document.getElementById('footer-element').scrollIntoView();
+      })
+
       footerContainer.append("div")
         .attr("class","swarm-chart-source")
+        .attr("id","footer-element")
         .selectAll("p")
-        .data(["Source: ASNE, Census: &lsquo;11-&lsquo;15","American Community Survey.","Newsrooms shown are those","with 25 total staff or more"])
+        .data(["Source: ASNE, Census: &lsquo;11-&lsquo;15","American Community Survey.","Newsrooms shown are those","with 25 total staff or more","<span class='note-new-data-footer'>*</span>About two-thirds of newsrooms did not respond to the 2018 survey and use data from 2017. This year’s respondents are here."])
         .enter()
         .append("p")
         .attr("class","swarm-chart-source-text")
+        .style("margin-top",function(d,i){
+          if(i==1 || i == 4){
+            return "10px"
+          }
+          return null;
+        })
+        .classed("footer-highlight",function(d,i){
+          if(i==4){
+            return true;
+          }
+          return false;
+        })
         .html(function(d){
           return d;
         })
@@ -4714,7 +4750,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
       buildAverage();
       // }
     }
-    else if(chartType = "table"){
+    else if(chartType == "table"){
 
       chartDivContainerTable.selectAll(".swarm-chart-table-company-container").remove();
 
@@ -4766,12 +4802,29 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
 
         chartTableItem.append("p")
           .attr("class","swarm-chart-table-company-name")
-          .text(function(d){
-            var companyName = d.value.companyName
-            if(companyName.length > 30){
-              return companyName.replace(/\b\w/g, l => l.toUpperCase()).slice(0,27)+"..."
+          .html(function(d){
+            var oldData = newDataIDs.indexOf(+d.key);
+            var textValue = "";
+            if(d.value.companyName == "usa today"){
+              textValue = "USA Today";
             }
-            return companyName.replace(/\b\w/g, l => l.toUpperCase())
+            else if(d.value.companyName.length > 30){
+              textValue = d.value.companyName.replace(/\b\w/g, l => l.toUpperCase()).slice(0,27)+"..."
+            }
+            else {
+              textValue = d.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
+            }
+            if(oldData == -1){
+              textValue = textValue + "<span class='red'>*</span>"
+            }
+            return textValue;
+
+            //
+            // var companyName = d.value.companyName
+            // if(companyName.length > 30){
+            //   return companyName.replace(/\b\w/g, l => l.toUpperCase()).slice(0,27)+"..."
+            // }
+            // return companyName.replace(/\b\w/g, l => l.toUpperCase())
           })
           ;
 
@@ -5564,9 +5617,20 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
         .style("opacity",0)
         .attr("class","swarm-text")
         .text(function(d){
-          return d.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
+          var text = d.value.companyName.replace(/\b\w/g, l => l.toUpperCase())
+          return text;
         })
         ;
+
+      cellText.filter(function(d){
+        return newDataIDs.indexOf(+d.key) == -1
+      })
+      .append("tspan")
+      .attr("dx",2)
+      .text(function(d){
+        return "*"
+      })
+      ;
 
       cellEnter
         .append("line")

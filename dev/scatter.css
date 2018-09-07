@@ -339,6 +339,16 @@ p {
     color: rgb(136, 136, 136);
     font-size: 11px;
     font-weight: 400;
+    max-width: 170px;
+}
+
+.footer-highlighted{background: rgba(255, 0, 0, 0.1);color: black;font-weight: 500;padding-bottom: 6px;padding-right: 6px;transition: all 1s;}
+
+.note-new-data{color: #ee5d5d;font-weight: 500;cursor: pointer;cursor: hand;padding-left: 2px;}
+.note-new-data-footer{color: #ee5d5d;font-weight: 500;padding-right:2px;font-size: 17px;}
+
+.note-new-data:hover{
+  text-decoration:underline;
 }
 
 .swarm-chart-source {
@@ -1229,6 +1239,32 @@ p {
     line-height: 26px;
 }
 
+.swarm-text tspan{
+  fill: #ee5d5d;
+}
+
+.chart-title-note{
+  position: absolute;
+  top: 17px;
+  left: 0px;
+  right: 0px;
+  font-size: 11px;
+  color: #797979;
+  text-transform: capitalize;
+  font-weight: 400;
+}
+
+.red{
+  fill: #ee5d5d;
+  color: #ee5d5d;
+}
+
+.swarm-chart-tool-tip-company span{
+    font-size: 11px;
+    color: red;
+    margin-left: 5px;
+}
+
 .swarm-chart-tool-tip-gender {
     font-size: 16px;
 }
@@ -1386,7 +1422,7 @@ p {
     display: flex;
     -webkit-justify-content:center;
     justify-content: center;
-    padding-top: 50px;
+    padding-top: 70px;
     pointer-events: none;
 }
 
