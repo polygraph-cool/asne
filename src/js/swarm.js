@@ -173,14 +173,14 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
     return +d.Year == 2017
   });
 
-  for (var newsRoom in oldIDs){
-    if (newDataIDs.indexOf(+oldIDs[newsRoom]["NewsID"]) == -1){
-      oldIDs[newsRoom]["Year"] = 2018;
-      mergedData.push(oldIDs[newsRoom])
-    }
-  }
+  // for (var newsRoom in oldIDs){
+  //   if (newDataIDs.indexOf(+oldIDs[newsRoom]["NewsID"]) == -1){
+  //     oldIDs[newsRoom]["Year"] = 2018;
+  //     mergedData.push(oldIDs[newsRoom])
+  //   }
+  // }
 
-  mergedData = mergedData.concat(new_2018);
+  mergedData = new_2018//mergedData.concat(new_2018);
 
   var mapData = rawMapData.concat(mergedData)
 
@@ -1113,11 +1113,6 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
       var cityState = companyData.City+" "+companyData.State;
       newsNest[item].value.companyData = companyData;
 
-      if(+newsNest[item].key == 489){
-        console.log(cityState);
-        console.log(censusMap.has(cityState));
-      }
-
       if(companyData.hasOverride){
         whiteCensus = +companyData.override.white/100;
         blackCensus = +companyData.override.black/100;
@@ -1185,6 +1180,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
       // newsNest[item].top3Data = top3Map.get(newsNest[item].companyName);
     }
     ;
+
 
   newsNest = newsNest.filter(function(d){
     searchDataSet.push(d);
@@ -1903,6 +1899,8 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
         .duration(500)
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+
+
     }
 
     changeTitle();
@@ -2386,6 +2384,8 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
              return "Women Leaders";
            })
            ;
+
+           console.log("2388");
          chartAverage.append("circle")
            .attr("class","swarm-circle swarm-circle-average")
            .attr("cx",xScale(newsNestAverageT1))
@@ -3070,6 +3070,8 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
         .attr("class","swarm-line")
         ;
 
+      console.log("3071");
+
       cellCircleTwo = cell
         .append("circle")
         .attr("class","swarm-circle-two")
@@ -3081,6 +3083,8 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
         })
         .attr("cy", function(d) { return d.y; })
         ;
+
+console.log("3085");
 
       cellCircle = cell
         .append("circle")
@@ -5373,6 +5377,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
       buildChart("table");
     }
 
+console.log("5380");
     var mapMarkers = mapSvg.append("g")
       .attr("class","map-markers")
       .selectAll("circle")
@@ -5394,27 +5399,14 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
       .attr("transform",function(d){
         if(d.value.hasLocation){
           var location = d.value.location;
+          console.log();
           var project = projection([+location.longitude,location.latitude]);
-          return "translate("+project+")";
+          if(project){
+            return "translate("+project+")";
+          }
         }
         return null;
       })
-      .each(function(d){
-        if(d.value.hasLocation){
-          // var itemB = d.value.location;
-          // var distance = geolib.getDistanceSimple(location, itemB)
-          // if(distance < 200000){
-          //   distanceArray.push(d);
-          // }
-        }
-      })
-      // if(distanceArray.length > 4){
-      //   distanceArray = distanceArray.sort(function(a,b){
-      //     return +b.value.maxTotal - +a.value.maxTotal;
-      //   }).slice(0,4)
-      // }
-      // tableData = distanceArray;
-      // buildChart("table");
       .on("click",function(d){
         getLocations(d);
       })
@@ -5426,7 +5418,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
       ;
 
     var selectorRadius = 20;
-
+console.log("5432");
     mapSelector
       .append("circle")
       .attr("class","map-selector-circle")
@@ -5543,6 +5535,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
         .attr("class","swarm-cell-g")
         ;
 
+console.log("5549");
       cellEnter
         .append("circle")
         .attr("class","swarm-circle")
@@ -5642,6 +5635,8 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
         .append("path")
         .attr("class","swarm-line")
         ;
+
+console.log("5650");
 
       cellEnter
         .append("circle")
