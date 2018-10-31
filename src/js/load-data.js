@@ -26,8 +26,8 @@ function init() {
 			// .defer(d3.csv,'assets/news_ids.csv')
 			.defer(d3.json,'assets/usJson.json')
 			// .defer(d3.csv,'assets/top_3.csv')
-			.defer(d3.csv,'assets/census_2.csv')
-			.defer(d3.csv,'assets/census_override_2.csv')
+			.defer(d3.csv,'assets/census_3.csv')
+			.defer(d3.csv,'assets/census_override_3.csv')
 			.defer(d3.csv,'assets/new_2018_3.csv')
 			.awaitAll((err, result) => {
 				if (err){

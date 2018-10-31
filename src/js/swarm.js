@@ -2976,8 +2976,8 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
            	city: 'Boston',
            	zip_code: '01230',
            	time_zone: 'America/New_York',
-            latitude: 37.7749,
-           	longitude: -122.4194,
+            latitude: 42.3601,
+           	longitude: -71.0589,
            	metro_code: 532,
            };
 
