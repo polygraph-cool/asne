@@ -2965,25 +2965,28 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
             .attr("y2",height*.8)
             ;
 
+          var result = {
+          	ip: '24.194.26.74',
+          	country_code: 'US',
+          	country_name: 'United States',
+          	region_code: 'CA',
+          	region_name: 'Massachusetts',
+          	city: 'New York',
+          	zip_code: '01230',
+          	time_zone: 'America/New_York',
+           latitude: 42.3601,
+          	longitude: -71.0589,
+          	metro_code: 532,
+          };
 
-         locate((err, result) => {
+
+          locate('fd4d87f605681c0959c16d9164ab6a4a', (err, response) => {
 
            var locations = [];
 
-           result = {
-           	ip: '24.194.26.74',
-           	country_code: 'US',
-           	country_name: 'United States',
-           	region_code: 'CA',
-           	region_name: 'Massachusetts',
-           	city: 'Boston',
-           	zip_code: '01230',
-           	time_zone: 'America/New_York',
-            latitude: 42.3601,
-           	longitude: -71.0589,
-           	metro_code: 532,
-           };
-
+           if(response){
+             result = response;
+           }
 
            cell
              .each(function(d){
@@ -5381,7 +5384,6 @@ console.log("3085");
       buildChart("table");
     }
 
-console.log("5380");
     var mapMarkers = mapSvg.append("g")
       .attr("class","map-markers")
       .selectAll("circle")
