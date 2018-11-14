@@ -37,6 +37,7 @@ function getIP() {
 }
 
 function getGeocode({ ip }) {
+	console.log(ip);
 	if (debug) return Promise.resolve(test);
 	const url = `https://freegeoip.net/json/${ip}`;
 	return new Promise((resolve, reject) => {

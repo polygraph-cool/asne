@@ -1555,13 +1555,16 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
       //   title = "<span>Change</span> in Gender Breakdown from 2002 - 2017"
       // }
       else if(chartType == "arrow-scatter"){
-        title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected+"</span><span class='chart-title-note'><span class='red'>*</span>Newsroom Uses 2017 Data</span>"
+        title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected+"</span>"
+        // title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected+"</span><span class='chart-title-note'><span class='red'>*</span>Newsroom Uses 2017 Data</span>"
       }
       else if(chartType == "arrow-scatter-full"){
-        title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected+"</span><span class='chart-title-note'><span class='red'>*</span>Newsroom Uses 2017 Data</span>"
+        title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected+"</span>"
+        // title = "How Newsrooms <span>Changed, "+yearOld+" - "+yearSelected+"</span><span class='chart-title-note'><span class='red'>*</span>Newsroom Uses 2017 Data</span>"
       }
       else if(chartType == "table"){
-        title = "Individual Newsroom Demographics<span class='chart-title-note'><span class='red'>*</span>Newsroom Uses 2017 Data</span>"
+        title = "Individual Newsroom Demographics"
+        // title = "Individual Newsroom Demographics<span class='chart-title-note'><span class='red'>*</span>Newsroom Uses 2017 Data</span>"
       }
       chartTitle.html(title);
     }
@@ -3214,7 +3217,7 @@ console.log("3085");
       footerContainer.append("div")
         .attr("class","news-lab-logo")
         .append("p")
-        .html("*60 of 670 newsrooms are compared to a geography larger than a city, (e.g., USA Today: USA. Boston Globe: Massachusetts). Geographies were approximated using public data.")
+        .html("*105 of 292 newsrooms are compared to a geography larger than a city, (e.g., USA Today: USA. Boston Globe: Massachusetts). Geographies were approximated using public data.")
         ;
 
       var embedLink = footerContainer.append("div")
@@ -3247,7 +3250,8 @@ console.log("3085");
         .attr("class","swarm-chart-source")
         .attr("id","footer-element")
         .selectAll("p")
-        .data(["Source: ASNE, Census: &lsquo;11-&lsquo;15","American Community Survey.","Newsrooms shown are those","with 25 total staff or more","<span class='note-new-data-footer'>*</span>About two-thirds of newsrooms did not respond to the 2018 survey and use data from 2017. This year’s respondents are here."])
+        .data(["Source: ASNE, Census: &lsquo;11-&lsquo;15","American Community Survey.","Newsrooms shown are those","with 25 total staff or more"])
+        // .data(["Source: ASNE, Census: &lsquo;11-&lsquo;15","American Community Survey.","Newsrooms shown are those","with 25 total staff or more","<span class='note-new-data-footer'>*</span>About two-thirds of newsrooms did not respond to the 2018 survey and use data from 2017. This year’s respondents are here."])
         .enter()
         .append("p")
         .attr("class","swarm-chart-source-text")

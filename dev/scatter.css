@@ -269,6 +269,7 @@ p {
     stroke: black;
     stroke-width: 2px;
     shape-rendering: crispEdges;
+    pointer-events: none;
 }
 
 .swarm-average-text-label {
@@ -344,8 +345,21 @@ p {
 
 .footer-highlighted{background: rgba(255, 0, 0, 0.1);color: black;font-weight: 500;padding-bottom: 6px;padding-right: 6px;transition: all 1s;}
 
-.note-new-data{color: #ee5d5d;font-weight: 500;cursor: pointer;cursor: hand;padding-left: 2px;}
-.note-new-data-footer{color: #ee5d5d;font-weight: 500;padding-right:2px;font-size: 17px;}
+.note-new-data{
+  color: #ee5d5d;
+  font-weight: 500;
+  cursor: pointer;
+  cursor: hand;
+  padding-left: 2px;
+  display: none;
+}
+.note-new-data-footer{
+  color: #ee5d5d;
+  font-weight: 500;
+  padding-right:2px;
+  font-size: 17px;
+  display: none;
+}
 
 .note-new-data:hover{
   text-decoration:underline;
