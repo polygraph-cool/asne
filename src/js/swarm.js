@@ -3217,8 +3217,12 @@ console.log("3085");
         .attr("class","footer-wrapper")
         ;
 
-      footerContainer.append("div")
+      var newsLabLogo = footerContainer.append("div")
         .attr("class","news-lab-logo")
+
+      newsLabLogo.append("img").attr("src","assets/newsinit_logo.png")
+
+      newsLabLogo
         .append("p")
         .html("*105 of 292 newsrooms are compared to a geography larger than a city, (e.g., USA Today: USA. Boston Globe: Massachusetts). Geographies were approximated using public data.")
         ;
