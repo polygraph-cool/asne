@@ -20,15 +20,15 @@ function cleanTk(d) {
 function init() {
 	return new Promise((resolve, reject) => {
 		d3.queue()
-			.defer(d3.csv,'assets/map_data_3.csv')
-			.defer(d3.csv,'assets/lats_2.csv')
-			.defer(d3.csv,'assets/newsidsunique_4.csv')
+			.defer(d3.csv,'assets/map_data_4.csv')
+			.defer(d3.csv,'assets/lats_3.csv')
+			.defer(d3.csv,'assets/newsidsunique_5.csv')
 			// .defer(d3.csv,'assets/news_ids.csv')
 			.defer(d3.json,'assets/usJson.json')
 			// .defer(d3.csv,'assets/top_3.csv')
-			.defer(d3.csv,'assets/census_4.csv')
-			.defer(d3.csv,'assets/census_override_4.csv')
-			.defer(d3.csv,'assets/new_2018_3.csv')
+			.defer(d3.csv,'assets/census_5.csv')
+			.defer(d3.csv,'assets/census_override_5.csv')
+			.defer(d3.csv,'assets/new_2019.csv')
 			.awaitAll((err, result) => {
 				if (err){
 					reject(err)

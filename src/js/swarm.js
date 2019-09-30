@@ -215,7 +215,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
   var newsIDSearchColor = "#7354ab"
   var searchAlphaSortLetters;
   var searchResultsContainer;
-  var yearSelected = 2018;
+  var yearSelected = 2019;
   var yearOld = 2001;
   var currentChart = "swarm";
   var previousChart = "swarm";
@@ -5345,47 +5345,59 @@ console.log("3085");
 
     function getLocations(d){
 
-      console.log(d);
+
 
       var itemSelected = d;
 
-      var location = d.value.location;
-      var project = projection([+location.longitude,location.latitude]);
-
-      mapSelector
-        .transition()
-        .duration(750)
-        .attr("transform","translate("+project+")")
-        ;
-
-      var distanceArray = [];
-
-      mapMarkers.each(function(d){
-        if(d.value.hasLocation){
-          var itemB = d.value.location;
-          var distance = geolib.getDistanceSimple(location, itemB)
-          if(distance < 200000){
-            distanceArray.push(d);
-          }
+      if(!d.value.location){
+        tableData = [];
+        tableData.unshift(d)
+        if(mobile || viewportWidth < 450){
+          tableData = [d];
         }
-      })
+        buildChart("table");
 
-      distanceArray = distanceArray.filter(function(d){
-        return +d.key != +itemSelected.key;
-      });
+      } else {
+        var location = d.value.location;
+        var project = projection([+location.longitude,location.latitude]);
 
-      if(distanceArray.length > 3){
-        distanceArray = distanceArray.sort(function(a,b){
-          return +b.value.maxTotal - +a.value.maxTotal;
-        }).slice(0,3)
+        mapSelector
+          .transition()
+          .duration(750)
+          .attr("transform","translate("+project+")")
+          ;
+
+        var distanceArray = [];
+
+        mapMarkers.each(function(d){
+          if(d.value.hasLocation){
+            var itemB = d.value.location;
+            var distance = geolib.getDistanceSimple(location, itemB)
+            if(distance < 200000){
+              distanceArray.push(d);
+            }
+          }
+        })
+
+        distanceArray = distanceArray.filter(function(d){
+          return +d.key != +itemSelected.key;
+        });
+
+        if(distanceArray.length > 3){
+          distanceArray = distanceArray.sort(function(a,b){
+            return +b.value.maxTotal - +a.value.maxTotal;
+          }).slice(0,3)
+        }
+
+        tableData = distanceArray;
+        tableData.unshift(d)
+        if(mobile || viewportWidth < 450){
+          tableData = [d];
+        }
+        buildChart("table");
       }
 
-      tableData = distanceArray;
-      tableData.unshift(d)
-      if(mobile || viewportWidth < 450){
-        tableData = [d];
-      }
-      buildChart("table");
+
     }
 
     var mapMarkers = mapSvg.append("g")
@@ -5428,7 +5440,7 @@ console.log("3085");
       ;
 
     var selectorRadius = 20;
-console.log("5432");
+
     mapSelector
       .append("circle")
       .attr("class","map-selector-circle")

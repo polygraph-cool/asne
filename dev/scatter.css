@@ -291,6 +291,7 @@ p {
 
 .swarm-chart-wrapper {
     margin: 0 auto;
+    overflow: visible;
 }
 
 .swarm-chart-container {
