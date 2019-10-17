@@ -29,8 +29,6 @@ const urlParam = urlParameter.get('view');
 const urlParamCut = urlParameter.get('filter');
 const urlParamEmbed = urlParameter.get('embed');
 
-console.log(urlParamEmbed);
-
 if(urlParamEmbed){
   d3.select("#content").classed("embedded",true);
 }
@@ -163,8 +161,7 @@ var states = [
 
 function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverride,new_2018) {
 
-  // mapData = mapData.concat(new_2018)
-
+  console.log(new_2018);
 
 
   var mergedData = [];
@@ -175,14 +172,17 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
 
   // for (var newsRoom in oldIDs){
   //   if (newDataIDs.indexOf(+oldIDs[newsRoom]["NewsID"]) == -1){
-  //     oldIDs[newsRoom]["Year"] = 2018;
+  //     oldIDs[newsRoom]["Year"] = 2019;
   //     mergedData.push(oldIDs[newsRoom])
   //   }
   // }
 
-  mergedData = new_2018//mergedData.concat(new_2018);
-
+  mergedData = new_2018
+  //mergedData = mergedData.concat(new_2018);
+  console.log(mergedData);
   var mapData = rawMapData.concat(mergedData)
+
+
 
   var newToggleForRaceAndGender;
   var alphaSort = ""
@@ -216,7 +216,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
   var searchAlphaSortLetters;
   var searchResultsContainer;
   var yearSelected = 2019;
-  var yearOld = 2001;
+  var yearOld = 2004;
   var currentChart = "swarm";
   var previousChart = "swarm";
   var previousCut = "gender";
@@ -1071,6 +1071,9 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
     .entries(filteredMapData)
     ;
 
+
+    var hasOverride = 0;
+
     var cutOutData = [];
     var searchDataSet = []
 
@@ -1114,6 +1117,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
       newsNest[item].value.companyData = companyData;
 
       if(companyData.hasOverride){
+        hasOverride = hasOverride + 1;
         whiteCensus = +companyData.override.white/100;
         blackCensus = +companyData.override.black/100;
         hispanicCensus = +companyData.override.hispanic/100;
@@ -1180,7 +1184,6 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
       // newsNest[item].top3Data = top3Map.get(newsNest[item].companyName);
     }
     ;
-
 
   newsNest = newsNest.filter(function(d){
     searchDataSet.push(d);
@@ -1574,6 +1577,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
           extentOverride = d3.extent(newsNest,function(d){
             return getPercentType("genderStaff",d.value)
           });
+
         }
         else{
           extentOverride = d3.extent(newsNest,function(d){ return getPercentType("gender",d.value)});
@@ -1594,9 +1598,9 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
           height = 400 - margin.top - margin.bottom;
         }
         if(cut == "race"){
-          xScale.domain([-1,1]).range([0,width]).clamp(true);
+          xScale.domain([-.7,.7]).range([0,width]).clamp(true);
           newsNestAverageT1 = d3.mean(newsNest,function(d){ return d.value.whiteDelta;});
-          genderColorScale.domain([-1,0,1]);
+          genderColorScale.domain([-.7,0,.7]);
         }
         else if(cut == "gender"){
           newsNestAverageT1 = d3.mean(newsNest,function(d){ return getPercentType("gender",d.value)});
@@ -1765,9 +1769,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
           margin = {top: 160, right: 20, bottom: 20, left: 20};
           width = viewportWidth - margin.left - margin.right;
           height = 280 - margin.top - margin.bottom;
-          console.log(urlParamEmbed);
           if(urlParamEmbed!=""){
-            console.log("here");
             height = 210 - margin.top - margin.bottom;
           }
         }
@@ -2388,7 +2390,6 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
            })
            ;
 
-           console.log("2388");
          chartAverage.append("circle")
            .attr("class","swarm-circle swarm-circle-average")
            .attr("cx",xScale(newsNestAverageT1))
@@ -2438,7 +2439,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
           }
           var midPoint = .5
           if(cut == "race"){
-            tickData = [-1,-.5,-.25,0,.25,1];
+            tickData = [-.7,-.25,0,.25,.7];
             midPoint = 0
           }
           if(viewportWidth < 700){
@@ -2772,16 +2773,16 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
        var tickData = [.2,.3,.5,.7,.8];
        var midPoint = .5
        if(cut == "race"){
-         tickData = [-1,-.5,-.25,0,.25,1];
+         tickData = [-.7,-.25,0,.25,.7];
          if(viewportWidth < 750){
-           tickData = [-1,-.25,0,.25,1];
+           tickData = [-.7,-.25,0,.25,.7];
          }
          midPoint = 0
        }
        if(viewportWidth < 700){
          tickData = [.2,.5,.8];
          if(cut == "race"){
-           tickData = [-1,0,1];
+           tickData = [-.7,0,.7];
            midPoint = 0
          }
        }
@@ -3076,7 +3077,6 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
         .attr("class","swarm-line")
         ;
 
-      console.log("3071");
 
       cellCircleTwo = cell
         .append("circle")
@@ -3089,8 +3089,6 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
         })
         .attr("cy", function(d) { return d.y; })
         ;
-
-console.log("3085");
 
       cellCircle = cell
         .append("circle")
@@ -3224,7 +3222,7 @@ console.log("3085");
 
       newsLabLogo
         .append("p")
-        .html("*105 of 292 newsrooms are compared to a geography larger than a city, (e.g., USA Today: USA. Boston Globe: Massachusetts). Geographies were approximated using public data.")
+        .html("*98 of 342 newsrooms are compared to a geography larger than a city, (e.g., USA Today: USA. Boston Globe: Massachusetts). Geographies were approximated using public data.")
         ;
 
       var embedLink = footerContainer.append("div")
@@ -5052,8 +5050,8 @@ console.log("3085");
           .attr("class","swarm-chart-table-company-row-top-label-census")
           .text(function(d){
             if(d.value.value.companyData.hasOverride){
-              if(d.value.value.companyData.override.coverage_area.length > 20){
-                return d.value.value.companyData.override.coverage_area.slice(0,17)+"..."
+              if(d.value.value.companyData.override.coverage_area.length > 25){
+                return d.value.value.companyData.override.coverage_area.slice(0,22)+"..."
               }
               return d.value.value.companyData.override.coverage_area;
             }
@@ -5421,7 +5419,6 @@ console.log("3085");
       .attr("transform",function(d){
         if(d.value.hasLocation){
           var location = d.value.location;
-          console.log();
           var project = projection([+location.longitude,location.latitude]);
           if(project){
             return "translate("+project+")";
@@ -5557,7 +5554,6 @@ console.log("3085");
         .attr("class","swarm-cell-g")
         ;
 
-console.log("5549");
       cellEnter
         .append("circle")
         .attr("class","swarm-circle")
@@ -5658,7 +5654,6 @@ console.log("5549");
         .attr("class","swarm-line")
         ;
 
-console.log("5650");
 
       cellEnter
         .append("circle")

@@ -1,0 +1,289 @@
+news_id,paper,city_state,coverage_area,coverage_area_orig,hispanic,white,black,american_indian_alaska_native,asian,native_hawaiian_pacific_islander,other,two_or_more,female,,,,,,
+12,the arizona republic/phoenix gazette,"phoenix, az",Arizona,arizona,30.9,55.5,4.9,5.4,3.4,0.3,null,2.8,50.3,,,,,,
+15,arizona daily star,"tuscon, az","tuscon, AZ","tuscon, AZ",42.5,45.8,4.6,1.7,2.8,0.1,0.1,2.3,50.5,,,,,,
+34,los angeles times,los angeles,California,california,38.9,37.7,6.5,1.7,14.8,0.5,null,3.8,50.3,,,,,,
+50,san francisco chronicle,san francisco,Bay Area,"bay area (alameda, contra costa, marin, napa, san francisco, san mateo, santa clara, solano, and sonoma counties)",23.4,40.36,6.01,0.24,23.92,0.58,0.3,5.23,n/a,,,,,,
+51,san jose mercury news,san jose,Bay Area,"bay area (alameda, contra costa, marin, napa, san francisco, san mateo, santa clara, solano, and sonoma counties)",23.4,40.36,6.01,0.24,23.92,0.58,0.3,5.23,n/a,,,,,,
+61,los angeles daily news,"woodland hills, ca",Los angeles County,"los angeles county, CA",48.5,26.5,9.1,1.5,15.1,0.4,null,3,50.7,,,,,,
+62,Ventura County Star,Camarillo,"ventura county, ca",,41.6,47,1.6,0.3,6.9,0.1,0.1,4.2,50.4,,,,,,
+86,the news journal,"new castle, de",Deleware,delaware,9.2,62.9,22.6,0.6,4,0.1,null,2.6,51.6,,,,,,
+88,the washington post,"washington, dc",United States,united states,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+104,south florida sun-sentinel,"ft. lauderdale, fl","Dade, Broward and Palm Beach County","dade, broward and palm beach counties",44.4,31.37,22.24,0.4,2.58,0.06,0,1.66,n/a,,,,,,
+108,tampa bay times,"st. petersburg, fl","Tampa Bay, FL","tampa bay (clearwater, tampa, st. petersburg), fl",16.2,55.75,21.81,0.23,3.26,0.1,0.27,2.25,n/a,,,,,,
+109,scripps treasure coast newspapers,"stuart, fl","Indian River, Martin and St. Lucie County","indian river, martin and st. lucie counties; fl",15.4,68.08,13.86,0.63,1.67,0.1,0,1.82,n/a,,,,,,
+112,The Palm Beach Post,west palm beach,Palm Beach and Treasure Coast County,,18.6,60.62,16.08,0.13,2.16,0.03,0.3,2.08,n/a,,,,,,
+126,honolulu star-advertiser,"honolulu, hi",Hawaii,hawaii,10.4,22.1,2.2,0.4,37.7,10.2,null,23.7,49.5,,,,,,
+129,daily herald,"arlington heights, il","Cook, Dupage, Kane, Lake, Mckhenry County","suburban chicago (cook, dupage, kane, lake, mckhenry counties)",23.6,49.85,18.45,0.76,7.56,0.1,0,1.9,n/a,,,,,,
+139,The Dispatch and The Rock Island Argus,Moline,"Moline, East moline and Rock island, IL, Davenport and Bettendorf, IA",,10.5,73.86,10.29,0.25,2.77,0.01,0.1,2.25,n/a,,,,,,
+196,bangor daily news,"bangor, me",Maine,maine,1.6,93.5,1.5,0.7,1.2,0,null,1.7,51.1,,,,,,
+202,the boston globe,"dorchester, ma",Massachusetts,massachusetts,11.5,73,8.6,0.5,6.7,0.1,null,2.3,51.5,,,,,,
+204,the christian science monitor,"boston, ma",United States,united states,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+225,detroit free press,"detriot, mi","Detriot, MI","detriot, MI",7.7,9.1,79.8,0.3,1.3,0,0.1,1.7,52,,,,,,
+226,the detroit news,"detriot, mi","Detriot, MI","detriot, MI",7.7,9.1,79.8,0.3,1.3,0,0.1,1.7,52,,,,,,
+240,minneapolis star tribune,"minneapolis, mn",Minnesota,minnesota,5.2,80.6,6.2,1.3,4.9,0.1,null,2.4,50.3,,,,,,
+263,St. Louis Post Dispatch,"St. Louis, MO","St. Louis, MO-IL CSA","St. Louis-St. Charles-Farmington, MO-IL CSA",3.0,75,18,0,2,0,0,2,51,,,,,,
+282,Bergen Record,"woodland park, nj","Bergen, Husdon, Essex, Passaic County","bergen, husdon, essex, passaic counties; nj",29.6,40.84,19.91,0.86,11.59,0.14,0,2.37,n/a,,,,,,
+284,the star-ledger,"newark, nj",New Jersey,new jersey,20.0,55.8,15,0.6,9.8,0.1,null,2.2,51.2,,,,,,
+290,albuquerque journal,"albuquerque, nm",New Mexico,new mexico,48.5,38.1,2.5,10.6,1.7,0.2,null,2.5,50.5,,,,,,
+292,the new york times,"new york, ny",United States,united states,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+293,the wall street journal,"new york, ny",United States,united states,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+296,The Daily Gazette,"Schenectady, NY","Schenectady, Saratoga, Fulton, Montgomery Schoharie and Albany County",,5.0,81.29,6.77,0.14,3.64,0.03,0.45,2.63,n/a,,,,,,
+301,watertown daily times,"watertown, ny","Jefferson, St. Lawrence and Lewis County","jefferson, st. lawrence and lewis counties;",4.5,87.92,4.33,0.75,1.02,0.19,0,2,n/a,,,,,,
+302,The Journal News,"white plains, ny","Westchester, Rockland, Putnam County",,20.8,58.49,11.99,0.12,5.46,0.01,0.36,2.78,n/a,,,,,,
+326,akron beacon journal,"akron, oh","Summit, Medina, Portage, Stark and Wayne County","summit, medina, portage, stark and wayne counties; oh",2.0,85.08,8.86,0.23,2.04,0,0,2.17,n/a,,,,,,
+352,Register-Guard,Eugene,Sangamon and Lane County,,5.9,82.25,4.97,0.64,2.21,0.15,0.23,3.64,n/a,,,,,,
+357,the oregonian,"portland, or",Oregon,oregon,12.8,76.4,2.1,1.8,4.5,0.4,null,3.8,50.5,,,,,,
+371,Intelligencer Journal / Lancaster New Era / Sunday News,lancaster,"Lancaster County, PA",,9.6,83.4,3.5,0.1,2,0,0.1,2,51,,,,,,
+372,bucks county courier times,"levittown, pa","Bucks County, PA","bucks county, pa",5.2,84.6,4.2,0.3,4.8,0.1,null,1.7,51,,,,,,
+389,the providence journal,"providence, ri",Rhode Island,rhode island,14.9,73.3,8.1,1,3.6,0.2,null,2.7,51.6,,,,,,
+394,the post and courier,"charleston, sc","Charleston, Dorchester and Berkeley County","charleston, dorchester and berkeley counties; sc",5.4,64.36,26.46,0.54,1.94,0.12,0,2.17,n/a,,,,,,
+417,the tennessean,"nashville, tn","Nashville-Davidson, TN","nashville-davidson metropolitan government (balance), tn",10.2,56,27.9,0.3,3.3,0.1,0.3,2.1,51.5,,,,,,
+447,salt lake tribune,"salt lake city, ut",Utah,utah,13.8,78.8,1.4,1.6,2.5,1,null,2.5,49.7,,,,,,
+455,the virginian-pilot,"norfolk, va","Norfolk County, VA","norfolk county, VA",7.8,43.7,42.7,0.7,3.7,0.2,null,3.6,47.8,,,,,,
+457,the roanoke times,"roanoke, va","Roanoke, Blacksburg, Christiansburg","roanoke, blacksburg, christiansburg; va",5.1,68.09,18.74,0.15,4.92,0.09,0.37,2.55,n/a,,,,,,
+468,The Columbian,"Vancouver, WA","clark county, wa",,8.4,80.3,1.8,0.6,4.1,0.7,0.2,4.5,50.5,,,,,,
+494,newsday,"melville, ny",Long Island and NYC,"long island and nyc (nassau, suffolk, kings, queens, new york, bronx, richmond counties)",26.7,39.28,24.06,1.23,13.03,0.18,0,2.67,52,,,,,,
+495,new york daily news,"new york, ny",New York,new york,19.0,55.8,17.7,1,8.9,0.1,null,2.5,51.5,,,,,,
+550,northwest arkansas newspapers llc,"springdale, ar","Fayetteville, Springdale, Rogers, Bentonville County","fayetteville, springdale, rogers, bentonville counties; ar",21.7,65.83,3.28,0.92,4,2.01,0.3,1.98,n/a,,,,,,
+673,Florida Today,Melbourne,"Brevard, Orange, Seminole, Osceola, Brevard, Volusia and Lake County",,21.9,57.77,13.58,0.19,3.4,0.06,0.4,2.74,n/a,,,,,,
+675,The News-Press,Fort Myers,"Collier ,Llee, Charlotte, Manatee, Sarasota, Desoto, Hendry and Glades County",,16.2,71.86,8.49,0.21,1.45,0.02,0.15,1.6,n/a,,,,,,
+1180,asbury park press,"neptune, nj",Monmouth and Ocean County,"monmouth and ocean counties, NJ",10.0,79.82,7.55,0.3,3.85,0.05,0,1.56,n/a,,,,,,
+1247,Times Herald Record,"Middletown, NY","Orange, Sullivan, Ulster, Pike, Sussex County",,13.7,74.08,6.68,0.11,2.06,0.02,0.25,3.05,n/a,,,,,,
+1462,Beaver County Times,"Beaver, PA","Beaver, Alegheny and Lawrence County",,1.7,81.4,11.51,0.09,2.78,0.02,0.17,2.3,n/a,,,,,,
+1478,The Intelligencer,doylestown pa,Bucks and Montgomery County,,4.7,80.76,6.49,0.1,5.82,0.01,0.19,1.96,n/a,,,,,,
+1536,york daily record,"york, pa","York County, PA","york county, PA",7.2,84,6.7,0.3,1.5,0.1,null,2.1,50.6,,,,,,
+1659,standard-examiner,"ogden, ut","Weber, Davis, Box Elder, Cache County","weber, davis counties, box elder, cache counties; ut",12.3,81.89,1.35,0.97,1.91,0.55,0,2.45,n/a,,,,,,
+1682,daily press media group,"newport news, va","Virginia Peninsula, VA","virginia peninsula, va (chesapeake, franklin, hampton, newport news, norfolk, poquoson, portsmouth, suffolk, virginia beach, and williamsburg)",6.4,52.76,33.14,0.26,3.82,0.11,0.27,3.24,n/a,,,,,,
+1722,The Parkersburg News and The Parkersburg Sentinel,Parkersburg,Mid-Ohio Valley,"Mid-ohio valley (calhoun, jackson, pleasants, ritchie, roane, wirt, and wood counties), wv",0.8,96.3,0.77,0.13,0.38,0.02,0.07,1.59,n/a,,,,,,
+1865,USA Today,"mclean, va",United States,united states,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,n/a,,,,,,
+2029,Charlotte Sun,"charlotte harbor, fl","port charlotte/punta gorda, fl",,7.8,80.21,7.7,0.14,1.82,0.01,0.27,2.04,n/a,,,,,,
+2147,The Texas Tribune,Austin,Texas,,39.1,42.6,12.6,1,4.8,0.1,null,1.9,50.3,,,,,,
+2199,ProPublica,"new york, ny",United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+2274,center for investigative reporting/california watch,berkeley ca,united states,,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+2408,Arkansas Democrat-Gazette,little rock,Arkansas,,7.3,72.9,15.7,1,1.6,0.3,null,2,50.9,,,,,,
+2415,Gannett Corporate,n/a,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9900,Georgia News Lab,,Georgia,,9.1,54.6,30.5,0.2,3.6,0,0.2,1.7,51.2,,,,,,
+9903,Conn. Health I-Team,,Connecticut,,14.7,69.2,9.6,0.1,4.2,0,0.3,1.9,51.3,,,,,,
+9904,Iowa Center for Public Affairs Journalism,,Iowa,,5.4,87.4,3.1,0.3,2,0.1,0.1,1.6,50.4,,,,,,
+9906,Aspen Journalism,,Colorado,,21.1,69.1,3.9,0.5,2.8,0.1,0.2,2.3,51.2,,,,,,
+9908,Highlands Current,,"Cold Spring, Philipstown and Beacon",,18.4,59.6,16.6,0.4,1.6,0,0.4,3,48.7,,,,,,
+9909,Montana Free Press,,Montana,,3.3,87,0.4,6.3,0.7,0.1,0,2.2,49.7,,,,,,
+9910,Ensia,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9911,www.grantcountybeat.com,,"Grant County, NM",,49.2,47.6,0.5,0.7,0.1,0,0,1.9,50.6,,,,,,
+9912,Solitary Watch,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9914,Auricle Productions,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9915,BenitoLink.com,,"San Benito County, CA",,57.9,36.6,0.7,0.3,2.5,0.1,0.1,1.7,50,,,,,,
+9916,Carolina Public Press,,North Carolina,,8.8,64.2,21.2,1.1,2.5,0.1,0.2,1.9,51.3,,,,,,
+9917,Shelterforce,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9918,The GroundTruth Project,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9919,Alabama Initiative for Independent Journalism publishing as BirminghamWatch,,Alabama,,4.0,66.3,26.3,0.5,1.2,0,0.1,1.5,51.5,,,,,,
+9920,California Health Report,,California,california,38.9,37.7,6.5,1.7,14.8,0.5,null,3.8,50.3,,,,,,
+9922,Pulitzer Center,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9925,CNBNEWS,,Southern New Jersey,,7.2,85,2.3,0.2,4.2,0,0.1,1.1,52.2,,,,,,
+9926,Georgia Health News,,Georgia,,9.1,54.6,30.5,0.2,3.6,0,0.2,1.7,51.2,,,,,,
+9927,FairWarning,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9928,ecoRI News,,New England,,9.9,77.2,6,0.2,4.3,0,0.4,1.9,51.3,,,,,,
+9929,Food and Environment Reporting Network,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9930,MuckRock,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9931,Investigative Reporting Workshop,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9932,Center for Sustainable Journalism,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9933,Centro de Periodismo Investigativo,,Puerto Rico,,99.0,0.7,0.1,0,0.1,0,0,0.1,52.2,,,,,,
+9934,The Midwest Center for Investigative Reporting,,Midwest,,7.4,76.9,10.2,0.5,2.9,0,0.1,2,50.7,,,,,,
+9937,Maryland Matters,,Maryland,,9.0,53,29.1,0.2,6,0,0.2,2.4,51.6,,,,,,
+9938,OpenSecrets,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9939,Current,,Northwest Washington,"Northwest Washington (Chevy Chase, Dupont Circle, Foggy Bottom, Georgetown and the Palisades)",10.5,69.9,9.7,0.2,6.4,0.1,0.2,3,52.2,,,,,,
+9940,Voices of Monterey Bay,,Monterey and Santa Cruz County,,47.7,41.9,1.9,0.3,5.2,0.3,0.1,2.6,49.4,,,,,,
+9941,The Investigative Fund,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9942,Voice of OC,,"Orange County, CA",,34.2,42.4,1.5,0.2,18.8,0.3,0.2,2.5,50.6,,,,,,
+9943,Technically Media (publishes two brands: Technical.ly and Generocity.org),,Mid-Atlantic Region,,14.8,63.5,12.8,0.2,6.6,0,0.4,1.7,51.3,,,,,,
+9944,Madison365,,"Madison, WI Metro Area",,5.5,83.4,4.2,0.2,4.5,0,0,2.1,50.3,,,,,,
+9947,PublicSource,,"Pittsburgh, PA Metro Area",,1.5,86.3,8.1,0.1,2,0,0.1,1.9,51.5,,,,,,
+9948,new food economy,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9949,Connecticut News Project / Connecticut Mirror,,Connecticut,,14.7,69.2,9.6,0.1,4.2,0,0.3,1.9,51.3,,,,,,
+9950,Oklahoma Watch,,Oklahoma,,9.6,67.3,7.1,6.9,1.9,0.1,0.1,6.9,50.5,,,,,,
+9951,International Consortium of Investigative Journalists,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9952,Injustice Watch,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9953,The Trace,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9954,InsideClimate News,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9955,CALmatters,,California,,38.9,37.7,6.5,1.7,14.8,0.5,null,3.8,50.3,,,,,,
+9956,Better Government Association,,Illinois,,16.5,62.5,14.1,0.1,5,0,0.1,1.7,50.9,,,,,,
+9957,Youth Radio,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9958,VTDigger.org,,Vermont,,1.7,93.6,1.1,0.3,1.4,0,0.1,1.8,50.8,,,,,,
+9959,The Hechinger Report,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9960,The Texas Observer,,Texas,,39.1,42.6,12.6,1,4.8,0.1,null,1.9,50.3,,,,,,
+9961,The Marshall Project,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9962,St. Louis Public Radio,,St. Louis Metropolitan region,"St. Louis Metropolitan region, Quincy, IL, Rolla, MO, Lebanon, MO",2.8,74.8,17.8,0.2,2.3,0,0.1,2,51.5,,,,,,
+9964,Chalkbeat,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9965,"WHYY, Inc.",,PA-NJ-DE-MD Metro Area,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD Metro Area",8.6,63.5,20.2,0.1,5.4,0,0.3,1.9,51.7,,,,,,
+9966,PBS NewsHour,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9967,The Intercept,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+9969,The Post Publications,,"Sanatoga, Limerick, Pottstown, Schwenksville, Gilbertsville, and Phoenixville, PA",,7.9,76.9,10.6,0.1,1.2,0,0.2,3.2,52.3,,,,,,
+9970,Axios,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+9972,Mississippi Today,,Mississippi,,2.9,57.4,37.2,0.4,1,0,0.1,1,51.4,,,,,,
+9973,The Mendocino Voice,,"Mendocino County, CA",,23.6,66.7,0.6,3.4,1.9,0.2,0.4,3.2,49.9,,,,,,
+9975,Southern California Public Radio,,"LA, Orange, Riverside, San Bernardino, Santa Barbara, Ventura counties",,45.7,32.6,6.3,0.2,12.4,0.3,0.4,2,50.6,,,,,,
+9976,The Verge,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+9977,SB Nation,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+9978,Polygon,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+9979,Recode,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+9980,Curbed,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+9981,Eater,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+9982,McClatchy Washington Bureau,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+9983,Chemical & Engineering News (C&EN),,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+9984,MPR News,,Minnesota,minnesota,5.2,80.6,6.2,1.3,4.9,0.1,0,2.4,50.3,,,,,,
+9985,New York Public Radio,,New York City metro,,23.6,47.9,15.8,0.1,10.4,0,0.6,1.6,51.7,,,,,,
+9986,Chicago Public Media,,Chicago metro,,21.4,54,16.7,0.1,6.1,0,0.1,1.6,51.1,,,,,,
+9987,WhereBy.Us,,"Miami, Orlando, Portland, Seattle Metros",,26.6,51.3,12.7,0.4,5.7,0.3,0.3,2.7,50.9,,,,,,
+9988,The Daily Dot,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+2356,Slate Magazine,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+2398,Vox.com,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+2166,the center for public integrity,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+201901,STAT,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+201903,St. Lucie News Tribune,,St. Lucie County,St. Lucie County,17.3,75.1,20.8,0.3,2.3,0.1,3.6,2.4,51.2,,,,,,
+201906,High Country News,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+201908,Pacific Standard,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+201909,Bridge Magazine,,Michigan,Michigan,4.7,79,14,0.5,2.7,0,1.1,2.6,50.9,,,,,,
+201911,Rio Grande,,Texas,,39.1,42.9,11.7,0.2,4.5,0.1,0,1.9,50.3,,,,,,
+201912,Next City,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+201913,Missouri Lawyers Media,,Missouri,Missouri,3.9,79.8,11.5,1.3,2.3,0.1,1.1,2.4,51,,,,,,
+201914,Chadds Ford Live,,Delaware County,Delaware County,3.4,70.9,21.8,0.6,5.8,0.1,1,2.1,52,,,,,,
+201916,In These Times,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+201919,Fostering Media Connections,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+201920,InMaricopa,,Maricopa County,Maricopa County,30.1,56.3,5.1,1.5,3.9,0.2,0.1,2.3,50.6,,,,,,
+201921,Searchlight New Mexico,,New Mexico,new mexico,48.5,38.2,1.8,8.7,1.3,0,0.2,2.5,50.5,,,,,,
+201922,Rocky Mountain PBS,,Colorado,,21.1,68.6,3.9,0.5,3,0.1,0.2,2.3,51.2,,,,,,
+201923,Scalawag,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+201924,Arizona Mirror,,Arizona,arizona,30.9,55.5,4.9,5.4,3.4,0.3,0,2.8,50.3,,,,,,
+201925,Wisconsin Watch,,Wisconsin,Wisconsin,6.3,81.8,6.2,0.8,2.6,0.1,1.7,2.1,50.3,,,,,,
+201929,PolitiFact,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+201930,New England Center for Investigative Reporting / WGBH,,New England,,9.9,77.2,6,0.2,4.3,0,0.4,1.9,51.3,,,,,,
+201933,passblue.com,,United States,United States,17.8,61.3,13.3,1.3,5.7,0.2,0,2.6,50.8,,,,,,
+201935,Knoxville Journal-Express,,Marion County,Marion County,1.8,97.7,1.3,0.3,1.7,0,0.4,1.5,50.3,,,,,,
+201936,"South Dakota News Watch, Inc.",,South Dakota,South Dakota,3.3,82.7,1.7,8.3,1.4,0.1,0.9,2.6,49.8,,,,,,
+9971,Pacific Daily News,,Guam,,0.5,2.5,0.6,0,27.1,58,0.2,11.1,49.3,,,,,,
+201938,Greenville News and Anderson Independent-Mail,,"Anderson, Greenville County",,7.00,71.00,17.00,0.00,2.00,0.05,0.09,2.00,51.57,,,,,,
+201939,The Times and The News-Star,,Louisiana,,8.8,69.00,18.00,0.20,2.20,0.10,0.10,1.70,51.10,,,,,,
+201940,"salinas californian, times-delta, tulare advance-register",,"Monterey, Tulare County",,60.9,30.04247867,1.86036187,0.4590925551,4.353811814,0.2784825169,0.1445104526,2.009917296,49,,,,,,
+201941,"beaufort gazette, the island packet",,Beaufort County,,11.3,67.4,18.1,0.2,1.2,0.1,0.1,1.7,50.6,,,,,,
+201942,"Northern Kentucky Tribune, Kentucky Forward, Kentucky Center",,Kentucky,,3.4,85.1,7.9,0.2,1.3,0,0.1,1.9,51,,,,,,
+201943,"Galion Inquirer, Morrow County Sentinel",,"Crawford, Morrow, Richland County",,1.66,89.72012944,5.028208496,0.1107202351,0.5732288537,0.01157529731,0.09662856884,2.80,49.79,,,,,,
+201944,Southern California News Group,,California,california,38.9,37.7,6.5,1.7,14.8,0.5,0,3.8,50.3,,,,,,
+201945,"The Ithaca Independent, press & sun-bulletin, star-gazette",,"Elmira, Ithaca, Binghamton, NY",,6.65,70.43034309,10.51283028,0.20478921,7.243822986,0.006667555674,0.1952641305,4.753967196,50.60,,,,,,
+201947,"El Paso Times, Alamogardo Daily, Las Cruces Sun-News",,"El Paso County, Alamogardo, Las Cruces",,78.19884527,16.1643232,2.998649155,0.378153955,1.13404813,0.07519636906,0.06568045991,0.9851034648,50.95272869,,,,,,
+201948,"farmington daily times, carlsbad current-argus",,"San Juan County, Carlsbad",,24.8,40.95802419,0.7892014762,30.95125595,0.5318809302,0.04405736396,0.1142937413,1.792304647,50.18644566,,,,,,
+201949,"chillicothe gazette, coshocton tribune, marion star, eagle-gazette, news journal/telegraph-forum, port clinton news-herald",,"Ross, Coshocton, Marion County",,1.6,90.60710898,4.315049383,0.08816472295,0.5094581776,0.003348027454,0.1668433681,2.68902405,47.73338541,,,,,,
+201950,"the gleaner, evansville courier & press",,"Evansville, IN; Henderson, KY",,3.0,80.38812094,12.15282683,0.2374466081,0.6975414523,0.1641274005,0.2367739549,3.172232873,52.40036323,,,,,,
+201951,"the star press, palladium-item, lafayette journal & courier",,"Delaware, Wayne, Tippecanoe County",,5.3,82.26027193,5.507451401,0.1146369424,4.625858083,0.02926900656,0.09675032724,2.030130816,50.32886981,,,,,,
+201952,Independent Newsmedia,,United States,,17.8,61.3,13.3,1.3,5.7,0.2,null,2.6,50.8,,,,,,
+201953,NJ Advance Media,,New Jersey,,20.0,55.8,15,0.6,9.8,0.1,null,2.2,51.2,,,,,,
+201954,"Bergen Record, Morristown Daily Record",,"Bergen, Husdon, Essex, Passaic County","bergen, husdon, essex, passaic counties; nj",29.6,40.84,19.91,0.86,11.59,0.14,0,2.37,n/a,,,,,,
+201956,"Suburban Newsrooms, Chicago Tribune",,Chicago metro,,21.4,54,16.7,0.1,6.1,0,0.1,1.6,51.1,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,SEX AND AGE,,,,,,SEX AND AGE,,,,,,EX AND AGE,,,,
+,,,Total population,"115,938",*****,"115,938.00",(X),,Total population,"66,972",*****,"66,972",(X),,Total population,"186,081",*****,"186,081",(X)
+,,,Male,"55,903",#ERROR!,48.20%,#ERROR!,,Male,"32,387",#ERROR!,48.40%,#ERROR!,,Male,"94,992",#ERROR!,51.00%,#ERROR!
+,,50.32886981,Female,"60,035",#ERROR!,51.80%,#ERROR!,,Female,"34,585",#ERROR!,51.60%,#ERROR!,,Female,"91,089",#ERROR!,49.00%,#ERROR!
+,,,Sex ratio (males per 100 females),93.1,#ERROR!,(X),(X),,Sex ratio (males per 100 females),93.6,#ERROR!,(X),(X),,Sex ratio (males per 100 females),104,#ERROR!,(X),(X)
+,,,,,,,,,,,,,,,,,,,
+,,,Under 5 years,"5,801",#ERROR!,5.00%,#ERROR!,,Under 5 years,"3,919",#ERROR!,5.90%,#ERROR!,,Under 5 years,"11,312",#ERROR!,6.10%,#ERROR!
+,,,5 to 9 years,"5,919",#ERROR!,5.10%,#ERROR!,,5 to 9 years,"4,107",#ERROR!,6.10%,#ERROR!,,5 to 9 years,"11,179",#ERROR!,6.00%,#ERROR!
+,,,10 to 14 years,"6,147",#ERROR!,5.30%,#ERROR!,,10 to 14 years,"4,203",#ERROR!,6.30%,#ERROR!,,10 to 14 years,"10,048",#ERROR!,5.40%,#ERROR!
+,,,15 to 19 years,"10,518",#ERROR!,9.10%,#ERROR!,,15 to 19 years,"4,511",#ERROR!,6.70%,#ERROR!,,15 to 19 years,"17,654",#ERROR!,9.50%,#ERROR!
+,,,20 to 24 years,"16,358",#ERROR!,14.10%,#ERROR!,,20 to 24 years,"4,325",#ERROR!,6.50%,#ERROR!,,20 to 24 years,"33,327",#ERROR!,17.90%,#ERROR!
+,,,25 to 34 years,"12,823",#ERROR!,11.10%,#ERROR!,,25 to 34 years,"7,599",#ERROR!,11.30%,#ERROR!,,25 to 34 years,"26,300",#ERROR!,14.10%,#ERROR!
+,,,35 to 44 years,"11,879",#ERROR!,10.20%,#ERROR!,,35 to 44 years,"7,802",#ERROR!,11.60%,#ERROR!,,35 to 44 years,"19,781",#ERROR!,10.60%,#ERROR!
+,,,45 to 54 years,"13,922",#ERROR!,12.00%,#ERROR!,,45 to 54 years,"9,127",#ERROR!,13.60%,#ERROR!,,45 to 54 years,"18,684",#ERROR!,10.00%,#ERROR!
+,,,55 to 59 years,"7,031",#ERROR!,6.10%,#ERROR!,,55 to 59 years,"4,421",#ERROR!,6.60%,#ERROR!,,55 to 59 years,"9,202",#ERROR!,4.90%,#ERROR!
+,,,60 to 64 years,"6,697",#ERROR!,5.80%,#ERROR!,,60 to 64 years,"4,795",#ERROR!,7.20%,#ERROR!,,60 to 64 years,"8,788",#ERROR!,4.70%,#ERROR!
+,,,65 to 74 years,"10,556",#ERROR!,9.10%,#ERROR!,,65 to 74 years,"6,564",#ERROR!,9.80%,#ERROR!,,65 to 74 years,"11,370",#ERROR!,6.10%,#ERROR!
+,,,75 to 84 years,"5,761",#ERROR!,5.00%,#ERROR!,,75 to 84 years,"3,772",#ERROR!,5.60%,#ERROR!,,75 to 84 years,"5,721",#ERROR!,3.10%,#ERROR!
+,,,85 years and over,"2,526",#ERROR!,2.20%,#ERROR!,,85 years and over,"1,827",#ERROR!,2.70%,#ERROR!,,85 years and over,"2,715",#ERROR!,1.50%,#ERROR!
+,,,,,,,,,,,,,,,,,,,
+,,,Median age (years),35.4,#ERROR!,(X),(X),,Median age (years),41.1,#ERROR!,(X),(X),,Median age (years),28,#ERROR!,(X),(X)
+,,,,,,,,,,,,,,,,,,,
+,,,Under 18 years,"21,967",*****,18.90%,*****,,Under 18 years,"14,851",#ERROR!,22.20%,#ERROR!,,Under 18 years,"38,555",#ERROR!,20.70%,#ERROR!
+,,,16 years and over,"96,707",#ERROR!,83.40%,#ERROR!,,16 years and over,"53,898",#ERROR!,80.50%,#ERROR!,,16 years and over,"151,543",#ERROR!,81.40%,#ERROR!
+,,,18 years and over,"93,971",*****,81.10%,*****,,18 years and over,"52,121",#ERROR!,77.80%,#ERROR!,,18 years and over,"147,526",#ERROR!,79.30%,#ERROR!
+,,,21 years and over,"83,246",#ERROR!,71.80%,#ERROR!,,21 years and over,"49,138",#ERROR!,73.40%,#ERROR!,,21 years and over,"127,762",#ERROR!,68.70%,#ERROR!
+,,,62 years and over,"22,785",#ERROR!,19.70%,#ERROR!,,62 years and over,"15,255",#ERROR!,22.80%,#ERROR!,,62 years and over,"24,524",#ERROR!,13.20%,#ERROR!
+,,,65 years and over,"18,843",#ERROR!,16.30%,#ERROR!,,65 years and over,"12,163",#ERROR!,18.20%,#ERROR!,,65 years and over,"19,806",#ERROR!,10.60%,#ERROR!
+,,,,,,,,,,,,,,,,,,,
+,,,18 years and over,"93,971",*****,"93,971",(X),,18 years and over,"52,121",#ERROR!,"52,121",(X),,18 years and over,"147,526",#ERROR!,"147,526",(X)
+,,,Male,"44,634",#ERROR!,47.50%,#ERROR!,,Male,"24,843",#ERROR!,47.70%,#ERROR!,,Male,"75,520",#ERROR!,51.20%,#ERROR!
+,,,Female,"49,337",#ERROR!,52.50%,#ERROR!,,Female,"27,278",#ERROR!,52.30%,#ERROR!,,Female,"72,006",#ERROR!,48.80%,#ERROR!
+,,,Sex ratio (males per 100 females),90.5,#ERROR!,(X),(X),,Sex ratio (males per 100 females),91.1,#ERROR!,(X),(X),,Sex ratio (males per 100 females),105,#ERROR!,(X),(X)
+,,,,,,,,,,,,,,,,,,,
+,,,65 years and over,"18,843",#ERROR!,"18,843",(X),,65 years and over,"12,163",#ERROR!,"12,163",(X),,65 years and over,"19,806",#ERROR!,"19,806",(X)
+,,,Male,"8,125",#ERROR!,43.10%,#ERROR!,,Male,"5,061",#ERROR!,41.60%,#ERROR!,,Male,"8,605",#ERROR!,43.40%,#ERROR!
+,,,Female,"10,718",#ERROR!,56.90%,#ERROR!,,Female,"7,102",#ERROR!,58.40%,#ERROR!,,Female,"11,201",#ERROR!,56.60%,#ERROR!
+,,,Sex ratio (males per 100 females),75.8,#ERROR!,(X),(X),,Sex ratio (males per 100 females),71.3,#ERROR!,(X),(X),,Sex ratio (males per 100 females),77,#ERROR!,(X),(X)
+,,,,,,,,,,,,,,,,,,,
+,,,RACE,,,,,,RACE,,,,,,RACE,,,,
+,,,Total population,"115,938",*****,"115,938",(X),,Total population,"66,972",*****,"66,972",(X),,Total population,"186,081",*****,"186,081",(X)
+,,,One race,"113,423",#ERROR!,97.80%,#ERROR!,,One race,"65,264",#ERROR!,97.40%,#ERROR!,,One race,"181,925",#ERROR!,97.80%,#ERROR!
+,,,Two or more races,"2,515",#ERROR!,2.20%,#ERROR!,,Two or more races,"1,708",#ERROR!,2.60%,#ERROR!,,Two or more races,"4,156",#ERROR!,2.20%,#ERROR!
+,,,,,,,,,,,,,,,,,,,
+,,,One race,"113,423",#ERROR!,97.80%,#ERROR!,,One race,"65,264",#ERROR!,97.40%,#ERROR!,,One race,"181,925",#ERROR!,97.80%,#ERROR!
+,,,White,"102,569",#ERROR!,88.50%,#ERROR!,,White,"60,305",#ERROR!,90.00%,#ERROR!,,White,"154,732",#ERROR!,83.20%,#ERROR!
+,,,Black or African American,"8,463",#ERROR!,7.30%,#ERROR!,,Black or African American,"3,438",#ERROR!,5.10%,#ERROR!,,Black or African American,"8,844",#ERROR!,4.80%,#ERROR!
+,,,American Indian and Alaska Native,88,#ERROR!,0.10%,#ERROR!,,American Indian and Alaska Native,124,#ERROR!,0.20%,#ERROR!,,American Indian and Alaska Native,319,#ERROR!,0.20%,#ERROR!
+,,,Cherokee tribal grouping,31,#ERROR!,0.00%,#ERROR!,,Cherokee tribal grouping,36,#ERROR!,0.10%,#ERROR!,,Cherokee tribal grouping,135,#ERROR!,0.10%,#ERROR!
+,,,Chippewa tribal grouping,0,#ERROR!,0.00%,#ERROR!,,Chippewa tribal grouping,0,#ERROR!,0.00%,#ERROR!,,Chippewa tribal grouping,0,#ERROR!,0.00%,#ERROR!
+,,,Navajo tribal grouping,0,#ERROR!,0.00%,#ERROR!,,Navajo tribal grouping,10,#ERROR!,0.00%,#ERROR!,,Navajo tribal grouping,4,#ERROR!,0.00%,#ERROR!
+,,,Sioux tribal grouping,0,#ERROR!,0.00%,#ERROR!,,Sioux tribal grouping,0,#ERROR!,0.00%,#ERROR!,,Sioux tribal grouping,31,#ERROR!,0.00%,#ERROR!
+,,,Asian,"1,563",#ERROR!,1.30%,#ERROR!,,Asian,664,#ERROR!,1.00%,#ERROR!,,Asian,"14,891",#ERROR!,8.00%,#ERROR!
+,,,Asian Indian,673,#ERROR!,0.60%,#ERROR!,,Asian Indian,74,#ERROR!,0.10%,#ERROR!,,Asian Indian,"3,227",#ERROR!,1.70%,#ERROR!
+,,,Chinese,458,#ERROR!,0.40%,#ERROR!,,Chinese,57,#ERROR!,0.10%,#ERROR!,,Chinese,"7,835",#ERROR!,4.20%,#ERROR!
+,,,Filipino,259,#ERROR!,0.20%,#ERROR!,,Filipino,328,#ERROR!,0.50%,#ERROR!,,Filipino,592,#ERROR!,0.30%,#ERROR!
+,,,Japanese,0,#ERROR!,0.00%,#ERROR!,,Japanese,39,#ERROR!,0.10%,#ERROR!,,Japanese,445,#ERROR!,0.20%,#ERROR!
+,,,Korean,52,#ERROR!,0.00%,#ERROR!,,Korean,11,#ERROR!,0.00%,#ERROR!,,Korean,"1,720",#ERROR!,0.90%,#ERROR!
+,,,Vietnamese,29,#ERROR!,0.00%,#ERROR!,,Vietnamese,39,#ERROR!,0.10%,#ERROR!,,Vietnamese,389,#ERROR!,0.20%,#ERROR!
+,,,Other Asian,92,#ERROR!,0.10%,#ERROR!,,Other Asian,116,#ERROR!,0.20%,#ERROR!,,Other Asian,683,#ERROR!,0.40%,#ERROR!
+,,,Native Hawaiian and Other Pacific Islander,115,#ERROR!,0.10%,#ERROR!,,Native Hawaiian and Other Pacific Islander,0,#ERROR!,0.00%,#ERROR!,,Native Hawaiian and Other Pacific Islander,64,#ERROR!,0.00%,#ERROR!
+,,,Native Hawaiian,37,#ERROR!,0.00%,#ERROR!,,Native Hawaiian,0,#ERROR!,0.00%,#ERROR!,,Native Hawaiian,0,#ERROR!,0.00%,#ERROR!
+,,,Guamanian or Chamorro,71,#ERROR!,0.10%,#ERROR!,,Guamanian or Chamorro,0,#ERROR!,0.00%,#ERROR!,,Guamanian or Chamorro,0,#ERROR!,0.00%,#ERROR!
+,,,Samoan,7,#ERROR!,0.00%,#ERROR!,,Samoan,0,#ERROR!,0.00%,#ERROR!,,Samoan,42,#ERROR!,0.00%,#ERROR!
+,,,Other Pacific Islander,0,#ERROR!,0.00%,#ERROR!,,Other Pacific Islander,0,#ERROR!,0.00%,#ERROR!,,Other Pacific Islander,22,#ERROR!,0.00%,#ERROR!
+,,,Some other race,625,#ERROR!,0.50%,#ERROR!,,Some other race,733,#ERROR!,1.10%,#ERROR!,,Some other race,"3,075",#ERROR!,1.70%,#ERROR!
+,,,Two or more races,"2,515",#ERROR!,2.20%,#ERROR!,,Two or more races,"1,708",#ERROR!,2.60%,#ERROR!,,Two or more races,"4,156",#ERROR!,2.20%,#ERROR!
+,,,White and Black or African American,"1,121",#ERROR!,1.00%,#ERROR!,,White and Black or African American,987,#ERROR!,1.50%,#ERROR!,,White and Black or African American,"1,866",#ERROR!,1.00%,#ERROR!
+,,,White and American Indian and Alaska Native,620,#ERROR!,0.50%,#ERROR!,,White and American Indian and Alaska Native,376,#ERROR!,0.60%,#ERROR!,,White and American Indian and Alaska Native,676,#ERROR!,0.40%,#ERROR!
+,,,White and Asian,221,#ERROR!,0.20%,#ERROR!,,White and Asian,184,#ERROR!,0.30%,#ERROR!,,White and Asian,797,#ERROR!,0.40%,#ERROR!
+,,,Black or African American and American Indian and Alaska Native,60,#ERROR!,0.10%,#ERROR!,,Black or African American and American Indian and Alaska Native,0,#ERROR!,0.00%,#ERROR!,,Black or African American and American Indian and Alaska Native,32,#ERROR!,0.00%,#ERROR!
+,,,,,,,,,,,,,,,,,,,
+,,,Race alone or in combination with one or more other races,,,,,,Race alone or in combination with one or more other races,,,,,,Race alone or in combination with one or more other races,,,,
+,,,Total population,"115,938",*****,"115,938",(X),,Total population,"66,972",*****,"66,972",(X),,Total population,"186,081",*****,"186,081",(X)
+,,,White,"104,930",#ERROR!,90.50%,#ERROR!,,White,"62,013",#ERROR!,92.60%,#ERROR!,,White,"158,552",#ERROR!,85.20%,#ERROR!
+,,,Black or African American,"9,719",#ERROR!,8.40%,#ERROR!,,Black or African American,"4,494",#ERROR!,6.70%,#ERROR!,,Black or African American,"10,998",#ERROR!,5.90%,#ERROR!
+,,,American Indian and Alaska Native,831,#ERROR!,0.70%,#ERROR!,,American Indian and Alaska Native,554,#ERROR!,0.80%,#ERROR!,,American Indian and Alaska Native,"1,185",#ERROR!,0.60%,#ERROR!
+,,,Asian,"1,932",#ERROR!,1.70%,#ERROR!,,Asian,848,#ERROR!,1.30%,#ERROR!,,Asian,"16,009",#ERROR!,8.60%,#ERROR!
+,,,Native Hawaiian and Other Pacific Islander,302,#ERROR!,0.30%,#ERROR!,,Native Hawaiian and Other Pacific Islander,70,#ERROR!,0.10%,#ERROR!,,Native Hawaiian and Other Pacific Islander,172,#ERROR!,0.10%,#ERROR!
+,,,Some other race,892,#ERROR!,0.80%,#ERROR!,,Some other race,770,#ERROR!,1.10%,#ERROR!,,Some other race,"3,506",#ERROR!,1.90%,#ERROR!
+,,,,,,,,,,,,,,,,,,,
+,,,HISPANIC OR LATINO AND RACE,,,,,,HISPANIC OR LATINO AND RACE,,,,,,HISPANIC OR LATINO AND RACE,,,,
+,,,Total population,"115,938",*****,"115,938",(X),,Total population,"66,972",*****,"66,972",(X),,Total population,"186,081",*****,"186,081",(X)
+,5.335631492,5.335631492,Hispanic or Latino (of any race),"2,661",*****,2.30%,*****,,Hispanic or Latino (of any race),"1,892",*****,2.80%,*****,,Hispanic or Latino (of any race),"15,135",*****,8.10%,*****
+,,,Mexican,"1,654",#ERROR!,1.40%,#ERROR!,,Mexican,"1,256",#ERROR!,1.90%,#ERROR!,,Mexican,"11,626",#ERROR!,6.20%,#ERROR!
+,,,Puerto Rican,406,#ERROR!,0.40%,#ERROR!,,Puerto Rican,327,#ERROR!,0.50%,#ERROR!,,Puerto Rican,529,#ERROR!,0.30%,#ERROR!
+,,,Cuban,22,#ERROR!,0.00%,#ERROR!,,Cuban,9,#ERROR!,0.00%,#ERROR!,,Cuban,369,#ERROR!,0.20%,#ERROR!
+,,,Other Hispanic or Latino,579,#ERROR!,0.50%,#ERROR!,,Other Hispanic or Latino,300,#ERROR!,0.40%,#ERROR!,,Other Hispanic or Latino,"2,611",#ERROR!,1.40%,#ERROR!
+,,,Not Hispanic or Latino,"113,277",*****,97.70%,*****,,Not Hispanic or Latino,"65,080",*****,97.20%,*****,,Not Hispanic or Latino,"170,946",*****,91.90%,*****
+,82.26027193,82.26027193,White alone,"100,956",#ERROR!,87.10%,#ERROR!,,White alone,"59,273",#ERROR!,88.50%,#ERROR!,,White alone,"143,304",#ERROR!,77.00%,#ERROR!
+,5.507451401,5.507451401,Black or African American alone,"8,275",#ERROR!,7.10%,#ERROR!,,Black or African American alone,"3,368",#ERROR!,5.00%,#ERROR!,,Black or African American alone,"8,679",#ERROR!,4.70%,#ERROR!
+,0.1146369424,0.1146369424,American Indian and Alaska Native alone,69,#ERROR!,0.10%,#ERROR!,,American Indian and Alaska Native alone,102,#ERROR!,0.20%,#ERROR!,,American Indian and Alaska Native alone,252,#ERROR!,0.10%,#ERROR!
+,4.625858083,4.625858083,Asian alone,"1,563",#ERROR!,1.30%,#ERROR!,,Asian alone,664,#ERROR!,1.00%,#ERROR!,,Asian alone,"14,842",#ERROR!,8.00%,#ERROR!
+,0.02926900656,0.02926900656,Native Hawaiian and Other Pacific Islander alone,44,#ERROR!,0.00%,#ERROR!,,Native Hawaiian and Other Pacific Islander alone,0,#ERROR!,0.00%,#ERROR!,,Native Hawaiian and Other Pacific Islander alone,64,#ERROR!,0.00%,#ERROR!
+,0.09675032724,0.09675032724,Some other race alone,166,#ERROR!,0.10%,#ERROR!,,Some other race alone,46,#ERROR!,0.10%,#ERROR!,,Some other race alone,145,#ERROR!,0.10%,#ERROR!
+,2.030130816,2.030130816,Two or more races,"2,204",#ERROR!,1.90%,#ERROR!,,Two or more races,"1,627",#ERROR!,2.40%,#ERROR!,,Two or more races,"3,660",#ERROR!,2.00%,#ERROR!
+,,,Two races including Some other race,63,#ERROR!,0.10%,#ERROR!,,Two races including Some other race,0,#ERROR!,0.00%,#ERROR!,,Two races including Some other race,132,#ERROR!,0.10%,#ERROR!
+,,,"Two races excluding Some other race, and Three or more races","2,141",#ERROR!,1.80%,#ERROR!,,"Two races excluding Some other race, and Three or more races","1,627",#ERROR!,2.40%,#ERROR!,,"Two races excluding Some other race, and Three or more races","3,528",#ERROR!,1.90%,#ERROR!
+,,,,,,,,,,,,,,,,,,,
+,,,Total housing units,"52,668",#ERROR!,(X),(X),,Total housing units,"31,325",#ERROR!,(X),(X),,Total housing units,"74,721",#ERROR!,(X),(X)
+,,,,,,,,,,,,,,,,,,,
+,,,"CITIZEN, VOTING AGE POPULATION",,,,,,"CITIZEN, VOTING AGE POPULATION",,,,,,"CITIZEN, VOTING AGE POPULATION",,,,
+,,,"Citizen, 18 and over population","92,417",#ERROR!,"92,417",(X),,"Citizen, 18 and over population","51,530",#ERROR!,"51,530",(X),,"Citizen, 18 and over population","131,956",#ERROR!,"131,956",(X)
+,,,Male,"43,811",#ERROR!,47.40%,#ERROR!,,Male,"24,612",#ERROR!,47.80%,#ERROR!,,Male,"66,364",#ERROR!,50.30%,#ERROR!
+,,,Female,"48,606",#ERROR!,52.60%,#ERROR!,,Female,"26,918",#ERROR!,52.20%,#ERROR!,,Female,"65,592",#ERROR!,49.70%,#ERROR!

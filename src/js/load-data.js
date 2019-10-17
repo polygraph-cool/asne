@@ -21,14 +21,14 @@ function init() {
 	return new Promise((resolve, reject) => {
 		d3.queue()
 			.defer(d3.csv,'assets/map_data_4.csv')
-			.defer(d3.csv,'assets/lats_3.csv')
-			.defer(d3.csv,'assets/newsidsunique_5.csv')
+			.defer(d3.csv,'assets/lats_4.csv')
+			.defer(d3.csv,'assets/newsidsunique_6.csv')
 			// .defer(d3.csv,'assets/news_ids.csv')
 			.defer(d3.json,'assets/usJson.json')
 			// .defer(d3.csv,'assets/top_3.csv')
-			.defer(d3.csv,'assets/census_5.csv')
-			.defer(d3.csv,'assets/census_override_5.csv')
-			.defer(d3.csv,'assets/new_2019.csv')
+			.defer(d3.csv,'assets/census_6.csv')
+			.defer(d3.csv,'assets/census_override_7.csv')
+			.defer(d3.csv,'assets/new_2019_3.csv')
 			.awaitAll((err, result) => {
 				if (err){
 					reject(err)
