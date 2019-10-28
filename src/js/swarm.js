@@ -3238,7 +3238,7 @@ function init(rawMapData,latLongData,newsIDInfo,stateTopo,censusData,censusOverr
           embedLinkInput.style("display","block")
             .attr("readonly",true)
             .attr("value",function(d){
-                return "<iframe src='https://googletrends.github.io/asne/index.html?view="+stepperSequence.indexOf(currentChart)+"&filter="+cut+"' frameborder='0'></iframe>"
+                return "<iframe src='https://googletrends.github.io/asne2019/index.html?view="+stepperSequence.indexOf(currentChart)+"&filter="+cut+"' frameborder='0'></iframe>"
             })
             ;
         })
